@@ -1,22 +1,5 @@
 module.exports = function (RED) {
     
-  function answerurl(config) {
-    RED.nodes.createNode(this, config);
-    var node = this;
-    var rawBodyParser = function(req,res,next) {
-      req.body = "";
-      req._body = true;
-      getBody(req, {
-        length: req.headers['content-length'],
-        encoding: "utf8"
-      },function (err, buf) {
-        if (err) { return next(err); }
-        req.body = buf;
-        next();
-      }
-      );
-    }
-  }
   function talk(config){
     RED.nodes.createNode(this, config);
     this.text = config.text;
@@ -26,10 +9,10 @@ module.exports = function (RED) {
     this.level = config.level;
     var node = this;
     node.on('input', function (msg) {
-      if ( Object.keys(msg.payload).length === 0){
+      if ( 'ncco' in msg.payload){
+        var resp = msg.payload.ncco;    
+      }else{
         var resp = []; 
-      }else{  
-        var resp = msg.payload;
       }
       var ncco = {};
       ncco.action="talk";
@@ -40,7 +23,7 @@ module.exports = function (RED) {
       ncco.voiceName=this.voicename;
       clean(ncco);
       resp.push(ncco);
-      msg.payload = resp;
+      msg.payload.ncco = resp;
       node.send(msg);
     });  
   }
@@ -52,10 +35,10 @@ module.exports = function (RED) {
     this.level = config.level;
     var node = this;
     node.on('input', function (msg) {
-      if ( Object.keys(msg.payload).length === 0){
+      if ( 'ncco' in msg.payload){
+        var resp = msg.payload.ncco;    
+      }else{
         var resp = []; 
-      }else{  
-        var resp = msg.payload;
       }
       var ncco = {};
       ncco.action="stream";
@@ -65,7 +48,7 @@ module.exports = function (RED) {
       ncco.level=this.level;
       clean(ncco);
       resp.push(ncco);
-      msg.payload = resp;
+      msg.payload.ncco = resp;
       node.send(msg);
     });  
   }
@@ -78,10 +61,10 @@ module.exports = function (RED) {
     this.eventmethod = config.eventmethod;  
     var node = this;
     node.on('input', function (msg) {
-      if ( Object.keys(msg.payload).length === 0){
+      if ( 'ncco' in msg.payload){
+        var resp = msg.payload.ncco;    
+      }else{
         var resp = []; 
-      }else{  
-        var resp = msg.payload;
       }
       var ncco = {};
       ncco.action="input";
@@ -94,7 +77,7 @@ module.exports = function (RED) {
       ncco.eventMethod=this.eventmethod;
       clean(ncco);
       resp.push(ncco);
-      msg.payload = resp;
+      msg.payload.ncco = resp;
       node.send(msg);
     });
   }
@@ -113,10 +96,10 @@ module.exports = function (RED) {
     
     var node = this;
     node.on('input', function (msg) {
-      if ( Object.keys(msg.payload).length === 0){
+      if ( 'ncco' in msg.payload){
+        var resp = msg.payload.ncco;    
+      }else{
         var resp = []; 
-      }else{  
-        var resp = msg.payload;
       }
       var ncco = {};
       ncco.action="record";
@@ -133,7 +116,7 @@ module.exports = function (RED) {
       ncco.eventMethod=this.eventmethod;
       clean(ncco);
       resp.push(ncco);
-      msg.payload = resp;
+      msg.payload.ncco = resp;
       node.send(msg);
     });
   }
@@ -149,10 +132,10 @@ module.exports = function (RED) {
     this.musiconholdurl = config.musiconholdurl;  
     var node = this;
     node.on('input', function (msg) {
-      if ( Object.keys(msg.payload).length === 0){
+      if ( 'ncco' in msg.payload){
+        var resp = msg.payload.ncco;    
+      }else{
         var resp = []; 
-      }else{  
-        var resp = msg.payload;
       }
       var ncco = {};
       ncco.action="conversation";
@@ -167,7 +150,7 @@ module.exports = function (RED) {
       ncco.musicOnHoldUrl=this.musiconholdurl;
       clean(ncco);
       resp.push(ncco);
-      msg.payload = resp;
+      msg.payload.ncco = resp;
       node.send(msg);
     });
   }
@@ -186,10 +169,10 @@ module.exports = function (RED) {
     this.to = config.to  
     var node = this;
     node.on('input', function (msg) {
-      if ( Object.keys(msg.payload).length === 0){
+      if ( 'ncco' in msg.payload){
+        var resp = msg.payload.ncco;    
+      }else{
         var resp = []; 
-      }else{  
-        var resp = msg.payload;
       }
       var ncco = {};
       ncco.action="connect";
@@ -220,7 +203,7 @@ module.exports = function (RED) {
       }
       clean(ncco);
       resp.push(ncco);
-      msg.payload = resp;
+      msg.payload.ncco = resp;
       node.send(msg);
     });
   }
@@ -235,7 +218,6 @@ module.exports = function (RED) {
   
   
   
-  RED.nodes.registerType("answerurl", answerurl);
   RED.nodes.registerType("talk", talk);
   RED.nodes.registerType("stream", stream);
   RED.nodes.registerType("input", input);

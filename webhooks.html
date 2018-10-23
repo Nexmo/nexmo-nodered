@@ -1,0 +1,87 @@
+<script type="text/x-red" data-template-name="answerurl">
+    <div class="form-row">
+        <label for="node-input-method"><i class="fa fa-tasks"></i></label>
+        <select type="text" id="node-input-method" style="width:70%;">
+        <option value="get">GET</option>
+        <option value="post">POST</option>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-url"><i class="fa fa-globe"></i></label>
+        <input id="node-input-url" type="text" placeholder="/answer">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]common.label.name">
+    </div>
+    <div id="node-input-tip" class="form-tips"><span data-i18n="httpin.tip.in"></span><code><span id="node-input-path"></span></code>.</div>
+</script>
+
+<script type="text/x-red" data-help-name="answerurl">
+  <p> TODO Add Help Here</p>
+</script>
+
+<script type="text/x-red" data-template-name="return ncco">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]common.label.name">
+    </div>
+  </script>
+
+<script type="text/x-red" data-help-name="return ncco">
+    <p>Sends responses back to requests received from an HTTP Input node.</p>
+  </script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('answerurl',{
+        category: 'input',
+        color: "#009cff",
+        defaults: {
+            name: {value:""},
+            url: {value:"",required:true},
+            method: {value:"get", required:true},
+        },
+        inputs:0,
+        outputs:1,
+        icon: "nexmo.png",
+        label: function() {
+            if (this.name) {
+                return this.name;
+            } else if (this.url) {
+                var root = RED.settings.httpNodeRoot;
+                if (root.slice(-1) != "/") {
+                    root = root+"/";
+                }
+                if (this.url.charAt(0) == "/") {
+                    root += this.url.slice(1);
+                } else {
+                    root += this.url;
+                }
+                return "["+this.method+"] "+root;
+            } else {
+                return "http";
+            }
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+    });
+
+    RED.nodes.registerType('return ncco',{
+        category: 'output',
+        color: "#009cff",
+        defaults: {
+            name: {value:""},
+        },
+        inputs:1,
+        outputs:0,
+        align: "right",
+        icon: "nexmo.png",
+        label: function() {
+            return this.name||("http"+(this.statusCode?" ("+this.statusCode+")":""));
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>

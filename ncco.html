@@ -1,38 +1,4 @@
 <script type="text/javascript">
-    RED.nodes.registerType('answerurl', {
-        category: 'input',
-        defaults: {
-          webhookURL: { type: "answerurl-config", required: true }
-        },
-        color: "#009cff",
-        inputs: 0,               
-        outputs: 1,              
-        icon: "nexmo.png",     
-        label: "Answer URL",
-        inputLabels: "",
-        outputLabels: ""
-    });
-</script>
-
-
-<script type="text/x-red" data-template-name="answerurl">
-    <div class="form-row">
-        <label for="node-input-method"><i class="fa fa-tasks"></i>Method</label>
-        <select type="text" id="node-input-method" style="width:70%;">
-        <option value="get">GET</option>
-        <option value="post">POST</option>
-         </select>
-    </div>
-  
-    <div class="form-row">
-        <label for="node-input-url"><i class="fa fa-globe"></i>URL </label>
-        <input id="node-input-url" type="text" placeholder="/url">
-    </div>
-  </script>
-
-
-
-<script type="text/javascript">
     RED.nodes.registerType('talk',{
         category: 'nexmo',
         color: '#009cff',
