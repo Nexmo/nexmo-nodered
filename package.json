@@ -1,0 +1,16 @@
+{
+  "name": "ncco",
+  "version": "0.1.0",
+  "description": "Node Red module for an NCCO actions",
+  "main": "ncco.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "node-red" : {
+          "nodes": {
+              "ncco": "ncco.js"
+          }
+  }
+}

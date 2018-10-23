@@ -1,0 +1,406 @@
+<script type="text/javascript">
+    RED.nodes.registerType('answerurl', {
+        category: 'input',
+        defaults: {
+          webhookURL: { type: "answerurl-config", required: true }
+        },
+        color: "#009cff",
+        inputs: 0,               
+        outputs: 1,              
+        icon: "nexmo.png",     
+        label: "Answer URL",
+        inputLabels: "",
+        outputLabels: ""
+    });
+</script>
+
+
+<script type="text/x-red" data-template-name="answerurl">
+    <div class="form-row">
+        <label for="node-input-method"><i class="fa fa-tasks"></i>Method</label>
+        <select type="text" id="node-input-method" style="width:70%;">
+        <option value="get">GET</option>
+        <option value="post">POST</option>
+         </select>
+    </div>
+  
+    <div class="form-row">
+        <label for="node-input-url"><i class="fa fa-globe"></i>URL </label>
+        <input id="node-input-url" type="text" placeholder="/url">
+    </div>
+  </script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('talk',{
+        category: 'nexmo',
+        color: '#009cff',
+        defaults: {
+          text: {required:true},
+          voicename: {},
+          bargein: {},
+          loop: {},
+          level: {},
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Talk"
+    });
+</script>
+<script type="text/x-red" data-template-name="talk">
+    <div class="form-row">
+        <label for="node-input-text"><i class="icon-tag"></i>Text</label>
+        <input type="text" id="node-input-text" placeholder="text">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-voicename"><i class="icon-tag"></i>Voice Name</label>
+        <input type="text" id="node-input-voicename" placeholder="Kimblerly">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-bargein"><i class="icon-tag"></i>Barge In</label>
+        <input type="checkbox" id="node-input-bargein">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-loop"><i class="icon-tag"></i>Loop</label>
+        <input type="text" id="node-input-loop">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-level"><i class="icon-tag"></i>Level</label>
+        <input type="text" id="node-input-level">
+    </div>
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('stream',{
+        category: 'nexmo',
+        color: '#009cff',
+        defaults: {
+          streamurl: {required:true},
+          bargein: {},
+          loop: {},
+          level: {}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Stream"
+    });
+</script>
+
+<script type="text/x-red" data-template-name="stream">
+    <div class="form-row">
+        <label for="node-input-streamurl"><i class="icon-tag"></i>Stream URL</label>
+        <input type="text" id="node-input-streamurl" placeholder="text">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-bargein"><i class="icon-tag"></i>Barge In</label>
+        <input type="checkbox" id="node-input-bargein">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-loop"><i class="icon-tag"></i>Loop</label>
+        <input type="text" id="node-input-loop">
+    </div>
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('input',{
+        category: 'nexmo',
+        color: '#009cff',
+        defaults: {
+          eventurl: {},
+          eventmethod: {},
+          timeout:{},
+          maxdigits:{},
+          submitonhash:{}        
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Input"
+    });
+</script>
+
+<script type="text/x-red" data-template-name="input">
+    <div class="form-row">
+        <label for="node-input-eventurl"><i class="icon-tag"></i>URL</label>
+        <input type="text" id="node-input-eventurl" placeholder="text">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-eventmethod"><i class="fa fa-tasks"></i>Method</label>
+        <select type="text" id="node-input-eventmethod" style="width:70%;">
+        <option value="get">GET</option>
+        <option value="post">POST</option>
+         </select>
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-submitonhash"><i class="icon-tag"></i>Submit On Hash</label>
+        <input type="checkbox" id="node-input-submitonhash" style="width:70%;">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-timeout"><i class="icon-tag"></i>Time Out</label>
+        <input type="text" id="node-input-timeout">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-maxdigits"><i class="icon-tag"></i>Max Digits</label>
+        <input type="text" id="node-input-maxdigits">
+    </div>
+    
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('record',{
+        category: 'nexmo',
+        color: '#009cff',
+        defaults: {
+          format:{},
+          split:{},
+          channel:{},
+          endonsilence:{},
+          endonkey:{},
+          timeout:{},
+          beepstart:{},
+          eventurl: {},
+          eventmethod:{}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Record"
+    });
+</script>
+
+<script type="text/x-red" data-template-name="record">
+    <div class="form-row">
+        <label for="node-input-eventurl"><i class="icon-tag"></i>URL</label>
+        <input type="text" id="node-input-eventurl" placeholder="text">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-eventmethod"><i class="fa fa-tasks"></i>Method</label>
+        <select type="text" id="node-input-eventmethod" style="width:70%;">
+          <option value="get">GET</option>
+          <option value="post">POST</option>
+         </select>
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-format"><i class="fa fa-tasks"></i>Format</label>
+        <select type="text" id="node-input-eventmethod" style="width:70%;">
+          <option value="mp3">MP3</option>
+          <option value="wav">WAV</option>
+          <option value="ogg">OGG</option>
+         </select>
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-split"><i class="fa fa-tasks"></i>Split</label>
+        <select type="text" id="node-input-split" style="width:70%;">
+        <option value="conversation">Conversation</option>
+         </select>
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i>Channels</label>
+        <input type="number" id="node-input-channel">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-endonsilence"><i class="icon-tag"></i>End On Silence</label>
+        <input type="number" id="node-input-endonsilence">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-endonkey"><i class="icon-tag"></i>end on key</label>
+        <input type="text" id="node-input-endonkey">
+    </div>
+        
+    
+    <div class="form-row">
+        <label for="node-input-timeout"><i class="icon-tag"></i>Time Out</label>
+        <input type="number" id="node-input-timeout">
+    </div>
+    
+    
+    <div class="form-row">
+        <label for="node-input-beepstart"><i class="icon-tag"></i>Beep Start</label>
+        <input type="checkbox" id="node-input-beepstart">
+    </div>
+    
+
+    
+</script>
+
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('conversation',{
+        category: 'nexmo',
+        color: '#009cff',
+        defaults: {
+          name: {required:true},
+          musiconholdurl:{},
+          startonenter:{},
+          endonexit:{},
+          record:{},
+          eventurl:{},
+          eventmethod:{}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Conversation"
+    });
+</script>
+
+<script type="text/x-red" data-template-name="conversation">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+        <input type="text" id="node-input-name" placeholder="text">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-musiconholdurl"><i class="icon-tag"></i>Music On Hold URL</label>
+        <input type="text" id="node-input-musiconholdurl" placeholder="/url">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-startonenter"><i class="icon-tag"></i>Start On Enter</label>
+        <input type="checkbox" checked  id="node-input-startonenter">
+    </div>
+ 
+    <div class="form-row">
+        <label for="node-input-endonexit"><i class="icon-tag"></i>End On Exit</label>
+        <input type="checkbox"  id="node-input-endonexit">
+    </div>   
+   
+    <div class="form-row">
+        <label for="node-input-record"><i class="icon-tag"></i>Record</label>
+        <input type="checkbox"  id="node-input-record">
+    </div>   
+   
+    <div class="form-row">
+        <label for="node-input-eventurl"><i class="icon-tag"></i>Event URL</label>
+        <input type="text" id="node-input-eventurl" placeholder="/url">
+    </div>
+   
+    <div class="form-row">
+        <label for="node-input-eventmethod"><i class="fa fa-tasks"></i>Method</label>
+        <select type="text" id="node-input-eventmethod" style="width:70%;">
+          <option value="get">GET</option>
+          <option value="post">POST</option>
+         </select>
+    </div>
+    
+    
+    
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('connect',{
+        category: 'nexmo',
+        color: '#009cff',
+        defaults: {
+          endpoint: {value:"number"},
+          to: {required: true},
+          from: {},
+          eventtype: {},
+          timeout: {},
+          machinedetection:{},
+          limit:{},
+          eventurl:{},
+          eventmethod:{}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Connect"
+    });
+</script>
+
+<script type="text/x-red" data-template-name="connect">
+    
+  <div class="form-row">
+      <label for="node-input-endpoint"><i class="fa fa-tasks"></i>Endpoint</label>
+      <select type="text" id="node-input-endpoint" style="width:70%;">
+        <option value="number">Number</option>
+        <option value="sip">SIP</option>
+        <option value="websocket">Websocket</option>
+       </select>
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-to"><i class="icon-tag"></i>To</label>
+      <input type="text" id="node-input-to" placeholder="Destination">
+  </div>
+    
+    <div class="form-row">
+        <label for="node-input-from"><i class="icon-tag"></i>From</label>
+        <input type="number" id="node-input-from" placeholder="From Number">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-eventtype"><i class="icon-tag"></i>Synchronous (event type)</label>
+        <input type="checkbox" value="synchronous" id="node-input-eventtype">
+    </div>   
+    
+    <div class="form-row">
+        <label for="node-input-timeout"><i class="icon-tag"></i>Timeout</label>
+        <input type="number" id="node-input-timeout" placeholder="60">
+    </div>
+    
+     
+    <div class="form-row">
+        <label for="node-input-limit"><i class="icon-tag"></i>Limit</label>
+        <input type="number" id="node-input-limit" placeholder="7200">
+    </div>
+    
+    
+    <div class="form-row">
+        <label for="node-input-machinedetection"><i class="fa fa-tasks"></i>Machine Detection</label>
+        <select type="text" id="node-input-machinedetection" style="width:70%;">
+          <option value="continue">continue</option>
+          <option value="hangup">hangup</option>
+         </select>
+    </div>
+    
+   
+    <div class="form-row">
+        <label for="node-input-eventurl"><i class="icon-tag"></i>Event URL</label>
+        <input type="text" id="node-input-eventurl" placeholder="/url">
+    </div>
+   
+    <div class="form-row">
+        <label for="node-input-eventmethod"><i class="fa fa-tasks"></i>Method</label>
+        <select type="text" id="node-input-eventmethod" style="width:70%;">
+          <option value="get">GET</option>
+          <option value="post">POST</option>
+         </select>
+    </div>
+    
+    
+    
+</script>
+
+
+
