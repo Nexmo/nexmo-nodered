@@ -1,17 +1,24 @@
+var mustache = require("mustache");
+
+
 module.exports = function (RED) {
     
   function talk(config){
     RED.nodes.createNode(this, config);
-    this.text = config.text;
     this.voiceName = config.voiceName;
     this.bargein = config.bargein;
     this.loop = config.loop;
     this.level = config.level;
     var node = this;
     node.on('input', function (msg) {
+      if (config.template == true){
+        this.text = mustache.render(config.text, msg.payload);
+      }else{
+        this.text = config.text;
+      }
       if ( 'ncco' in msg.payload){
         var resp = msg.payload.ncco;    
-      }else{
+      } else{
         var resp = []; 
       }
       var ncco = {};
