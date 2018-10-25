@@ -1,0 +1,74 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sendverify',{
+        category: 'Nexmo Verify',
+        color: '#7683d8',
+        defaults: {
+          creds: {value:"", type:"nexmocreds"},
+          to: {},
+          brand: {},
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Send Verify"
+    });
+</script>
+<script type="text/x-red" data-template-name="sendverify">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-to"><i class="icon-tag"></i>To</label>
+      <input type="text" id="node-input-to" placeholder="number to verify">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-brand"><i class="icon-tag"></i>Brand</label>
+      <input type="text" id="node-input-brand" placeholder="Brand">
+  </div>
+  
+
+  
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('checkverify',{
+        category: 'Nexmo Verify',
+        color: '#7683d8',
+        defaults: {
+          creds: {value:"", type:"nexmocreds"},
+          verify_id: {},
+          code: {},
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Check Code"
+    });
+</script>
+<script type="text/x-red" data-template-name="checkverify">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-verify_id"><i class="icon-tag"></i>Request ID</label>
+      <input type="text" id="node-input-verify_id" placeholder="Veridy request ID">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-code"><i class="icon-tag"></i>Code</label>
+      <input type="text" id="node-input-code" placeholder="Code">
+  </div>
+  
+
+  
+</script>
+
+
+

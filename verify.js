@@ -1,0 +1,60 @@
+const Nexmo = require('nexmo');
+const mustache = require("mustache");
+
+module.exports = function (RED) {
+  
+   function sendverify(config){
+    RED.nodes.createNode(this, config);
+    this.creds = RED.nodes.getNode(config.creds);
+    var node = this;
+    
+    node.on('input', function (msg) {
+      this.to = mustache.render(config.to, msg.payload);
+      this.brand = mustache.render(config.brand, msg.payload);
+      const nexmo = new Nexmo({
+        apiKey: this.creds.apikey,
+        apiSecret: this.creds.apisecret,
+        applicationId: this.creds.appid,
+        privateKey: this.creds.privatekey
+        }, {debug: false}
+      );
+      nexmo.verify.request({number: this.to, brand: this.brand}, function(err, response) {
+          if(err) { console.error(err); }
+        else {
+          msg.payload=response;
+          node.send(response)  
+        }
+      })
+    });  
+  }
+  
+  function checkverify(config){
+   RED.nodes.createNode(this, config);
+   this.creds = RED.nodes.getNode(config.creds);
+   var node = this;
+   
+   node.on('input', function (msg) {
+     this.verify_id = mustache.render(config.verify_id, msg.payload);
+     this.code = mustache.render(config.code, msg.payload);
+     const nexmo = new Nexmo({
+       apiKey: this.creds.apikey,
+       apiSecret: this.creds.apisecret,
+       applicationId: this.creds.appid,
+       privateKey: this.creds.privatekey
+       }, {debug: false}
+     );
+     nexmo.verify.check({request_id: this.verify_id, code: this.code}, function(err, response) {
+         if(err) { console.error(err); }
+       else {
+         msg.payload=response;
+         node.send(response)  
+       }
+     })
+   });  
+ }
+  
+ 
+  RED.nodes.registerType("sendverify",sendverify);    
+  RED.nodes.registerType("checkverify",checkverify);  
+    
+}

@@ -1,0 +1,47 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sendsms',{
+        category: 'Nexmo Messaging',
+        color: '#c485db',
+        defaults: {
+          creds: {value:"", type:"nexmocreds"},
+          to: {},
+          fr: {},
+          text:{},
+          unicode: {}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Send SMS"
+    });
+</script>
+<script type="text/x-red" data-template-name="sendsms">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-to"><i class="icon-tag"></i>To</label>
+      <input type="text" id="node-input-to" placeholder="destination number">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-fr"><i class="icon-tag"></i>From</label>
+      <input type="text" id="node-input-fr" placeholder="sender">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-text"><i class="icon-tag"></i>Text</label>
+      <input type="text" id="node-input-text" placeholder="message text">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-unicode"><i class="icon-tag"></i>Unicode</label>
+      <input type="checkbox" id="node-input-unicode">
+  </div>
+  
+</script>
+
+
+

@@ -45,8 +45,8 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('getrecording',{
-        category: 'nexmo',
-        color: '#009cff',
+        category: 'Nexmo Voice',
+        color: '#35be8b',
         defaults: {
           creds: {value:"", type:"nexmocreds"},
         },
@@ -62,4 +62,142 @@
       <input type="text" id="node-input-creds" >
   </div>
 </script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('earmuff',{
+        category: 'Nexmo Voice',
+        color: '#35be8b',
+        defaults: {
+          creds: {value:"", type:"nexmocreds"},
+          calluuid: {},
+          status:{}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Earmuff"
+    });
+</script>
+<script type="text/x-red" data-template-name="earmuff">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-calluuid"><i class="icon-tag"></i>Call UUID</label>
+      <input type="text" id="node-input-calluuid" placeholder="UUID">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-status"><i class="fa fa-tasks"></i>Status</label>
+      <select type="text" id="node-input-eventmethod" style="width:70%;">
+      <option value="on">Earmuff On</option>
+      <option value="off">Earmuff Off (unearmuff)</option>
+       </select>
+  </div>
+  
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('mute',{
+        category: 'Nexmo Voice',
+        color: '#35be8b',
+        defaults: {
+          creds: {value:"", type:"nexmocreds"},
+          calluuid: {},
+          status:{}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Mute"
+    });
+</script>
+<script type="text/x-red" data-template-name="mute">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-calluuid"><i class="icon-tag"></i>Call UUID</label>
+      <input type="text" id="node-input-calluuid" placeholder="UUID">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-status"><i class="fa fa-tasks"></i>Status</label>
+      <select type="text" id="node-input-eventmethod" style="width:70%;">
+      <option value="on">Mute On</option>
+      <option value="off">Mute Off (unmute)</option>
+       </select>
+  </div>
+  
+</script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('hangup',{
+        category: 'Nexmo Voice',
+        color: '#35be8b',
+        defaults: {
+          creds: {value:"", type:"nexmocreds"},
+          calluuid: {}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Hangup"
+    });
+</script>
+<script type="text/x-red" data-template-name="hangup">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-calluuid"><i class="icon-tag"></i>Call UUID</label>
+      <input type="text" id="node-input-calluuid" placeholder="UUID">
+  </div>
+  
+
+  
+</script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('transfer',{
+        category: 'Nexmo Voice',
+        color: '#35be8b',
+        defaults: {
+          creds: {value:"", type:"nexmocreds"},
+          calluuid: {}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Transfer"
+    });
+</script>
+<script type="text/x-red" data-template-name="transfer">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-calluuid"><i class="icon-tag"></i>Call UUID</label>
+      <input type="text" id="node-input-calluuid" placeholder="UUID">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-url"><i class="icon-tag"></i>New NCCO URL</label>
+      <input type="text" id="node-input-url" placeholder="url">
+  </div>
+
+  
+</script>
+
 
