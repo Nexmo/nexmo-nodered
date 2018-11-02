@@ -166,7 +166,7 @@ module.exports = function(RED) {
         RED.httpNode.options("*",corsHandler);
     }
     
-    function answerurl(n) {
+    function voicewebhook(n) {
         RED.nodes.createNode(this,n);
         if (RED.settings.httpNodeRoot !== false) {
 
@@ -259,7 +259,7 @@ module.exports = function(RED) {
             this.warn(RED._("httpin.errors.not-created"));
         }
     }
-    RED.nodes.registerType("answerurl",answerurl);
+    RED.nodes.registerType("voice webhook",voicewebhook);
     
 
     function returnncco(n) {

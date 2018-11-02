@@ -1,6 +1,6 @@
 const Nexmo = require('nexmo');
 const mustache = require("mustache");
-
+const debug = false;
 
 
 module.exports = function (RED) {
@@ -25,7 +25,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.apisecret,
         applicationId: this.creds.appid,
         privateKey: this.creds.privatekey
-        }, {debug: false}
+        }, {debug: debug}
       );
       nexmo.files.get(msg.payload.recording_url, (error, data) => {
             if (error) {
@@ -53,7 +53,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.apisecret,
         applicationId: this.creds.appid,
         privateKey: this.creds.privatekey
-        }, {debug: false}
+        }, {debug: debug}
       );
     if (this.state == "on"){
       nexmo.calls.update(this.calluuid, { action: 'earmuff' }, (err, res) => {
@@ -89,7 +89,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.apisecret,
         applicationId: this.creds.appid,
         privateKey: this.creds.privatekey
-        }, {debug: false}
+        }, {debug: debug}
       );
     if (this.state == "on"){
       nexmo.calls.update(this.calluuid, { action: 'mute' }, (err, res) => {
@@ -116,7 +116,6 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
-    
     node.on('input', function (msg) {
       this.calluuid = mustache.render(config.calluuid, msg.payload);
       const nexmo = new Nexmo({
@@ -124,9 +123,9 @@ module.exports = function (RED) {
         apiSecret: this.creds.apisecret,
         applicationId: this.creds.appid,
         privateKey: this.creds.privatekey
-        }, {debug: false}
+        }, {debug: debug}
       );
-      nexmo.calls.update(this.calluuid, { action: 'hangup' }, (err, res) => {
+      nexmo.calls.update(this.calluuid, { action: 'hangup' }, (err, response) => {
         if(err) { console.error(err); }
         else {
           msg.payload=response;
@@ -149,9 +148,9 @@ module.exports = function (RED) {
         apiSecret: this.creds.apisecret,
         applicationId: this.creds.appid,
         privateKey: this.creds.privatekey
-        }, {debug: false}
+        }, {debug: debug}
       );
-      nexmo.calls.update(this.calluuid, {action: 'transfer', destination: {"type": "ncco", "url": [this.url]}}, (err, res) => {
+      nexmo.calls.update(this.calluuid, {action: 'transfer', destination: {"type": "ncco", "url": [this.url]}}, (err, response) => {
         if(err) { console.error(err); }
         else {
           msg.payload=response;
@@ -183,7 +182,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.apisecret,
         applicationId: this.creds.appid,
         privateKey: this.creds.privatekey
-        }, {debug: true}
+        }, {debug: debug}
       );
       if (this.endpoint == "number"){
         var ep = {}
@@ -221,6 +220,112 @@ module.exports = function (RED) {
       });  
     });  
   }
+  
+  function playaudio(config){
+    RED.nodes.createNode(this, config);
+    this.creds = RED.nodes.getNode(config.creds);
+    this.action = config.action
+    this.loop = config.loop
+    this.level = config.level
+    var node = this;
+    node.on('input', function (msg) {
+      this.calluuid = mustache.render(config.calluuid, msg.payload);
+      this.url = mustache.render(config.url, msg.payload);
+      
+      const nexmo = new Nexmo({
+        apiKey: this.creds.apikey,
+        apiSecret: this.creds.apisecret,
+        applicationId: this.creds.appid,
+        privateKey: this.creds.privatekey
+        }, {debug: debug}
+      );
+      if (this.action == 'on'){
+        nexmo.calls.stream.start(this.calluuid, { stream_url: [this.url], loop: this.loop, level: this.level},  (err, response) => {
+          if(err) { console.error(err); }
+          else {
+            msg.payload=response;
+            node.send(response)  
+          }
+        });
+      } else {
+        nexmo.calls.stream.stop(this.calluuid,  (err, response) => {
+          if(err) { console.error(err); }
+          else {
+            msg.payload=response;
+            node.send(response)  
+          }
+        });
+      }
+  });  
+ }
+ 
+ 
+ function playtts(config){
+   RED.nodes.createNode(this, config);
+   this.creds = RED.nodes.getNode(config.creds);
+   this.action = config.action;
+   this.loop = config.loop;
+   this.level = config.level;
+   this.voicename = config.voicename;
+   var node = this;
+   node.on('input', function (msg) {
+     this.calluuid = mustache.render(config.calluuid, msg.payload);
+     this.text = mustache.render(config.text, msg.payload);
+     const nexmo = new Nexmo({
+       apiKey: this.creds.apikey,
+       apiSecret: this.creds.apisecret,
+       applicationId: this.creds.appid,
+       privateKey: this.creds.privatekey
+       }, {debug: debug}
+     );
+     if (this.action == 'on'){
+       nexmo.calls.talk.start(this.calluuid, { text: this.text, voice_name: this.voicename, loop: this.loop, level: this.level },  (err, response) => {
+         if(err) { console.error(err); }
+         else {
+           msg.payload=response;
+           node.send(response)  
+         }
+       });
+     } else {
+       nexmo.calls.talk.stop(this.calluuid,  (err, res) => {
+         if(err) { console.error(err); }
+         else {
+           msg.payload=response;
+           node.send(response)  
+         }
+       });
+     }
+ });  
+}
+
+function playdtmf(config){
+  RED.nodes.createNode(this, config);
+  this.creds = RED.nodes.getNode(config.creds);
+  var node = this;
+  node.on('input', function (msg) {
+    this.calluuid = mustache.render(config.calluuid, msg.payload);
+    this.digits = mustache.render(config.digits, msg.payload);
+    const nexmo = new Nexmo({
+      apiKey: this.creds.apikey,
+      apiSecret: this.creds.apisecret,
+      applicationId: this.creds.appid,
+      privateKey: this.creds.privatekey
+      }, {debug: debug}
+    );
+    nexmo.calls.dtmf.send(this.calluuid, { digits: this.digits }, (err, response) => {
+       if(err) { 
+        console.error(err); 
+       } else {
+        msg.payload=response;
+        node.send(response)  
+       }
+    });
+  });  
+}
+
+
+  
+  
 
   function clean(obj) {
     for (var propName in obj) { 
@@ -237,6 +342,9 @@ module.exports = function (RED) {
   RED.nodes.registerType("hangup",hangup);    
   RED.nodes.registerType("transfer",transfer);
   RED.nodes.registerType("createcall",createCall);
+  RED.nodes.registerType("playaudio",playaudio);
+  RED.nodes.registerType("playtts",playtts);
+  RED.nodes.registerType("playdtmf",playdtmf);
   
   
   

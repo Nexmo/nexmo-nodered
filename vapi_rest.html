@@ -296,3 +296,149 @@
 
 
 
+<script type="text/javascript">
+    RED.nodes.registerType('playaudio',{
+        category: 'Nexmo Voice',
+        color: '#35be8b',
+        defaults: {
+          creds: {value:"", type:"nexmocreds"},
+          calluuid: {},
+          action:{},
+          url:{},
+          loop: {value:1},
+          level: {value:0}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Play Audio"
+    });
+</script>
+<script type="text/x-red" data-template-name="playaudio">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-calluuid"><i class="icon-tag"></i>Call UUID</label>
+      <input type="text" id="node-input-calluuid" placeholder="UUID">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-action"><i class="fa fa-tasks"></i>Action</label>
+      <select type="text" id="node-input-action" style="width:70%;">
+      <option value="on">Start Playing Audio File</option>
+      <option value="off">Stop Playing Audio File</option>
+       </select>
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-url"><i class="icon-tag"></i>Audio File URL</label>
+      <input type="text" id="node-input-url" placeholder="url">
+  </div>
+  <div class="form-row">
+      <label for="node-input-loop"><i class="icon-tag"></i>Loop</label>
+      <input type="text" id="node-input-loop">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-level"><i class="icon-tag"></i>Level</label>
+      <input type="text" id="node-input-level">
+  </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('playtts',{
+        category: 'Nexmo Voice',
+        color: '#35be8b',
+        defaults: {
+          creds: {value:"", type:"nexmocreds"},
+          calluuid: {},
+          action:{},
+          text:{},
+          voicename:{value: "kimberly"},
+          loop: {value:1},
+          level: {value:0}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Play TTS"
+    });
+</script>
+    
+<script type="text/x-red" data-template-name="playtts">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-calluuid"><i class="icon-tag"></i>Call UUID</label>
+      <input type="text" id="node-input-calluuid" placeholder="UUID">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-action"><i class="fa fa-tasks"></i>Action</label>
+      <select type="text" id="node-input-action" style="width:70%;">
+      <option value="on">Start Speaking Text</option>
+      <option value="off">Stop Speaking Text</option>
+       </select>
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-text"><i class="icon-tag"></i>text</label>
+      <input type="text" id="node-input-text" placeholder="url">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-voicename"><i class="icon-tag"></i>Voice Name</label>
+      <input type="text" id="node-input-voicename" placeholder="Kimblerly">
+  </div>
+  
+  
+  <div class="form-row">
+      <label for="node-input-loop"><i class="icon-tag"></i>Loop</label>
+      <input type="text" id="node-input-loop">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-level"><i class="icon-tag"></i>Level</label>
+      <input type="text" id="node-input-level">
+  </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('playdtmf',{
+        category: 'Nexmo Voice',
+        color: '#35be8b',
+        defaults: {
+          creds: {value:"", type:"nexmocreds"},
+          calluuid: {},
+          digits: {}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Play DTMF"
+    });
+</script>
+<script type="text/x-red" data-template-name="playdtmf">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-calluuid"><i class="icon-tag"></i>Call UUID</label>
+      <input type="text" id="node-input-calluuid" placeholder="UUID">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-digits"><i class="icon-tag"></i>Digits</label>
+      <input type="text" id="node-input-digits">
+  </div>
+</script>
+
+
