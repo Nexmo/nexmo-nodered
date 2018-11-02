@@ -48,7 +48,7 @@
         category: 'Nexmo Voice',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmocreds"},
+          creds: {value:"", type:"nexmocreds"}
         },
         inputs:1,
         outputs:1,
@@ -199,5 +199,100 @@
 
   
 </script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('createcall',{
+        category: 'Nexmo Voice',
+        color: '#35be8b',
+        defaults: {
+          creds: {value:"", type:"nexmocreds"},
+          endpoint: {value:"number"},
+          to: {required: true},
+          from: {},
+          ringingtimer:{},
+          lengthtimer:{},
+          machinedetection:{},
+          answerurl:{},
+          answermethod:{},
+          eventurl:{},
+          eventmethod:{}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Create Call"
+    });
+</script>
+
+<script type="text/x-red" data-template-name="createcall">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+      
+  <div class="form-row">
+      <label for="node-input-endpoint"><i class="fa fa-tasks"></i>Endpoint</label>
+      <select type="text" id="node-input-endpoint" style="width:70%;">
+        <option value="number">Number</option>
+        <option value="sip">SIP</option>
+        <option value="websocket">Websocket</option>
+       </select>
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-to"><i class="icon-tag"></i>To</label>
+      <input type="text" id="node-input-to" placeholder="Destination">
+  </div>
+    
+    <div class="form-row">
+        <label for="node-input-from"><i class="icon-tag"></i>From</label>
+        <input type="number" id="node-input-from" placeholder="From Number">
+    </div>
+    
+   
+    <div class="form-row">
+        <label for="node-input-answerurl"><i class="icon-tag"></i>Answer URL</label>
+        <input type="text" id="node-input-answerurl" placeholder="/url">
+    </div>
+   
+   
+    <div class="form-row">
+        <label for="node-input-ringingtimer"><i class="icon-tag"></i>Ringing Timer</label>
+        <input type="number" id="node-input-ringingtimer" placeholder="60">
+    </div>
+    
+     
+    <div class="form-row">
+        <label for="node-input-lengthtimer"><i class="icon-tag"></i>Length Timer</label>
+        <input type="number" id="node-input-lengthtimer" placeholder="7200">
+    </div>
+    
+    
+    <div class="form-row">
+        <label for="node-input-machinedetection"><i class="fa fa-tasks"></i>Machine Detection</label>
+        <select type="text" id="node-input-machinedetection" style="width:70%;">
+          <option value="continue">continue</option>
+          <option value="hangup">hangup</option>
+         </select>
+    </div>
+    
+   
+    <div class="form-row">
+        <label for="node-input-eventurl"><i class="icon-tag"></i>Event URL</label>
+        <input type="text" id="node-input-eventurl" placeholder="/url">
+    </div>
+   
+    <div class="form-row">
+        <label for="node-input-eventmethod"><i class="fa fa-tasks"></i>Method</label>
+        <select type="text" id="node-input-eventmethod" style="width:70%;">
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+         </select>
+    </div>
+</script>
+
+
 
 

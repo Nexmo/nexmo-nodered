@@ -5,7 +5,7 @@ const mustache = require("mustache");
 
 module.exports = function (RED) {
   
-  function NexmoCreds(n) {
+  function nexmocreds(n) {
     RED.nodes.createNode(this,n);
     this.name = n.name;
     this.apikey = n.apikey;
@@ -14,7 +14,7 @@ module.exports = function (RED) {
     this.privatekey = n.privatekey;
   }
         
-  function GetRecording(config){
+  function getrecording(config){
     RED.nodes.createNode(this, config);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
@@ -141,6 +141,7 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
+    
     node.on('input', function (msg) {
       this.calluuid = mustache.render(config.calluuid, msg.payload);
       this.url = mustache.render(config.url, msg.payload);
@@ -158,8 +159,6 @@ module.exports = function (RED) {
           node.send(response)  
         }
       });
-    
-    
     });  
   }
   
@@ -183,42 +182,45 @@ module.exports = function (RED) {
         apiSecret: this.creds.apisecret,
         applicationId: this.creds.appid,
         privateKey: this.creds.privatekey
-        }, {debug: true}
+        }, {debug: false}
       );
       if (this.endpoint == "number"){
         var ep = {}
         ep.type = "phone"
         ep.number = this.to
+        ncco.endpoint= [ep]
       } else if (this.endpoint == "sip"){
         var ep = {}
         ep.type = "sip"
         ep.uri = this.to
+        ncco.endpoint= [ep]
       }else if (this.endpoint == "websocket"){
         var ep = {}
         ep.type = "websocket"
         ep.uri = this.to
+        ncco.endpoint= [ep]
       }
       var request = {
         to: [ep],
         from: { type: 'phone', number: this.from},
         answer_url: [this.answerurl],
         answer_method : this.answermethod,
+        event_url : this.eventurl,
         event_method : this.eventmethod,
         machine_detection : this.machinedetection,
         length_timer : this.lengthtimer,
-        ringing_timer: this.ringingtimer    
+        ringing_timer: this.ringingtimer
+        
       };
-      if (this.eventurl != ""){
-        request.event_url= [this.eventurl]; 
-      }
-      clean(request);
-      nexmo.calls.create(request, (err, response) => {
+      nexmo.calls.create(clean(request), (err, res) => {
         if(err) { console.error(err); }
         else {
           msg.payload=response;
           node.send(response)  
         }
-      });  
+      });
+    
+    
     });  
   }
 
@@ -231,14 +233,13 @@ module.exports = function (RED) {
   }
   
   RED.nodes.registerType("earmuff",earmuff);    
-  RED.nodes.registerType("nexmocreds",NexmoCreds);    
-  RED.nodes.registerType("getrecording",GetRecording);
+  RED.nodes.registerType("NexmoCreds",nexmocreds);    
+  RED.nodes.registerType("GetRecording",getrecording);
   RED.nodes.registerType("mute",mute);    
   RED.nodes.registerType("hangup",hangup);    
-  RED.nodes.registerType("transfer",transfer);
-  RED.nodes.registerType("createcall",createCall);
+  RED.nodes.registerType("transfer",transfer);    
+  RED.nodes.registerType("CreateCall",createcall);    
   
-  
-  
+
       
 }

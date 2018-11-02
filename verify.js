@@ -53,8 +53,56 @@ module.exports = function (RED) {
    });  
  }
   
- 
+ function cancelverify(config){
+  RED.nodes.createNode(this, config);
+  this.creds = RED.nodes.getNode(config.creds);
+  var node = this;
+  
+  node.on('input', function (msg) {
+    this.verify_id = mustache.render(config.verify_id, msg.payload);
+    const nexmo = new Nexmo({
+      apiKey: this.creds.apikey,
+      apiSecret: this.creds.apisecret,
+      applicationId: this.creds.appid,
+      privateKey: this.creds.privatekey
+      }, {debug: false}
+    );
+    nexmo.verify.control({request_id: this.verify_id, cmd: 'cancel'}, function(err, response) {
+        if(err) { console.error(err); }
+      else {
+        msg.payload=response;
+        node.send(response)  
+      }
+    })
+  });  
+}
+ function nextverify(config){
+  RED.nodes.createNode(this, config);
+  this.creds = RED.nodes.getNode(config.creds);
+  var node = this;
+  
+  node.on('input', function (msg) {
+    this.verify_id = mustache.render(config.verify_id, msg.payload);
+    const nexmo = new Nexmo({
+      apiKey: this.creds.apikey,
+      apiSecret: this.creds.apisecret,
+      applicationId: this.creds.appid,
+      privateKey: this.creds.privatekey
+      }, {debug: false}
+    );
+    nexmo.verify.control({request_id: this.verify_id, cmd: 'trigger_next_event'}, function(err, response) {
+        if(err) { console.error(err); }
+      else {
+        msg.payload=response;
+        node.send(response)  
+      }
+    })
+  });  
+}
   RED.nodes.registerType("sendverify",sendverify);    
   RED.nodes.registerType("checkverify",checkverify);  
+  RED.nodes.registerType("cancelverify",cancelverify);  
+  RED.nodes.registerType("nextverify",nextverify);  
+
     
 }

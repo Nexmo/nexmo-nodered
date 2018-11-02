@@ -1,0 +1,45 @@
+<script type="text/javascript">
+    RED.nodes.registerType('numberinsight',{
+        category: 'Nexmo Insight',
+        color: '#ff8f02',
+        defaults: {
+          creds: {value:"", type:"nexmocreds"},
+          type: {},
+          number: {},
+          url: {value: "",}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Number Insight"
+    });
+</script>
+<script type="text/x-red" data-template-name="numberinsight">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-type"><i class="fa fa-tasks"></i>Type</label>
+      <select type="text" id="node-input-type" style="width:70%;">
+      <option value="basic">Number Insight Basic</option>
+      <option value="standard">Number Insight Standard</option>
+      <option value="advanced">Number Insight Advanced</option>
+      <option value="advancedAsync">Number Insight Async</option>
+       </select>
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-number"><i class="icon-tag"></i>Number</label>
+      <input type="text" id="node-input-number" placeholder="number">
+  </div>
+  
+  //TODO Make this hidden unless its an Async Call
+  <div class="form-row">
+      <label for="node-input-url"><i class="icon-tag"></i>Callback</label>
+      <input type="text" id="node-input-url" placeholder="url">
+  </div>
+  
+</script>
+

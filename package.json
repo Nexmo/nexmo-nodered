@@ -1,6 +1,6 @@
 {
     "name": "ncco",
-    "version": "0.2.2",
+    "version": "0.2.4",
     "description": "Node Red module for an NCCO actions",
     "main": "ncco.js",
     "scripts": {
@@ -58,7 +58,9 @@
             "nexmo_webhooks": "webhooks.js",
             "vapi_rest" : "vapi_rest.js",
             "sms_rest" : "sms_rest.js",
-            "verify" : "verify.js"
+            "verify" : "verify.js",
+            "insight" : "insight.js"
+            
         }
     }
 }
