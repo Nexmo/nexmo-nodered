@@ -1,0 +1,124 @@
+
+<script type="text/javascript">
+    RED.nodes.registerType('nexmovoiceapp',{
+        category: 'config',
+        defaults: {
+          name: {},
+          apikey: {},
+          apisecret: {},
+          privatekey: {},
+          appid: {},
+          
+        },
+        label: function() {
+            return this.name || this.appid;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="nexmovoiceapp">
+  <div class="form-row">
+      <label for="node-config-input-name">Name</label>
+      <input type="text" id="node-config-input-name" placeholder="Name">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-config-input-apikey">API Key</label>
+      <input type="text" id="node-config-input-apikey" placeholder="Nexmo API Key">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-config-input-apisecret">API Secret</label>
+      <input type="text" id="node-config-input-apisecret" placeholder="Nexmo API Secret">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-config-input-answerurl"></i>Answer URL</label>
+      <input type="text" id="answerurl" placeholder="http://example.com/answer">
+  </div>
+  <div class="form-row">
+      <label for="node-config-input-appid"></i>Event URL</label>
+      <input type="text" id="eventurl" placeholder="http://example.com/event">
+  </div>
+  
+	<div class="form-row">
+  <button id="button" onclick="createapp()">Create New Application</button><br>   
+  </div>
+  
+  
+  <div class="form-row">
+      <label for="node-config-input-appid"></i>App ID</label>
+      <input type="text" id="node-config-input-appid" placeholder="Application ID" disabled>
+  </div>
+  
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Private Key</label>
+      <textarea id="node-config-input-privatekey", placeholder="Private Key" rows="30" cols="40" disabled></textarea>
+  </div>
+</script>
+
+<script>
+    var resp;
+    function  createapp(){
+      var http = new XMLHttpRequest();
+      var url = 'https://m294jym4q1.execute-api.eu-west-1.amazonaws.com/cors/v1/applications'; //Lambda Function to enable CORS on api.nexmo.com
+      var params = {
+        api_key:  document.getElementById("node-config-input-apikey").value,
+        api_secret: document.getElementById("node-config-input-apisecret").value,
+        name : document.getElementById("node-config-input-name").value,
+        type : 'voice',
+        answer_url : document.getElementById("answerurl").value,
+        event_url : document.getElementById("eventurl").value
+      }
+      var urlparams = "";
+      for (var key in params) {
+          if (urlparams != "") {
+              urlparams += "&";
+          }
+          urlparams += key + "=" + encodeURIComponent(params[key]);
+      }
+      http.open('POST', url,);
+      //http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      http.onreadystatechange = function() {
+          if(http.readyState == 4 && http.status == 201) {
+              resp = JSON.parse(http.response)
+              console.log(resp);
+              document.getElementById("node-config-input-appid").value = resp.id;
+              document.getElementById("node-config-input-privatekey").value = resp.keys.private_key;
+
+          }
+      }
+      http.send(urlparams);
+    }
+
+</script>
+    
+    
+<script type="text/javascript">
+    RED.nodes.registerType('nexmobasic',{
+        category: 'config',
+        defaults: {
+          apikey: {},
+          apisecret: {},
+        },
+        label: function() {
+            return this.apikey;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="nexmobasic">
+  <div class="form-row">
+      <label for="node-config-input-apikey">API Key</label>
+      <input type="text" id="node-config-input-apikey" placeholder="Nexmo API Key">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-config-input-apisecret">API Secret</label>
+      <input type="text" id="node-config-input-apisecret" placeholder="Nexmo API Secret">
+  </div>
+  
+  
+
+</script>

@@ -1,54 +1,9 @@
 <script type="text/javascript">
-    RED.nodes.registerType('nexmocreds',{
-        category: 'config',
-        defaults: {
-          name: {},
-          apikey: {},
-          apisecret: {},
-          appid:{},
-          privatekey: {}
-        },
-        label: function() {
-            return this.name || this.appid;
-        }
-    });
-</script>
-
-<script type="text/x-red" data-template-name="nexmocreds">
-  <div class="form-row">
-      <label for="node-config-input-name">Name</label>
-      <input type="text" id="node-config-input-name" placeholder="Name">
-  </div>
-  
-  <div class="form-row">
-      <label for="node-config-input-apikey">API Key</label>
-      <input type="text" id="node-config-input-apikey" placeholder="Nexmo API Key">
-  </div>
-  
-  <div class="form-row">
-      <label for="node-config-input-apisecret">API Secret</label>
-      <input type="text" id="node-config-input-apisecret" placeholder="Nexmo API Secret">
-  </div>
-  
-  <div class="form-row">
-      <label for="node-config-input-appid">/i>App ID</label>
-      <input type="text" id="node-config-input-appid" placeholder="Application ID">
-  </div>
-  
-  <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Private Key</label>
-      <input type="text" id="node-config-input-privatekey" placeholder="Private Key">
-  </div>
-</script>
-
-
-
-<script type="text/javascript">
     RED.nodes.registerType('getrecording',{
-        category: 'Nexmo Voice',
+        category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmocreds"}
+          creds: {value:"", type:"nexmovoiceapp"}
         },
         inputs:1,
         outputs:1,
@@ -66,10 +21,10 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('earmuff',{
-        category: 'Nexmo Voice',
+        category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmocreds"},
+          creds: {value:"", type:"nexmovoiceapp"},
           calluuid: {},
           status:{}
         },
@@ -102,10 +57,10 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('mute',{
-        category: 'Nexmo Voice',
+        category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmocreds"},
+          creds: {value:"", type:"nexmovoiceapp"},
           calluuid: {},
           status:{}
         },
@@ -139,10 +94,10 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('hangup',{
-        category: 'Nexmo Voice',
+        category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmocreds"},
+          creds: {value:"", type:"nexmovoiceapp"},
           calluuid: {}
         },
         inputs:1,
@@ -169,10 +124,10 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('transfer',{
-        category: 'Nexmo Voice',
+        category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmocreds"},
+          creds: {value:"", type:"nexmovoiceapp"},
           calluuid: {}
         },
         inputs:1,
@@ -204,10 +159,10 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('createcall',{
-        category: 'Nexmo Voice',
+        category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmocreds"},
+          creds: {value:"", type:"nexmovoiceapp"},
           endpoint: {value:"number"},
           to: {required: true},
           from: {},
@@ -298,10 +253,10 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('playaudio',{
-        category: 'Nexmo Voice',
+        category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmocreds"},
+          creds: {value:"", type:"nexmovoiceapp"},
           calluuid: {},
           action:{},
           url:{},
@@ -350,10 +305,10 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('playtts',{
-        category: 'Nexmo Voice',
+        category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmocreds"},
+          creds: {value:"", type:"nexmovoiceapp"},
           calluuid: {},
           action:{},
           text:{},
@@ -411,10 +366,10 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('playdtmf',{
-        category: 'Nexmo Voice',
+        category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmocreds"},
+          creds: {value:"", type:"nexmoapp"},
           calluuid: {},
           digits: {}
         },

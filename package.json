@@ -1,6 +1,6 @@
 {
     "name": "ncco",
-    "version": "0.2.5",
+    "version": "0.2.9",
     "description": "Node Red module for an NCCO actions",
     "main": "ncco.js",
     "scripts": {
@@ -59,7 +59,8 @@
             "vapi_rest" : "vapi_rest.js",
             "sms_rest" : "sms_rest.js",
             "verify" : "verify.js",
-            "insight" : "insight.js"
+            "insight" : "insight.js",
+            "auth" : "auth.js"
             
         }
     }

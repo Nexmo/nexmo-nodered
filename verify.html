@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('sendverify',{
-        category: 'Nexmo Verify',
+        category: 'nexmo',
         color: '#7683d8',
         defaults: {
           creds: {value:"", type:"nexmocreds"},
@@ -37,7 +37,7 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('checkverify',{
-        category: 'Nexmo Verify',
+        category: 'nexmo',
         color: '#7683d8',
         defaults: {
           creds: {value:"", type:"nexmocreds"},
@@ -71,10 +71,10 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('cancelverify',{
-        category: 'Nexmo Verify',
+        category: 'nexmo',
         color: '#7683d8',
         defaults: {
-          creds: {value:"", type:"nexmocreds"},
+          creds: {value:"", type:"nexmobasic"},
           verify_id: {},
         },
         inputs:1,
@@ -104,7 +104,7 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('nextverify',{
-        category: 'Nexmo Verify',
+        category: 'nexmo',
         color: '#7683d8',
         defaults: {
           creds: {value:"", type:"nexmocreds"},
