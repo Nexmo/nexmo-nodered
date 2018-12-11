@@ -23,11 +23,11 @@
     },
     "node-red": {
         "nodes": {
-            "ncco": "ncco.js",
-            "nexmo_webhooks": "webhooks/webhooks.js",
+            "ncco": "vapi/ncco.js",
+            "nexmo_webhooks": "vapi/webhooks.js",
             "vapi_rest": "vapi/vapi_rest.js",
             "sms_rest": "sms/sms_rest.js",
-            "verify": "varify/verify.js",
+            "verify": "verify/verify.js",
             "insight": "insight/insight.js",
             "auth": "auth/auth.js"
         }

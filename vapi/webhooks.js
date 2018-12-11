@@ -165,7 +165,7 @@ module.exports = function(RED) {
         corsHandler = cors(RED.settings.httpNodeCors);
         RED.httpNode.options("*",corsHandler);
     }
-    
+
     function voicewebhook(n) {
         RED.nodes.createNode(this,n);
         if (RED.settings.httpNodeRoot !== false) {
@@ -198,7 +198,7 @@ module.exports = function(RED) {
                     node.send({_msgid:msgid,req:req,res:createResponseWrapper(node,res)});
                 }
             };
-            
+
             var httpMiddleware = function(req,res,next) { next(); }
 
             if (RED.settings.httpNodeMiddleware) {
@@ -206,7 +206,7 @@ module.exports = function(RED) {
                     httpMiddleware = RED.settings.httpNodeMiddleware;
                 }
             }
-            
+
             var maxApiRequestSize = RED.settings.apiMaxLength || '5mb';
             var jsonParser = bodyParser.json({limit:maxApiRequestSize});
             var urlencParser = bodyParser.urlencoded({limit:maxApiRequestSize,extended:true});
@@ -229,7 +229,7 @@ module.exports = function(RED) {
                     next();
                 };
             }
-            
+
             var multipartParser = function(req,res,next) { next(); }
             if (this.upload) {
                 var mp = multer({ storage: multer.memoryStorage() }).any();
@@ -240,7 +240,7 @@ module.exports = function(RED) {
                     })
                 };
             }
-            
+
             if (this.method == "get") {
                 RED.httpNode.get(this.url,cookieParser(),httpMiddleware,corsHandler,metricsHandler,this.callback,this.errorHandler);
             } else if (this.method == "post") {
@@ -260,7 +260,7 @@ module.exports = function(RED) {
         }
     }
     RED.nodes.registerType("voice webhook",voicewebhook);
-    
+
 
     function returnncco(n) {
         RED.nodes.createNode(this,n);
@@ -315,8 +315,5 @@ module.exports = function(RED) {
     }
     RED.nodes.registerType("return ncco",returnncco);
     
-
-
-
 
 }
