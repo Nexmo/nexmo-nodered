@@ -191,9 +191,9 @@ module.exports = function(RED) {
                 var msgid = RED.util.generateId();
                 res._msgid = msgid;
                 if (node.method.match(/^(post|delete|put|options|patch)$/)) {
-                    node.send({_msgid:msgid,req:req,res:createResponseWrapper(node,res),payload:{call:req.body}});
+                    node.send({_msgid:msgid,req:req,res:createResponseWrapper(node,res),call:req.body});
                 } else if (node.method == "get") {
-                    node.send({_msgid:msgid,req:req,res:createResponseWrapper(node,res),payload:{call:req.query}});
+                    node.send({_msgid:msgid,req:req,res:createResponseWrapper(node,res),call:req.query});
                 } else {
                     node.send({_msgid:msgid,req:req,res:createResponseWrapper(node,res)});
                 }
@@ -291,22 +291,22 @@ module.exports = function(RED) {
                     msg.res._res.set(headers);
                 }
                  var statusCode = node.statusCode || msg.statusCode || 200;
-                if (typeof msg.payload.ncco == "object" && !Buffer.isBuffer(msg.payload.ncco)) {
-                    msg.res._res.status(statusCode).jsonp(msg.payload.ncco);
+                if (typeof msg.ncco == "object" && !Buffer.isBuffer(msg.ncco)) {
+                    msg.res._res.status(statusCode).jsonp(msg.ncco);
                 } else {
                     if (msg.res._res.get('content-length') == null) {
                         var len;
-                        if (msg.payload.ncco == null) {
+                        if (msg.ncco == null) {
                             len = 0;
                         } else if (Buffer.isBuffer(msg.payload)) {
-                            len = msg.payload.ncco.length;
+                            len = msg.ncco.length;
                         } else {
-                            len = Buffer.byteLength(msg.payload.ncco);
+                            len = Buffer.byteLength(msg.ncco);
                         }
                         msg.res._res.set('content-length', len);
                     }
 
-                    msg.res._res.status(statusCode).send(msg.payload.ncco);
+                    msg.res._res.status(statusCode).send(msg.ncco);
                 }
             } else {
                 node.warn(RED._("httpin.errors.no-response"));

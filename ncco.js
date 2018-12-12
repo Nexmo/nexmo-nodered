@@ -11,13 +11,9 @@ module.exports = function (RED) {
     this.level = config.level;
     var node = this;
     node.on('input', function (msg) {
-      if (config.template == true){
-        this.text = mustache.render(config.text, msg.payload);
-      }else{
-        this.text = config.text;
-      }
-      if ( 'ncco' in msg.payload){
-        var resp = msg.payload.ncco;    
+      this.text = mustache.render(config.text, msg);
+      if ( 'ncco' in msg){
+        var resp = msg.ncco;    
       } else{
         var resp = []; 
       }
@@ -30,20 +26,20 @@ module.exports = function (RED) {
       ncco.voiceName=this.voicename;
       clean(ncco);
       resp.push(ncco);
-      msg.payload.ncco = resp;
+      msg.ncco = resp;
       node.send(msg);
     });  
   }
   function stream(config){
     RED.nodes.createNode(this, config);
-    this.streamurl = config.streamurl;
     this.bargein = config.bargein;
     this.loop = config.loop;
     this.level = config.level;
     var node = this;
     node.on('input', function (msg) {
-      if ( 'ncco' in msg.payload){
-        var resp = msg.payload.ncco;    
+      this.streamurl = mustache.render(config.streamurl, msg);
+      if ( 'ncco' in msg){
+        var resp = msg.ncco;    
       }else{
         var resp = []; 
       }
@@ -55,7 +51,7 @@ module.exports = function (RED) {
       ncco.level=this.level;
       clean(ncco);
       resp.push(ncco);
-      msg.payload.ncco = resp;
+      msg.ncco = resp;
       node.send(msg);
     });  
   }
@@ -68,8 +64,8 @@ module.exports = function (RED) {
     this.eventmethod = config.eventmethod;  
     var node = this;
     node.on('input', function (msg) {
-      if ( 'ncco' in msg.payload){
-        var resp = msg.payload.ncco;    
+      if ( 'ncco' in msg){
+        var resp = msg.ncco;    
       }else{
         var resp = []; 
       }
@@ -84,14 +80,13 @@ module.exports = function (RED) {
       ncco.eventMethod=this.eventmethod;
       clean(ncco);
       resp.push(ncco);
-      msg.payload.ncco = resp;
+      msg.ncco = resp;
       node.send(msg);
     });
   }
   
   function record(config){
     RED.nodes.createNode(this, config);
-    this.eventurl = config.eventurl;  
     this.eventmethod = config.eventmethod;  
     this.timeout = config.timeout;
     this.format = config.format;
@@ -100,11 +95,11 @@ module.exports = function (RED) {
     this.endonsilence = config.endonsilence;  
     this.endonkey = config.endonkey;  
     this.beepstart = config.beepstart;  
-    
     var node = this;
     node.on('input', function (msg) {
-      if ( 'ncco' in msg.payload){
-        var resp = msg.payload.ncco;    
+      this.eventurl = mustache.render(config.eventurl, msg);
+      if ( 'ncco' in msg){
+        var resp = msg.ncco;    
       }else{
         var resp = []; 
       }
@@ -123,14 +118,13 @@ module.exports = function (RED) {
       ncco.eventMethod=this.eventmethod;
       clean(ncco);
       resp.push(ncco);
-      msg.payload.ncco = resp;
+      msg.ncco = resp;
       node.send(msg);
     });
   }
   
   function conversation(config){
     RED.nodes.createNode(this, config);
-    this.name = config.name;
     this.eventurl = config.eventurl;
     this.eventmethod = config.eventmethod;  
     this.record = config.record;
@@ -139,8 +133,9 @@ module.exports = function (RED) {
     this.musiconholdurl = config.musiconholdurl;  
     var node = this;
     node.on('input', function (msg) {
-      if ( 'ncco' in msg.payload){
-        var resp = msg.payload.ncco;    
+      this.name = mustache.render(config.name, msg);
+      if ( 'ncco' in msg){
+        var resp = msg.ncco;    
       }else{
         var resp = []; 
       }
@@ -157,7 +152,7 @@ module.exports = function (RED) {
       ncco.musicOnHoldUrl=this.musiconholdurl;
       clean(ncco);
       resp.push(ncco);
-      msg.payload.ncco = resp;
+      msg.ncco = resp;
       node.send(msg);
     });
   }
@@ -173,11 +168,11 @@ module.exports = function (RED) {
     this.machinedetection = config.machinedetection;  
     this.eventtype = config.eventtype;  
     this.endpoint = config.endpoint;
-    this.to = config.to  
     var node = this;
     node.on('input', function (msg) {
-      if ( 'ncco' in msg.payload){
-        var resp = msg.payload.ncco;    
+      this.to = mustache.render(config.to, msg);
+      if ( 'ncco' in msg){
+        var resp = msg.ncco;    
       }else{
         var resp = []; 
       }
@@ -210,7 +205,7 @@ module.exports = function (RED) {
       }
       clean(ncco);
       resp.push(ncco);
-      msg.payload.ncco = resp;
+      msg.ncco = resp;
       node.send(msg);
     });
   }

@@ -9,8 +9,8 @@ module.exports = function (RED) {
     var node = this;
     
     node.on('input', function (msg) {
-      this.to = mustache.render(config.to, msg.payload);
-      this.brand = mustache.render(config.brand, msg.payload);
+      this.to = mustache.render(config.to, msg);
+      this.brand = mustache.render(config.brand, msg);
       const nexmo = new Nexmo({
         apiKey: this.creds.apikey,
         apiSecret: this.creds.apisecret,
@@ -34,8 +34,8 @@ module.exports = function (RED) {
    var node = this;
    
    node.on('input', function (msg) {
-     this.verify_id = mustache.render(config.verify_id, msg.payload);
-     this.code = mustache.render(config.code, msg.payload);
+     this.verify_id = mustache.render(config.verify_id, msg);
+     this.code = mustache.render(config.code, msg);
      const nexmo = new Nexmo({
        apiKey: this.creds.apikey,
        apiSecret: this.creds.apisecret,
@@ -59,7 +59,7 @@ module.exports = function (RED) {
   var node = this;
   
   node.on('input', function (msg) {
-    this.verify_id = mustache.render(config.verify_id, msg.payload);
+    this.verify_id = mustache.render(config.verify_id, msg);
     const nexmo = new Nexmo({
       apiKey: this.creds.apikey,
       apiSecret: this.creds.apisecret,
@@ -82,7 +82,7 @@ module.exports = function (RED) {
   var node = this;
   
   node.on('input', function (msg) {
-    this.verify_id = mustache.render(config.verify_id, msg.payload);
+    this.verify_id = mustache.render(config.verify_id, msg);
     const nexmo = new Nexmo({
       apiKey: this.creds.apikey,
       apiSecret: this.creds.apisecret,

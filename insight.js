@@ -10,8 +10,8 @@ module.exports = function (RED) {
     var node = this;
     
     node.on('input', function (msg) {
-      this.number = mustache.render(config.number, msg.payload);
-      this.url = mustache.render(config.url, msg.payload);
+      this.number = mustache.render(config.number, msg);
+      this.url = mustache.render(config.url, msg);
       
       const nexmo = new Nexmo({
         apiKey: this.creds.apikey,
