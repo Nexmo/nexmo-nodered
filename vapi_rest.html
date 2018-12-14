@@ -13,10 +13,42 @@
 </script>
 <script type="text/x-red" data-template-name="getrecording">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
-      <input type="text" id="node-input-creds" >
+      <label for="node-config-input-creds"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds">
+  </div>
+  <div class="form-row">
+      <label for="node-input-filename"><i class="icon-tag"></i>Filename</label>
+      <input type="text" id="node-input-filename" placeholder="Filename">
   </div>
 </script>
+
+<script type="text/x-red" data-help-name="getrecording">
+<p>Fetch a recording</p>
+
+<h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>call<span class="property-type">object</span></dt>
+        <dd> The output of a webhook , which contains details of the call recording in msg.payload </dd>
+    </dl>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>msg.payload<span class="property-type">object</span></dt>
+     <dd> The recording audio</dd>
+     <dt>msg.filename<span class="property-type">string</span></dt>
+     <dd>msg.filename will be set to whatever you enter so that you can connect into a  file node to write to disk </dd>
+ </dl>
+
+<h3>Details</h3>
+Fetch the recording audio from a URL supplied in a recording event webhook
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#connect">Nexmo NCCO Reference</a></li>
+    </ul>
+</script>
+
+
 
 
 <script type="text/javascript">
@@ -55,6 +87,27 @@
   
 </script>
 
+<script type="text/x-red" data-help-name="earmuff">
+<p>Earmuff a Call</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+Earmuff a call leg
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/voice#updateCall">Nexmo API Reference</a></li>
+    </ul>
+</script>
+
+
 <script type="text/javascript">
     RED.nodes.registerType('mute',{
         category: 'nexmo',
@@ -91,6 +144,25 @@
   
 </script>
 
+<script type="text/x-red" data-help-name="mute">
+<p>Mute a Call</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+Mute a call leg
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/voice#updateCall">Nexmo API Reference</a></li>
+    </ul>
+</script>
 
 <script type="text/javascript">
     RED.nodes.registerType('hangup',{
@@ -116,9 +188,26 @@
       <label for="node-input-calluuid"><i class="icon-tag"></i>Call UUID</label>
       <input type="text" id="node-input-calluuid" placeholder="UUID">
   </div>
-  
+</script>
 
-  
+<script type="text/x-red" data-help-name="hangup">
+<p>Hangup a Call</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+Earmuff a call leg
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/voice#updateCall">Nexmo API Reference</a></li>
+    </ul>
 </script>
 
 
@@ -155,6 +244,25 @@
   
 </script>
 
+<script type="text/x-red" data-help-name="transfer">
+<p>Transfer a Call to a new NCCO</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+Earmuff a call leg
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/voice#updateCall">Nexmo API Reference</a></li>
+    </ul>
+</script>
 
 
 <script type="text/javascript">
@@ -248,6 +356,26 @@
     </div>
 </script>
 
+<script type="text/x-red" data-help-name="createcall">
+<p>Transfer a Call to a new NCCO</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+Create a new outbound call
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/voice#createCall">Nexmo API Reference</a></li>
+    </ul>
+</script>
+
 
 
 
@@ -302,6 +430,29 @@
       <input type="text" id="node-input-level">
   </div>
 </script>
+
+
+<script type="text/x-red" data-help-name="playaudio">
+<p>PLay audio into a call</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+Play an audio file into a call
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/voice#startStream">Nexmo API Reference</a></li>
+    </ul>
+</script>
+
+
 
 <script type="text/javascript">
     RED.nodes.registerType('playtts',{
@@ -364,6 +515,28 @@
   </div>
 </script>
 
+<script type="text/x-red" data-help-name="playtts">
+<p>PLay text to speech into a call</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+Play text to speech into a call
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/voice#startTalk">Nexmo API Reference</a></li>
+    </ul>
+</script>
+
+
+
 <script type="text/javascript">
     RED.nodes.registerType('playdtmf',{
         category: 'nexmo',
@@ -397,3 +570,22 @@
 </script>
 
 
+<script type="text/x-red" data-help-name="playdtmf">
+<p>PLay DTMF into a call</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+Play DTMF tones  into a call
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/voice#startDTMF">Nexmo API Reference</a></li>
+    </ul>
+</script>

@@ -18,7 +18,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.apisecret,
         applicationId: this.creds.appid,
         privateKey: this.creds.privatekey
-        }, {debug: false}
+        }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       nexmo.numberInsight.get({level: this.type, number: this.number, callback: this.url}, (error, response) => {
         if(error) {

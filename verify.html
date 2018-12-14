@@ -28,9 +28,29 @@
       <label for="node-input-brand"><i class="icon-tag"></i>Brand</label>
       <input type="text" id="node-input-brand" placeholder="Brand">
   </div>
-  
+</script>
 
-  
+
+
+<script type="text/x-red" data-help-name="sendverify">
+<p>Start a Verification</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+When you have collected a user's phone number, start the verification process by sending a verify request to the Verify API.
+
+The Verify API returns a request_id. Use this to identify a specific verification request in subsequent calls to the API, such as when making a check request to see if the user provided the correct code.
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/verify#verify-request">Nexmo Documentation</a></li>
+    </ul>
 </script>
 
 
@@ -69,6 +89,27 @@
 </script>
 
 
+<script type="text/x-red" data-help-name="checkverify">
+<p>Check a Verification</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+Check the verification code that a user has provided. Use the request_id that was received when the verification code was sent.
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/verify#verify-check">Nexmo Documentation</a></li>
+    </ul>
+</script>
+
+
 <script type="text/javascript">
     RED.nodes.registerType('cancelverify',{
         category: 'nexmo',
@@ -93,13 +134,28 @@
       <label for="node-input-verify_id"><i class="icon-tag"></i>Request ID</label>
       <input type="text" id="node-input-verify_id" placeholder="Verify Request ID">
   </div>
-  
-
-  
 </script>
 
 
+<script type="text/x-red" data-help-name="cancelverify">
+<p>Cancel a Verification</p>
 
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+If the user decides to cancel the verification process, you should send a control request to the Verify API. This will terminate the verification process even if the user supplied the correct code.
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/verify#verify-control">Nexmo Documentation</a></li>
+    </ul>
+</script> 
 
 
 <script type="text/javascript">
@@ -130,7 +186,28 @@
   
 </script>
 
+<script type="text/x-red" data-help-name="nextverify">
+<p>
+Trigger next verification stage</p>
 
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+The Verify API starts the verification process by sending an SMS to the user. If the user does not confirm the code that they received within a certain time period, the Verify API sends a second SMS. If that does not elicit a response it attempts a Text-to-Speech (TTS) call.
+
+You can advance to the next verification attempt programmatically by making a control request. You would normally do this if your user indicates that they prefer to verify via a phone call instead of by SMS.
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/verify#verify-control">Nexmo Documentation</a></li>
+    </ul>
+</script> 
 
 
 

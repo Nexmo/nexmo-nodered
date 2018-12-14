@@ -43,6 +43,36 @@
     </div>
 </script>
 
+<script type="text/x-red" data-help-name="talk">
+<p>Adds a talk action to an NCCO</p>
+
+<h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>ncco<span class="property-type">object</span></dt>
+        <dd> The output of a previous action, if no <code>msg.ncco</code> exists it will be created  </dd>
+    </dl>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.ncco</code> will contain any previous actions provided to the input with the new <code>talk</code> action appended  </dd>
+ </dl>
+
+<h3>Details</h3>
+The talk action sends synthesized speech to a Conversation.
+
+The text provided in the talk action can either be plain, or formatted using SSML. SSML tags provide further instructions to the text-to-speech synthesiser which allow you to set pitch, pronunciation and to combine together text in multiple languages. SSML tags are XML-based and sent inline in the JSON string.
+
+By default, the talk action is synchronous. However, if you set bargeIn to true you must set an input action later in the NCCO stack. The following NCCO examples shows how to send a synthesized speech message to a Conversation or Call:
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#talk">Nexmo NCCO Reference</a></li>
+    </ul>
+</script>
+
+
+
 
 
 <script type="text/javascript">
@@ -84,7 +114,33 @@
     </div>
 </script>
 
+<script type="text/x-red" data-help-name="stream">
+<p>Adds a stream action to an NCCO</p>
 
+<h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>ncco<span class="property-type">object</span></dt>
+        <dd> The output of a previous action, if no <code>msg.ncco</code> exists it will be created  </dd>
+    </dl>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.ncco</code> will contain any previous actions provided to the input with the new <code>stream</code> action appended  </dd>
+ </dl>
+
+<h3>Details</h3>
+The talk action sends synthesized speech to a Conversation.
+
+The text provided in the talk action can either be plain, or formatted using SSML. SSML tags provide further instructions to the text-to-speech synthesiser which allow you to set pitch, pronunciation and to combine together text in multiple languages. SSML tags are XML-based and sent inline in the JSON string.
+
+By default, the stream action is synchronous. However, if you set bargeIn to true you must set an input action folowing this.
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#stream">Nexmo NCCO Reference</a></li>
+    </ul>
+</script>
 
 <script type="text/javascript">
     RED.nodes.registerType('input',{
@@ -135,6 +191,32 @@
     
 </script>
 
+<script type="text/x-red" data-help-name="input">
+<p>Adds an input action to an NCCO</p>
+
+<h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>ncco<span class="property-type">object</span></dt>
+        <dd> The output of a previous action, if no <code>msg.ncco</code> exists it will be created  </dd>
+    </dl>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.ncco</code> will contain any previous actions provided to the input with the new <code>stream</code> action appended  </dd>
+ </dl>
+
+<h3>Details</h3>
+The input action collects DTMF input from the caller.
+
+You can use the input action to collect digits input by the person you are calling. This action is synchronous, Nexmo processes the input and forwards it in the parameters sent to the eventURL webhook endpoint you configure in your request, you will need to use the full url including the hostname here of your webhook here.
+Your webhook endpoint should return another NCCO that replaces the existing NCCO and controls the Call based on the user input. 
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#input">Nexmo NCCO Reference</a></li>
+    </ul>
+</script>
 
 
 <script type="text/javascript">
@@ -215,11 +297,35 @@
         <label for="node-input-beepstart"><i class="icon-tag"></i>Beep Start</label>
         <input type="checkbox" id="node-input-beepstart">
     </div>
-    
 
-    
 </script>
 
+<script type="text/x-red" data-help-name="record">
+<p>Adds a record action to an NCCO</p>
+
+<h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>ncco<span class="property-type">object</span></dt>
+        <dd> The output of a previous action, if no <code>msg.ncco</code> exists it will be created  </dd>
+    </dl>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.ncco</code> will contain any previous actions provided to the input with the new <code>stream</code> action appended  </dd>
+ </dl>
+
+<h3>Details</h3>
+The record action records audio from a caller or records the call.
+
+The record action is asynchronous. Recording starts when the record action is executed in the NCCO and finishes when the synchronous condition in the action is met. That is, endOnSilence, timeOut or endOnKey. If you do not set a synchronous condition, the Voice API immediately executes the next NCCO without recording.
+
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#record">Nexmo NCCO Reference</a></li>
+    </ul>
+</script>
 
 
 
@@ -281,9 +387,34 @@
           <option value="post">POST</option>
          </select>
     </div>
-    
-    
-    
+  
+</script>
+
+<script type="text/x-red" data-help-name="conversation">
+<p>Adds a conversaton action to an NCCO</p>
+
+<h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>ncco<span class="property-type">object</span></dt>
+        <dd> The output of a previous action, if no <code>msg.ncco</code> exists it will be created  </dd>
+    </dl>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.ncco</code> will contain any previous actions provided to the input with the new <code>stream</code> action appended  </dd>
+ </dl>
+
+<h3>Details</h3>
+The conversation action creates a named conferance.
+
+You can use the conversation action to create standard or moderated conferences. The first person to call the virtual number assigned to the conversation creates it. This action is synchronous, the conversation lasts until the number of participants is 0.
+
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#conversation">Nexmo NCCO Reference</a></li>
+    </ul>
 </script>
 
 
@@ -372,6 +503,31 @@
     
     
     
+</script>
+<script type="text/x-red" data-help-name="connect">
+<p>Adds a connect action to an NCCO</p>
+
+<h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>ncco<span class="property-type">object</span></dt>
+        <dd> The output of a previous action, if no <code>msg.ncco</code> exists it will be created  </dd>
+    </dl>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.ncco</code> will contain any previous actions provided to the input with the new <code>stream</code> action appended  </dd>
+ </dl>
+
+<h3>Details</h3>
+You can use the connect action to connect a call to endpoints such as phone numbers.
+
+This action is synchronous, after a connect the next action in the NCCO stack is processed. A connect action ends when the endpoint you are calling is busy or unavailable. You ring endpoints sequentially by nesting connect actions.
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#connect">Nexmo NCCO Reference</a></li>
+    </ul>
 </script>
 
 

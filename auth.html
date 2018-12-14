@@ -57,6 +57,14 @@
   </div>
 </script>
 
+<script type="text/x-red" data-help-name="nexmovoiceapp">
+   <p>Creates a new Nexmo Voice Applicaiton </p>
+   <h3>Details</h3>
+   <p>Enter your the details in the boxes above and click, Create Application, node-red will then create a new nexmo application on your account and fill in the app id and private key fields for you to save.</p>
+   <p> This auth module can be used by any Nexmo Voice nodes that require auth.</p>
+</script>
+
+
 <script>
     var resp;
     function  createapp(){
@@ -118,7 +126,12 @@
       <label for="node-config-input-apisecret">API Secret</label>
       <input type="text" id="node-config-input-apisecret" placeholder="Nexmo API Secret">
   </div>
-  
-  
-
 </script>
+
+<script type="text/x-red" data-help-name="nexmobasic">
+   <p>Creates a new Nexmo Basic Auth node </p>
+   <h3>Details</h3>
+   <p>Enter your api key and secret</p>
+   <p> This auth module will be used by nodes that require basic auth such as SMS, Verify and Number Insight.</p>
+</script>
+

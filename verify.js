@@ -16,7 +16,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.apisecret,
         applicationId: this.creds.appid,
         privateKey: this.creds.privatekey
-        }, {debug: false}
+      }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       nexmo.verify.request({number: this.to, brand: this.brand}, function(err, response) {
           if(err) { console.error(err); }

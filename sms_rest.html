@@ -44,4 +44,25 @@
 </script>
 
 
+<script type="text/x-red" data-help-name="sendsms">
+<p>Send an SMS</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the nexmo api</dd>
+ </dl>
+
+<h3>Details</h3>
+The to number should always be in e.164 format, that is the full international number without a leading prefix like +, 00 or 001.
+Consult the nexmo documentation for valid From values depending on destination country.
+Set the Unicode flag if the message text contains unicode parameters
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/messaging/sms/overview">Nexmo Documentation</a></li>
+    </ul>
+</script>
+
 

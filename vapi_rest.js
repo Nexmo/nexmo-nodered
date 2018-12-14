@@ -21,7 +21,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.apisecret,
         applicationId: this.creds.appid,
         privateKey: this.creds.privatekey
-        }, {debug: debug}
+      }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       nexmo.files.get(msg.payload.recording_url, (error, data) => {
             if (error) {

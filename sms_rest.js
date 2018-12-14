@@ -20,7 +20,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.apisecret,
         applicationId: this.creds.appid,
         privateKey: this.creds.privatekey
-        }, {debug: false}
+      }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       const opts = {}
       if (this.unicode == true){

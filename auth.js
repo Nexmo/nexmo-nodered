@@ -1,5 +1,3 @@
-const Nexmo = require('nexmo');
-
 module.exports = function (RED) {
   
   function nexmovoiceapp(n){
