@@ -1,7 +1,7 @@
 {
-    "name": "ncco",
-    "version": "0.2.9",
-    "description": "Node Red module for an NCCO actions",
+    "name": "node-red-contrib-nexmo",
+    "version": "3.0.0",
+    "description": "Node Red module for an Nexmo API",
     "main": "ncco.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
