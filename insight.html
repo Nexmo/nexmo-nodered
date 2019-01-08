@@ -22,7 +22,7 @@
   
   <div class="form-row">
       <label for="node-input-ni_type"><i class="fa fa-tasks"></i>Type</label>
-      <select type="text" id="node-input-ni_type" style="width:70%;">
+      <select type="text" id="node-input-ni_type" style="width:70%;" onchange="toggleURL(this.value)">
       <option value="basic">Number Insight Basic</option>
       <option value="standard">Number Insight Standard</option>
       <option value="advanced">Number Insight Advanced</option>
@@ -35,14 +35,24 @@
       <input type="text" id="node-input-number" placeholder="number">
   </div>
   
-  //TODO Make this hidden unless its an Async Call
-  <div class="form-row">
+  <div id="callbackurl" class="form-row" style="display: none;">
       <label for="node-input-url"><i class="icon-tag"></i>Callback</label>
       <input type="text" id="node-input-url" placeholder="url">
   </div>
   
 </script>
-
+<script>
+    function toggleURL(ni_type){
+      if (ni_type == 'advancedAsync'){
+        document.getElementById("callbackurl").style.display = "block";    
+      }
+      else {
+        document.getElementById("callbackurl").style.display = "none";
+      }    
+    }
+</script>
+    
+    
 <script type="text/x-red" data-help-name="numberinsight">
 <p>Queries the Nexmo Number Insight API</p>
 
