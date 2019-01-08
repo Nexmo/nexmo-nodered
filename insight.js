@@ -6,7 +6,7 @@ module.exports = function (RED) {
    function numberinsight(config){
     RED.nodes.createNode(this, config);
     this.creds = RED.nodes.getNode(config.creds);
-    this.type = config.type;
+    this.ni_type = config.ni_type;
     var node = this;
     
     node.on('input', function (msg) {
@@ -20,7 +20,7 @@ module.exports = function (RED) {
         privateKey: this.creds.privatekey
         }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
-      nexmo.numberInsight.get({level: this.type, number: this.number, callback: this.url}, (error, response) => {
+      nexmo.numberInsight.get({level: this.ni_type, number: this.number, callback: this.url}, (error, response) => {
         if(error) {
           console.error(error);
         }
