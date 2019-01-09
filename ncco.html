@@ -18,7 +18,7 @@
 </script>
 <script type="text/x-red" data-template-name="talk">
     <div class="form-row">
-        <label for="node-input-text"><i class="icon-tag"></i>Text</label>
+        <label for="node-input-text"><i class="icon-tag"></i>Text {}</label>
         <input type="text" id="node-input-text" placeholder="text">
     </div>
     
@@ -94,8 +94,8 @@ By default, the talk action is synchronous. However, if you set bargeIn to true 
 
 <script type="text/x-red" data-template-name="stream">
     <div class="form-row">
-        <label for="node-input-streamurl"><i class="icon-tag"></i>Stream URL</label>
-        <input type="text" id="node-input-streamurl" placeholder="text">
+        <label for="node-input-streamurl"><i class="icon-tag"></i>Stream URL {}</label>
+        <input type="text" id="node-input-streamurl" placeholder="https://example.com/audio.mp3">
     </div>
     
     <div class="form-row">
@@ -162,8 +162,8 @@ By default, the stream action is synchronous. However, if you set bargeIn to tru
 
 <script type="text/x-red" data-template-name="input">
     <div class="form-row">
-        <label for="node-input-eventurl"><i class="icon-tag"></i>URL</label>
-        <input type="text" id="node-input-eventurl" placeholder="text">
+        <label for="node-input-eventurl"><i class="icon-tag"></i>URL {}</label>
+        <input type="text" id="node-input-eventurl" placeholder="https://example.com/webhooks/input">
     </div>
     
     <div class="form-row">
@@ -243,8 +243,8 @@ Your webhook endpoint should return another NCCO that replaces the existing NCCO
 
 <script type="text/x-red" data-template-name="record">
     <div class="form-row">
-        <label for="node-input-eventurl"><i class="icon-tag"></i>URL</label>
-        <input type="text" id="node-input-eventurl" placeholder="text">
+        <label for="node-input-eventurl"><i class="icon-tag"></i>URL {}</label>
+        <input type="text" id="node-input-eventurl" placeholder="https://example.com/webhooks/record">
     </div>
     
     <div class="form-row">
@@ -351,13 +351,13 @@ The record action is asynchronous. Recording starts when the record action is ex
 
 <script type="text/x-red" data-template-name="conversation">
     <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+        <label for="node-input-name"><i class="icon-tag"></i>Name {}</label>
         <input type="text" id="node-input-name" placeholder="text">
     </div>
     
     <div class="form-row">
-        <label for="node-input-musiconholdurl"><i class="icon-tag"></i>Music On Hold URL</label>
-        <input type="text" id="node-input-musiconholdurl" placeholder="/url">
+        <label for="node-input-musiconholdurl"><i class="icon-tag"></i>Music On Hold URL {}</label>
+        <input type="text" id="node-input-musiconholdurl" placeholder="https://example.com/audio.mp3">
     </div>
     
     <div class="form-row">
@@ -376,8 +376,8 @@ The record action is asynchronous. Recording starts when the record action is ex
     </div>   
    
     <div class="form-row">
-        <label for="node-input-eventurl"><i class="icon-tag"></i>Event URL</label>
-        <input type="text" id="node-input-eventurl" placeholder="/url">
+        <label for="node-input-eventurl"><i class="icon-tag"></i>Recording Event URL {}</label>
+        <input type="text" id="node-input-eventurl" placeholder="https://example.com/webhooks/event">
     </div>
    
     <div class="form-row">
@@ -453,12 +453,12 @@ You can use the conversation action to create standard or moderated conferences.
   </div>
   
   <div class="form-row">
-      <label for="node-input-to"><i class="icon-tag"></i>To</label>
+      <label for="node-input-to"><i class="icon-tag"></i>To {}</label>
       <input type="text" id="node-input-to" placeholder="Destination">
   </div>
     
     <div class="form-row">
-        <label for="node-input-from"><i class="icon-tag"></i>From</label>
+        <label for="node-input-from"><i class="icon-tag"></i>From {}</label>
         <input type="number" id="node-input-from" placeholder="From Number">
     </div>
     
@@ -489,7 +489,7 @@ You can use the conversation action to create standard or moderated conferences.
     
    
     <div class="form-row">
-        <label for="node-input-eventurl"><i class="icon-tag"></i>Event URL</label>
+        <label for="node-input-eventurl"><i class="icon-tag"></i>Event URL {}</label>
         <input type="text" id="node-input-eventurl" placeholder="/url">
     </div>
    

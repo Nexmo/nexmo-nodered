@@ -57,13 +57,13 @@ module.exports = function (RED) {
   }
   function input(config){
     RED.nodes.createNode(this, config);
-    this.eventurl = config.eventurl;
     this.timeout = config.timeout;
     this.maxdigits = config.maxdigits;
     this.submitonhash = config.submitonhash;
     this.eventmethod = config.eventmethod;  
     var node = this;
     node.on('input', function (msg) {
+      this.eventurl = mustache.render(config.eventurl, msg);;
       if ( 'ncco' in msg){
         var resp = msg.ncco;    
       }else{
@@ -125,15 +125,15 @@ module.exports = function (RED) {
   
   function conversation(config){
     RED.nodes.createNode(this, config);
-    this.eventurl = config.eventurl;
     this.eventmethod = config.eventmethod;  
     this.record = config.record;
     this.endonexit = config.endonexit;
     this.startonenter = config.startonenter;
-    this.musiconholdurl = config.musiconholdurl;  
     var node = this;
     node.on('input', function (msg) {
       this.name = mustache.render(config.name, msg);
+      this.musiconholdurl = mustache.render(config.musiconholdurl, msg);
+      this.eventurl = mustache.render(config.eventurl, msg);
       if ( 'ncco' in msg){
         var resp = msg.ncco;    
       }else{
@@ -160,9 +160,7 @@ module.exports = function (RED) {
   
   function connect(config){
     RED.nodes.createNode(this, config);
-    this.eventurl = config.eventurl;
     this.eventmethod = config.eventmethod;  
-    this.from = config.from;
     this.timeout = config.timeout;
     this.limit = config.limit;
     this.machinedetection = config.machinedetection;  
@@ -171,6 +169,8 @@ module.exports = function (RED) {
     var node = this;
     node.on('input', function (msg) {
       this.to = mustache.render(config.to, msg);
+      this.from = config.from, msg);
+      this.eventurl = mustache.render(config.eventurl, msg);
       if ( 'ncco' in msg){
         var resp = msg.ncco;    
       }else{
