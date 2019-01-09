@@ -166,11 +166,18 @@ module.exports = function (RED) {
     this.machinedetection = config.machinedetection;  
     this.eventtype = config.eventtype;  
     this.endpoint = config.endpoint;
+    this.contentype = config.contentype;
     var node = this;
     node.on('input', function (msg) {
       this.to = mustache.render(config.to, msg);
-      this.from = config.from, msg);
+      this.wsuri = mustache.render(config.wsuri, msg);
+      this.sipuri = mustache.render(config.sipuri, msg);
+      this.headers = mustache.render(config.headers, msg);
+      this.from = mustache.render(config.from, msg);
       this.eventurl = mustache.render(config.eventurl, msg);
+      this.dtmfanswer = mustache.render(config.dtmfanswer, msg);
+      this.onanswer = mustache.render(config.onanswer, msg);
+      
       if ( 'ncco' in msg){
         var resp = msg.ncco;    
       }else{
@@ -187,20 +194,28 @@ module.exports = function (RED) {
       ncco.timeout=this.timeout;
       ncco.limit=this.limit;
       ncco.machineDetection=this.machinedetection;
-      if (this.endpoint == "number"){
+      if (this.endpoint == "phone"){
         var ep = {}
         ep.type = "phone"
         ep.number = this.to
+        if (this.dtmfanswer != ""){
+          ep.dtmfAnswer = this.dtmfanswer
+        }
+        if (this.onanswer != ""){
+          ep.onAnswer = {url: this.onanswer}
+        }
         ncco.endpoint= [ep]
       } else if (this.endpoint == "sip"){
         var ep = {}
         ep.type = "sip"
-        ep.uri = this.to
+        ep.uri = this.sipuri
         ncco.endpoint= [ep]
       }else if (this.endpoint == "websocket"){
         var ep = {}
         ep.type = "websocket"
-        ep.uri = this.to
+        ep.uri = this.wsuri
+        ep['content-type'] = this.contentype
+        ep.headers = JSON.parse(this.headers)
         ncco.endpoint= [ep]
       }
       clean(ncco);
