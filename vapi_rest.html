@@ -238,7 +238,7 @@ Earmuff a call leg
   
   <div class="form-row">
       <label for="node-input-url"><i class="icon-tag"></i>New NCCO URL {}</label>
-      <input type="text" id="node-input-url" placeholder="https://example.com/webhooks/ncco">
+      <input type="text" id="node-input-url" placeholder="url">
   </div>
 
   
@@ -271,8 +271,13 @@ Earmuff a call leg
         color: '#35be8b',
         defaults: {
           creds: {value:"", type:"nexmovoiceapp"},
-          endpoint: {value:"number"},
-          to: {required: true},
+          endpoint: {},
+          to: {},
+          dtmfanswer: {},
+          wsuri: {},
+          contenttype: {},
+          headers: {},
+          sipuri: {},
           from: {},
           ringingtimer:{},
           lengthtimer:{},
@@ -297,16 +302,47 @@ Earmuff a call leg
       
   <div class="form-row">
       <label for="node-input-endpoint"><i class="fa fa-tasks"></i>Endpoint</label>
-      <select type="text" id="node-input-endpoint" style="width:70%;">
-        <option value="number">Number</option>
+      <select type="text" id="node-input-endpoint" style="width:70%;" onchange="toggleEndpoint(this.value)">
+        <option value="phone">Phone</option>
         <option value="sip">SIP</option>
         <option value="websocket">Websocket</option>
        </select>
   </div>
   
-  <div class="form-row">
-      <label for="node-input-to"><i class="icon-tag"></i>To {}</label>
-      <input type="text" id="node-input-to" placeholder="Destination">
+  <div id="phone" style="display: none;">
+    <div class="form-row" >
+       <label for="node-input-to"><i class="icon-tag"></i>Number {}</label>
+       <input type="text" id="node-input-to" placeholder="number">
+    </div>
+    <div class="form-row" >
+       <label for="node-input-dtmfanswer"><i class="icon-tag"></i>dtmfAnswer {}</label>
+       <input type="text" id="node-input-dtmfanswer" placeholder="digits">
+    </div>
+  </div>
+  
+  <div id="websocket" style="display: none;">
+    <div class="form-row">
+      <label for="node-input-wsuri"><i class="icon-tag"></i>URI {}</label>
+      <input type="text" id="node-input-wsuri" placeholder="wss://example.com/socket">
+    </div>
+    <div class="form-row">
+        <label for="node-input-contenttype"><i class="fa fa-tasks"></i>Sample Rate</label>
+        <select type="text" id="node-input-endpoint" style="width:70%;">
+          <option value="audio/l16;rate=16000">16Khz</option>
+          <option value="audio/l16;rate=8000">8Khz</option>
+         </select>
+    </div>
+    <div class="form-row">
+      <label for="node-input-headers"><i class="icon-tag"></i>Headers {}</label>
+      <input type="text" id="node-input-headers" placeholder='{"foo" : "bar"}'>
+    </div>
+  </div>
+  
+  <div id="sip" style="display: none;">
+    <div class="form-row">
+      <label for="node-input-sipuri"><i class="icon-tag"></i>URI {}</label>
+      <input type="text" id="node-input-sipuri" placeholder="sip:1000@example.com">
+    </div>
   </div>
     
     <div class="form-row">
@@ -317,7 +353,7 @@ Earmuff a call leg
    
     <div class="form-row">
         <label for="node-input-answerurl"><i class="icon-tag"></i>Answer URL {}</label>
-        <input type="text" id="node-input-answerurl" placeholder="https://example.com/webhooks/answer">
+        <input type="text" id="node-input-answerurl" placeholder="/url">
     </div>
    
    
@@ -343,8 +379,8 @@ Earmuff a call leg
     
    
     <div class="form-row">
-        <label for="node-input-eventurl"><i class="icon-tag"></i>Event URL {} </label>
-        <input type="text" id="node-input-eventurl" placeholder="https://example.com/webhooks/event">
+        <label for="node-input-eventurl"><i class="icon-tag"></i>Event URL {}</label>
+        <input type="text" id="node-input-eventurl" placeholder="/url">
     </div>
    
     <div class="form-row">
@@ -356,6 +392,25 @@ Earmuff a call leg
     </div>
 </script>
 
+<script>
+  function toggleEndpoint(endpoint){
+    if (endpoint == 'phone'){
+      document.getElementById("phone").style.display = "block";
+      document.getElementById("websocket").style.display = "none";
+      document.getElementById("sip").style.display = "none";    
+    }
+    else if (endpoint == 'websocket'){
+      document.getElementById("phone").style.display = "none";
+      document.getElementById("websocket").style.display = "block";
+      document.getElementById("sip").style.display = "none";    
+    } else if (endpoint == 'sip'){
+      document.getElementById("phone").style.display = "none";
+      document.getElementById("websocket").style.display = "none";
+      document.getElementById("sip").style.display = "block";    
+    } 
+  }
+</script>
+  
 <script type="text/x-red" data-help-name="createcall">
 <p>Transfer a Call to a new NCCO</p>
 
@@ -418,7 +473,7 @@ Create a new outbound call
   
   <div class="form-row">
       <label for="node-input-url"><i class="icon-tag"></i>Audio File URL {}</label>
-      <input type="text" id="node-input-url" placeholder="http://example.com/audio.mp3">
+      <input type="text" id="node-input-url" placeholder="url">
   </div>
   <div class="form-row">
       <label for="node-input-loop"><i class="icon-tag"></i>Loop</label>
@@ -495,7 +550,7 @@ Play an audio file into a call
   
   <div class="form-row">
       <label for="node-input-text"><i class="icon-tag"></i>text {}</label>
-      <input type="text" id="node-input-text" placeholder="Text">
+      <input type="text" id="node-input-text" placeholder="url">
   </div>
   
   <div class="form-row">
@@ -542,7 +597,7 @@ Play text to speech into a call
         category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmoapp"},
+          creds: {value:"", type:"nexmovoiceapp"},
           calluuid: {},
           digits: {}
         },
@@ -571,7 +626,7 @@ Play text to speech into a call
 
 
 <script type="text/x-red" data-help-name="playdtmf">
-<p>Play DTMF into a call</p>
+<p>PLay DTMF into a call</p>
 
 <h3>Inputs</h3>
 

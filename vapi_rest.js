@@ -166,12 +166,16 @@ module.exports = function (RED) {
     this.machinedetection = config.machinedetection 
     var node = this;
     node.on('input', function (msg) {
+      this.to = mustache.render(config.to, msg);
+      this.wsuri = mustache.render(config.wsuri, msg);
+      this.sipuri = mustache.render(config.sipuri, msg);
+      this.headers = mustache.render(config.headers, msg);
+      this.from = mustache.render(config.from, msg);
       this.eventurl = mustache.render(config.eventurl, msg);
       this.answerurl = mustache.render(config.answerurl, msg);    
-      this.from = mustache.render(config.from, msg.payload);
       this.ringingtimer = mustache.render(config.ringingtimer, msg);
       this.lengthtimer = mustache.render(config.lengthtimer, msg);
-      this.to = mustache.render(config.to, msg);
+      this.dtmfanswer = mustache.render(config.dtmfanswer, msg);
       const nexmo = new Nexmo({
         apiKey: this.creds.apikey,
         apiSecret: this.creds.apisecret,
@@ -179,18 +183,23 @@ module.exports = function (RED) {
         privateKey: this.creds.privatekey
         }, {debug: debug}
       );
-      if (this.endpoint == "number"){
+      if (this.endpoint == "phone"){
         var ep = {}
         ep.type = "phone"
         ep.number = this.to
+        if (this.dtmfanswer != ""){
+          ep.dtmfAnswer = this.dtmfanswer
+        }
       } else if (this.endpoint == "sip"){
         var ep = {}
         ep.type = "sip"
-        ep.uri = this.to
+        ep.uri = this.sipuri
       }else if (this.endpoint == "websocket"){
         var ep = {}
         ep.type = "websocket"
-        ep.uri = this.to
+        ep.uri = this.wsuri
+        ep['content-type'] = this.contentype
+        ep.headers = JSON.parse(this.headers)
       }
       var request = {
         to: [ep],
