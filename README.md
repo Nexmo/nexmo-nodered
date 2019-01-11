@@ -14,7 +14,8 @@ node-red-contrib-nexmo
 
 While this version (3.0) is in beta it is reccomended to install directly from the npm command line, once we exit beta and publish to NPM it will appear as Nexmo within the Node Red pallete.
 
-for now you can install by running the following command from your node-red home directorys (eg `~/.node-red`)
+for now you can install by running the following command from your node-red home directory (eg `~/.node-red`)
+
 `npm install git+https://git@github.com/nexmo/nexmo-nodered.git`
 
 ## Account Setup
