@@ -3,15 +3,18 @@
     RED.nodes.registerType('nexmovoiceapp',{
         category: 'config',
         defaults: {
-          name: {},
-          apikey: {},
-          apisecret: {},
-          privatekey: {},
-          appid: {},
-          
+          name: {}
+        },
+         credentials: {
+           apikey: {type:"text"},
+           apisecret: {type:"text"},
+           answerurl: {type:"text"},
+           eventurl: {type:"text"},
+           appid: {type:"text"},
+           privatekey: {type:"text"}
         },
         label: function() {
-            return this.name || this.appid;
+            return this.name;
         }
     });
 </script>
@@ -42,9 +45,8 @@
   </div>
   
 	<div class="form-row">
-  <button id="button" onclick="createapp()">Create New Application</button><br>   
+    <button id="button" onclick="createapp()">Create New Application</button><br>   
   </div>
-  
   
   <div class="form-row">
       <label for="node-config-input-appid"></i>App ID</label>
@@ -53,7 +55,7 @@
   
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Private Key</label>
-      <textarea id="node-config-input-privatekey", placeholder="Private Key" rows="30" cols="40" disabled></textarea>
+      <textarea id="node-config-input-privatekey", placeholder="Private Key" rows="30" cols="50" disabled></textarea>
   </div>
 </script>
 
@@ -106,12 +108,12 @@
 <script type="text/javascript">
     RED.nodes.registerType('nexmobasic',{
         category: 'config',
-        defaults: {
-          apikey: {},
-          apisecret: {},
+        credentials: {
+          apikey: {type:"text"},
+          apisecret: {type:"text"}
         },
         label: function() {
-            return this.apikey;
+            return this.credentials.apikey;
         }
     });
 </script>

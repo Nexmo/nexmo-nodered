@@ -16,10 +16,8 @@ module.exports = function (RED) {
       this.fr = mustache.render(config.fr, msg.payload);
       this.text = mustache.render(config.text, msg.payload);
       const nexmo = new Nexmo({
-        apiKey: this.creds.apikey,
-        apiSecret: this.creds.apisecret,
-        applicationId: this.creds.appid,
-        privateKey: this.creds.privatekey
+        apiKey: this.creds.credentials.apikey,
+        apiSecret: this.creds.credentials.apisecret
       }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       const opts = {}

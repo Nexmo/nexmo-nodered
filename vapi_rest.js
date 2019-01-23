@@ -10,18 +10,17 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
-    
     node.on('input', function (msg) {
       this.filename = mustache.render(config.filename, msg);
       if (this.filename){
         msg.filename = this.filename;
       }
       const nexmo = new Nexmo({
-        apiKey: this.creds.apikey,
-        apiSecret: this.creds.apisecret,
-        applicationId: this.creds.appid,
-        privateKey: this.creds.privatekey
-      }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
+        apiKey: this.creds.credentials.apikey,
+        apiSecret: this.creds.credentials.apisecret,
+        applicationId: this.creds.credentials.appid,
+        privateKey: this.creds.credentials.privatekey
+        }, {debug: debug}
       );
       nexmo.files.get(msg.payload.recording_url, (error, data) => {
             if (error) {
@@ -44,10 +43,10 @@ module.exports = function (RED) {
     node.on('input', function (msg) {
       this.calluuid = mustache.render(config.calluuid, msg);
       const nexmo = new Nexmo({
-        apiKey: this.creds.apikey,
-        apiSecret: this.creds.apisecret,
-        applicationId: this.creds.appid,
-        privateKey: this.creds.privatekey
+        apiKey: this.creds.credentials.apikey,
+        apiSecret: this.creds.credentials.apisecret,
+        applicationId: this.creds.credentials.appid,
+        privateKey: this.creds.credentials.privatekey
         }, {debug: debug}
       );
     if (this.state == "on"){
@@ -80,10 +79,10 @@ module.exports = function (RED) {
     node.on('input', function (msg) {
       this.calluuid = mustache.render(config.calluuid, msg);
       const nexmo = new Nexmo({
-        apiKey: this.creds.apikey,
-        apiSecret: this.creds.apisecret,
-        applicationId: this.creds.appid,
-        privateKey: this.creds.privatekey
+        apiKey: this.creds.credentials.apikey,
+        apiSecret: this.creds.credentials.apisecret,
+        applicationId: this.creds.credentials.appid,
+        privateKey: this.creds.credentials.privatekey
         }, {debug: debug}
       );
     if (this.state == "on"){
@@ -114,10 +113,10 @@ module.exports = function (RED) {
     node.on('input', function (msg) {
       this.calluuid = mustache.render(config.calluuid, msg);
       const nexmo = new Nexmo({
-        apiKey: this.creds.apikey,
-        apiSecret: this.creds.apisecret,
-        applicationId: this.creds.appid,
-        privateKey: this.creds.privatekey
+        apiKey: this.creds.credentials.apikey,
+        apiSecret: this.creds.credentials.apisecret,
+        applicationId: this.creds.credentials.appid,
+        privateKey: this.creds.credentials.privatekey
         }, {debug: debug}
       );
       nexmo.calls.update(this.calluuid, { action: 'hangup' }, (err, response) => {
@@ -139,10 +138,10 @@ module.exports = function (RED) {
       this.calluuid = mustache.render(config.calluuid, msg);
       this.url = mustache.render(config.url, msg);
       const nexmo = new Nexmo({
-        apiKey: this.creds.apikey,
-        apiSecret: this.creds.apisecret,
-        applicationId: this.creds.appid,
-        privateKey: this.creds.privatekey
+        apiKey: this.creds.credentials.apikey,
+        apiSecret: this.creds.credentials.apisecret,
+        applicationId: this.creds.credentials.appid,
+        privateKey: this.creds.credentials.privatekey
         }, {debug: debug}
       );
       nexmo.calls.update(this.calluuid, {action: 'transfer', destination: {"type": "ncco", "url": [this.url]}}, (err, response) => {
@@ -163,7 +162,8 @@ module.exports = function (RED) {
     this.eventmethod = config.eventmethod;
     this.answermethod = config.answermethod;  
     this.endpoint = config.endpoint;
-    this.machinedetection = config.machinedetection 
+    this.machinedetection = config.machinedetection
+    this.contenttype = config.contenttype
     var node = this;
     node.on('input', function (msg) {
       this.to = mustache.render(config.to, msg);
@@ -177,10 +177,10 @@ module.exports = function (RED) {
       this.lengthtimer = mustache.render(config.lengthtimer, msg);
       this.dtmfanswer = mustache.render(config.dtmfanswer, msg);
       const nexmo = new Nexmo({
-        apiKey: this.creds.apikey,
-        apiSecret: this.creds.apisecret,
-        applicationId: this.creds.appid,
-        privateKey: this.creds.privatekey
+        apiKey: this.creds.credentials.apikey,
+        apiSecret: this.creds.credentials.apisecret,
+        applicationId: this.creds.credentials.appid,
+        privateKey: this.creds.credentials.privatekey
         }, {debug: debug}
       );
       if (this.endpoint == "phone"){
@@ -198,7 +198,7 @@ module.exports = function (RED) {
         var ep = {}
         ep.type = "websocket"
         ep.uri = this.wsuri
-        ep['content-type'] = this.contentype
+        ep['content-type'] = this.contenttype
         ep.headers = JSON.parse(this.headers)
       }
       var request = {
@@ -235,12 +235,11 @@ module.exports = function (RED) {
     node.on('input', function (msg) {
       this.calluuid = mustache.render(config.calluuid, msg);
       this.url = mustache.render(config.url, msg);
-      
       const nexmo = new Nexmo({
-        apiKey: this.creds.apikey,
-        apiSecret: this.creds.apisecret,
-        applicationId: this.creds.appid,
-        privateKey: this.creds.privatekey
+        apiKey: this.creds.credentials.apikey,
+        apiSecret: this.creds.credentials.apisecret,
+        applicationId: this.creds.credentials.appid,
+        privateKey: this.creds.credentials.privatekey
         }, {debug: debug}
       );
       if (this.action == 'on'){
@@ -276,10 +275,10 @@ module.exports = function (RED) {
      this.calluuid = mustache.render(config.calluuid, msg);
      this.text = mustache.render(config.text, msg);
      const nexmo = new Nexmo({
-       apiKey: this.creds.apikey,
-       apiSecret: this.creds.apisecret,
-       applicationId: this.creds.appid,
-       privateKey: this.creds.privatekey
+       apiKey: this.creds.credentials.apikey,
+       apiSecret: this.creds.credentials.apisecret,
+       applicationId: this.creds.credentials.appid,
+       privateKey: this.creds.credentials.privatekey
        }, {debug: debug}
      );
      if (this.action == 'on'){
@@ -310,10 +309,10 @@ function playdtmf(config){
     this.calluuid = mustache.render(config.calluuid, msg);
     this.digits = mustache.render(config.digits, msg);
     const nexmo = new Nexmo({
-      apiKey: this.creds.apikey,
-      apiSecret: this.creds.apisecret,
-      applicationId: this.creds.appid,
-      privateKey: this.creds.privatekey
+      apiKey: this.creds.credentials.apikey,
+      apiSecret: this.creds.credentials.apisecret,
+      applicationId: this.creds.credentials.appid,
+      privateKey: this.creds.credentials.privatekey
       }, {debug: debug}
     );
     nexmo.calls.dtmf.send(this.calluuid, { digits: this.digits }, (err, response) => {

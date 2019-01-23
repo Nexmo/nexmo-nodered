@@ -3,7 +3,8 @@
         category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmovoiceapp"}
+          creds: {value:"", type:"nexmovoiceapp"},
+          filename: {}
         },
         inputs:1,
         outputs:1,
@@ -327,7 +328,7 @@ Earmuff a call leg
     </div>
     <div class="form-row">
         <label for="node-input-contenttype"><i class="fa fa-tasks"></i>Sample Rate</label>
-        <select type="text" id="node-input-endpoint" style="width:70%;">
+        <select type="text" id="node-input-contenttype" style="width:70%;">
           <option value="audio/l16;rate=16000">16Khz</option>
           <option value="audio/l16;rate=8000">8Khz</option>
          </select>

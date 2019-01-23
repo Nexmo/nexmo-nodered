@@ -12,10 +12,8 @@ module.exports = function (RED) {
       this.to = mustache.render(config.to, msg);
       this.brand = mustache.render(config.brand, msg);
       const nexmo = new Nexmo({
-        apiKey: this.creds.apikey,
-        apiSecret: this.creds.apisecret,
-        applicationId: this.creds.appid,
-        privateKey: this.creds.privatekey
+        apiKey: this.creds.credentials.apikey,
+        apiSecret: this.creds.credentials.apisecret
       }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       nexmo.verify.request({number: this.to, brand: this.brand}, function(err, response) {
@@ -37,11 +35,9 @@ module.exports = function (RED) {
      this.verify_id = mustache.render(config.verify_id, msg);
      this.code = mustache.render(config.code, msg);
      const nexmo = new Nexmo({
-       apiKey: this.creds.apikey,
-       apiSecret: this.creds.apisecret,
-       applicationId: this.creds.appid,
-       privateKey: this.creds.privatekey
-       }, {debug: false}
+       apiKey: this.creds.credentials.apikey,
+       apiSecret: this.creds.credentials.apisecret
+     }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
      );
      nexmo.verify.check({request_id: this.verify_id, code: this.code}, function(err, response) {
          if(err) { console.error(err); }
@@ -61,11 +57,9 @@ module.exports = function (RED) {
   node.on('input', function (msg) {
     this.verify_id = mustache.render(config.verify_id, msg);
     const nexmo = new Nexmo({
-      apiKey: this.creds.apikey,
-      apiSecret: this.creds.apisecret,
-      applicationId: this.creds.appid,
-      privateKey: this.creds.privatekey
-      }, {debug: false}
+      apiKey: this.creds.credentials.apikey,
+      apiSecret: this.creds.credentials.apisecret
+    }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
     );
     nexmo.verify.control({request_id: this.verify_id, cmd: 'cancel'}, function(err, response) {
         if(err) { console.error(err); }
@@ -84,11 +78,9 @@ module.exports = function (RED) {
   node.on('input', function (msg) {
     this.verify_id = mustache.render(config.verify_id, msg);
     const nexmo = new Nexmo({
-      apiKey: this.creds.apikey,
-      apiSecret: this.creds.apisecret,
-      applicationId: this.creds.appid,
-      privateKey: this.creds.privatekey
-      }, {debug: false}
+      apiKey: this.creds.credentials.apikey,
+      apiSecret: this.creds.credentials.apisecret
+    }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
     );
     nexmo.verify.control({request_id: this.verify_id, cmd: 'trigger_next_event'}, function(err, response) {
         if(err) { console.error(err); }

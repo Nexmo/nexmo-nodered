@@ -166,7 +166,7 @@ module.exports = function (RED) {
     this.machinedetection = config.machinedetection;  
     this.eventtype = config.eventtype;  
     this.endpoint = config.endpoint;
-    this.contentype = config.contentype;
+    this.contenttype = config.contenttype;
     var node = this;
     node.on('input', function (msg) {
       this.to = mustache.render(config.to, msg);
@@ -214,7 +214,7 @@ module.exports = function (RED) {
         var ep = {}
         ep.type = "websocket"
         ep.uri = this.wsuri
-        ep['content-type'] = this.contentype
+        ep['content-type'] = this.contenttype
         ep.headers = JSON.parse(this.headers)
         ncco.endpoint= [ep]
       }
