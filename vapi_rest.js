@@ -20,7 +20,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       nexmo.files.get(msg.payload.recording_url, (error, data) => {
             if (error) {
@@ -47,7 +47,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
     if (this.state == "on"){
       nexmo.calls.update(this.calluuid, { action: 'earmuff' }, (err, res) => {
@@ -83,7 +83,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
     if (this.state == "on"){
       nexmo.calls.update(this.calluuid, { action: 'mute' }, (err, res) => {
@@ -117,7 +117,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       nexmo.calls.update(this.calluuid, { action: 'hangup' }, (err, response) => {
         if(err) { console.error(err); }
@@ -142,7 +142,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       nexmo.calls.update(this.calluuid, {action: 'transfer', destination: {"type": "ncco", "url": [this.url]}}, (err, response) => {
         if(err) { console.error(err); }
@@ -181,7 +181,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       if (this.endpoint == "phone"){
         var ep = {}
@@ -240,7 +240,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       if (this.action == 'on'){
         nexmo.calls.stream.start(this.calluuid, { stream_url: [this.url], loop: this.loop, level: this.level},  (err, response) => {
@@ -279,7 +279,7 @@ module.exports = function (RED) {
        apiSecret: this.creds.credentials.apisecret,
        applicationId: this.creds.credentials.appid,
        privateKey: this.creds.credentials.privatekey
-       }, {debug: debug}
+       }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
      );
      if (this.action == 'on'){
        nexmo.calls.talk.start(this.calluuid, { text: this.text, voice_name: this.voicename, loop: this.loop, level: this.level },  (err, response) => {
@@ -313,7 +313,7 @@ function playdtmf(config){
       apiSecret: this.creds.credentials.apisecret,
       applicationId: this.creds.credentials.appid,
       privateKey: this.creds.credentials.privatekey
-      }, {debug: debug}
+      }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
     );
     nexmo.calls.dtmf.send(this.calluuid, { digits: this.digits }, (err, response) => {
        if(err) { 
