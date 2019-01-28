@@ -7,18 +7,21 @@ module.exports = function (RED) {
   
    function sendsms(config){
     RED.nodes.createNode(this, config);
+    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     this.unicode = config.unicode;
     var node = this;
     
     node.on('input', function (msg) {
-      this.to = mustache.render(config.to, msg.payload);
-      this.fr = mustache.render(config.fr, msg.payload);
-      this.text = mustache.render(config.text, msg.payload);
+      var data = dataobject(this.context(), msg)
+      this.to = mustache.render(config.to, data);
+      this.fr = mustache.render(config.fr, data);
+      this.text = mustache.render(config.text, data);
+      console.log(this.text);
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret
-      }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
+      }, {debug: true, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       const opts = {}
       if (this.unicode == true){
@@ -39,4 +42,20 @@ module.exports = function (RED) {
  
   RED.nodes.registerType("sendsms",sendsms);    
     
+}
+
+function dataobject(context, msg){
+  data = {}
+  data.msg = msg;
+  data.global = {};
+  data.flow = {};
+  g_keys = context.global.keys();
+  f_keys = context.flow.keys();
+  for (k in g_keys){
+    data.global[g_keys[k]] = context.global.get(g_keys[k]);
+  };
+  for (k in f_keys){
+    data.flow[f_keys[k]] = context.flow.get(f_keys[k]);
+  };
+  return data
 }

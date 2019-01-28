@@ -11,7 +11,8 @@ module.exports = function (RED) {
     this.level = config.level;
     var node = this;
     node.on('input', function (msg) {
-      this.text = mustache.render(config.text, msg);
+      var data = dataobject(this.context(), msg);
+      this.text = mustache.render(config.text, data);
       if ( 'ncco' in msg){
         var resp = msg.ncco;    
       } else{
@@ -37,7 +38,8 @@ module.exports = function (RED) {
     this.level = config.level;
     var node = this;
     node.on('input', function (msg) {
-      this.streamurl = mustache.render(config.streamurl, msg);
+      var data = dataobject(this.context(), msg);
+      this.streamurl = mustache.render(config.streamurl, data);
       if ( 'ncco' in msg){
         var resp = msg.ncco;    
       }else{
@@ -63,7 +65,8 @@ module.exports = function (RED) {
     this.eventmethod = config.eventmethod;  
     var node = this;
     node.on('input', function (msg) {
-      this.eventurl = mustache.render(config.eventurl, msg);;
+      var data = dataobject(this.context(), msg);
+      this.eventurl = mustache.render(config.eventurl, data);;
       if ( 'ncco' in msg){
         var resp = msg.ncco;    
       }else{
@@ -97,7 +100,8 @@ module.exports = function (RED) {
     this.beepstart = config.beepstart;  
     var node = this;
     node.on('input', function (msg) {
-      this.eventurl = mustache.render(config.eventurl, msg);
+      var data = dataobject(this.context(), msg);
+      this.eventurl = mustache.render(config.eventurl, data);
       if ( 'ncco' in msg){
         var resp = msg.ncco;    
       }else{
@@ -131,9 +135,10 @@ module.exports = function (RED) {
     this.startonenter = config.startonenter;
     var node = this;
     node.on('input', function (msg) {
-      this.name = mustache.render(config.name, msg);
-      this.musiconholdurl = mustache.render(config.musiconholdurl, msg);
-      this.eventurl = mustache.render(config.eventurl, msg);
+      var data = dataobject(this.context(), msg);
+      this.name = mustache.render(config.name, data);
+      this.musiconholdurl = mustache.render(config.musiconholdurl, data);
+      this.eventurl = mustache.render(config.eventurl, data);
       if ( 'ncco' in msg){
         var resp = msg.ncco;    
       }else{
@@ -169,14 +174,15 @@ module.exports = function (RED) {
     this.contenttype = config.contenttype;
     var node = this;
     node.on('input', function (msg) {
-      this.to = mustache.render(config.to, msg);
-      this.wsuri = mustache.render(config.wsuri, msg);
-      this.sipuri = mustache.render(config.sipuri, msg);
-      this.headers = mustache.render(config.headers, msg);
-      this.from = mustache.render(config.from, msg);
-      this.eventurl = mustache.render(config.eventurl, msg);
-      this.dtmfanswer = mustache.render(config.dtmfanswer, msg);
-      this.onanswer = mustache.render(config.onanswer, msg);
+      var data = dataobject(this.context(), msg);
+      this.to = mustache.render(config.to, data);
+      this.wsuri = mustache.render(config.wsuri, data);
+      this.sipuri = mustache.render(config.sipuri, data);
+      this.headers = mustache.render(config.headers, data);
+      this.from = mustache.render(config.from, data);
+      this.eventurl = mustache.render(config.eventurl, data);
+      this.dtmfanswer = mustache.render(config.dtmfanswer, data);
+      this.onanswer = mustache.render(config.onanswer, data);
       
       if ( 'ncco' in msg){
         var resp = msg.ncco;    
@@ -241,4 +247,21 @@ module.exports = function (RED) {
   RED.nodes.registerType("record", record);
   RED.nodes.registerType("conversation", conversation);
   RED.nodes.registerType("connect", connect);
+}
+
+
+function dataobject(context, msg){
+  data = {}
+  data.msg = msg;
+  data.global = {};
+  data.flow = {};
+  g_keys = context.global.keys();
+  f_keys = context.flow.keys();
+  for (k in g_keys){
+    data.global[g_keys[k]] = context.global.get(g_keys[k]);
+  };
+  for (k in f_keys){
+    data.flow[f_keys[k]] = context.flow.get(f_keys[k]);
+  };
+  return data
 }

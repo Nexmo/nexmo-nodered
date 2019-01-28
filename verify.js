@@ -5,16 +5,18 @@ module.exports = function (RED) {
   
    function sendverify(config){
     RED.nodes.createNode(this, config);
+    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
     
     node.on('input', function (msg) {
-      this.to = mustache.render(config.to, msg);
-      this.brand = mustache.render(config.brand, msg);
+      var data = dataobject(this.context(), msg)
+      this.to = mustache.render(config.to, data);
+      this.brand = mustache.render(config.brand, data);
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret
-      }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
+      }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       nexmo.verify.request({number: this.to, brand: this.brand}, function(err, response) {
           if(err) { console.error(err); }
@@ -28,16 +30,18 @@ module.exports = function (RED) {
   
   function checkverify(config){
    RED.nodes.createNode(this, config);
+   const debug = (this.context().global.get('nexmoDebug') | false);
    this.creds = RED.nodes.getNode(config.creds);
    var node = this;
    
    node.on('input', function (msg) {
-     this.verify_id = mustache.render(config.verify_id, msg);
-     this.code = mustache.render(config.code, msg);
+     var data = dataobject(this.context(), msg)
+     this.verify_id = mustache.render(config.verify_id, data);
+     this.code = mustache.render(config.code, data);
      const nexmo = new Nexmo({
        apiKey: this.creds.credentials.apikey,
        apiSecret: this.creds.credentials.apisecret
-     }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
+     }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
      );
      nexmo.verify.check({request_id: this.verify_id, code: this.code}, function(err, response) {
          if(err) { console.error(err); }
@@ -51,15 +55,16 @@ module.exports = function (RED) {
   
  function cancelverify(config){
   RED.nodes.createNode(this, config);
+  const debug = (this.context().global.get('nexmoDebug') | false);
   this.creds = RED.nodes.getNode(config.creds);
   var node = this;
   
   node.on('input', function (msg) {
-    this.verify_id = mustache.render(config.verify_id, msg);
+    this.verify_id = mustache.render(config.verify_id, dataobject(this.context(), msg));
     const nexmo = new Nexmo({
       apiKey: this.creds.credentials.apikey,
       apiSecret: this.creds.credentials.apisecret
-    }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
+    }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
     );
     nexmo.verify.control({request_id: this.verify_id, cmd: 'cancel'}, function(err, response) {
         if(err) { console.error(err); }
@@ -72,15 +77,16 @@ module.exports = function (RED) {
 }
  function nextverify(config){
   RED.nodes.createNode(this, config);
+  const debug = (this.context().global.get('nexmoDebug') | false);
   this.creds = RED.nodes.getNode(config.creds);
   var node = this;
   
   node.on('input', function (msg) {
-    this.verify_id = mustache.render(config.verify_id, msg);
+    this.verify_id = mustache.render(config.verify_id, dataobject(this.context(), msg));
     const nexmo = new Nexmo({
       apiKey: this.creds.credentials.apikey,
       apiSecret: this.creds.credentials.apisecret
-    }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
+    }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
     );
     nexmo.verify.control({request_id: this.verify_id, cmd: 'trigger_next_event'}, function(err, response) {
         if(err) { console.error(err); }
@@ -95,6 +101,20 @@ module.exports = function (RED) {
   RED.nodes.registerType("checkverify",checkverify);  
   RED.nodes.registerType("cancelverify",cancelverify);  
   RED.nodes.registerType("nextverify",nextverify);  
+}
 
-    
+function dataobject(context, msg){
+  data = {}
+  data.msg = msg;
+  data.global = {};
+  data.flow = {};
+  g_keys = context.global.keys();
+  f_keys = context.flow.keys();
+  for (k in g_keys){
+    data.global[g_keys[k]] = context.global.get(g_keys[k]);
+  };
+  for (k in f_keys){
+    data.flow[f_keys[k]] = context.flow.get(f_keys[k]);
+  };
+  return data
 }

@@ -1,6 +1,5 @@
 const Nexmo = require('nexmo');
 const mustache = require("mustache");
-const debug = false;
 
 
 module.exports = function (RED) {
@@ -8,10 +7,12 @@ module.exports = function (RED) {
         
   function GetRecording(config){
     RED.nodes.createNode(this, config);
+    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
     node.on('input', function (msg) {
-      this.filename = mustache.render(config.filename, msg);
+      
+      this.filename = mustache.render(config.filename, dataobject(this.context(), msg));
       if (this.filename){
         msg.filename = this.filename;
       }
@@ -37,11 +38,12 @@ module.exports = function (RED) {
   
   function earmuff(config){
     RED.nodes.createNode(this, config);
+    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     this.state = config.state;
     var node = this;
     node.on('input', function (msg) {
-      this.calluuid = mustache.render(config.calluuid, msg);
+      this.calluuid = mustache.render(config.calluuid, dataobject(this.context(), msg));
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
@@ -72,12 +74,13 @@ module.exports = function (RED) {
   
   function mute(config){
     RED.nodes.createNode(this, config);
+    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     this.state = config.state;
     var node = this;
     
     node.on('input', function (msg) {
-      this.calluuid = mustache.render(config.calluuid, msg);
+      this.calluuid = mustache.render(config.calluuid, dataobject(this.context(), msg));
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
@@ -108,10 +111,11 @@ module.exports = function (RED) {
   
   function hangup(config){
     RED.nodes.createNode(this, config);
+    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
     node.on('input', function (msg) {
-      this.calluuid = mustache.render(config.calluuid, msg);
+      this.calluuid = mustache.render(config.calluuid, dataobject(this.context(), msg));
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
@@ -132,11 +136,13 @@ module.exports = function (RED) {
   }
   function transfer(config){
     RED.nodes.createNode(this, config);
+    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
     node.on('input', function (msg) {
-      this.calluuid = mustache.render(config.calluuid, msg);
-      this.url = mustache.render(config.url, msg);
+      var data = dataobject(this.context(), msg);
+      this.calluuid = mustache.render(config.calluuid, data);
+      this.url = mustache.render(config.url, data);
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
@@ -158,6 +164,7 @@ module.exports = function (RED) {
   
   function createCall(config){
     RED.nodes.createNode(this, config);
+    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     this.eventmethod = config.eventmethod;
     this.answermethod = config.answermethod;  
@@ -166,16 +173,17 @@ module.exports = function (RED) {
     this.contenttype = config.contenttype
     var node = this;
     node.on('input', function (msg) {
-      this.to = mustache.render(config.to, msg);
-      this.wsuri = mustache.render(config.wsuri, msg);
-      this.sipuri = mustache.render(config.sipuri, msg);
-      this.headers = mustache.render(config.headers, msg);
-      this.from = mustache.render(config.from, msg);
-      this.eventurl = mustache.render(config.eventurl, msg);
-      this.answerurl = mustache.render(config.answerurl, msg);    
-      this.ringingtimer = mustache.render(config.ringingtimer, msg);
-      this.lengthtimer = mustache.render(config.lengthtimer, msg);
-      this.dtmfanswer = mustache.render(config.dtmfanswer, msg);
+      var data = dataobject(this.context(), msg);
+      this.to = mustache.render(config.to, data);
+      this.wsuri = mustache.render(config.wsuri, data);
+      this.sipuri = mustache.render(config.sipuri, data);
+      this.headers = mustache.render(config.headers, data);
+      this.from = mustache.render(config.from, data);
+      this.eventurl = mustache.render(config.eventurl, data);
+      this.answerurl = mustache.render(config.answerurl, data);    
+      this.ringingtimer = mustache.render(config.ringingtimer, data);
+      this.lengthtimer = mustache.render(config.lengthtimer, data);
+      this.dtmfanswer = mustache.render(config.dtmfanswer, data);
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
@@ -227,14 +235,17 @@ module.exports = function (RED) {
   
   function playaudio(config){
     RED.nodes.createNode(this, config);
+    const debug = (this.context().global.get('nexmoDebug') | false);
+    console.log(debug);
     this.creds = RED.nodes.getNode(config.creds);
     this.action = config.action
     this.loop = config.loop
     this.level = config.level
     var node = this;
     node.on('input', function (msg) {
-      this.calluuid = mustache.render(config.calluuid, msg);
-      this.url = mustache.render(config.url, msg);
+      var data = dataobject(this.context(), msg);
+      this.calluuid = mustache.render(config.calluuid, data);
+      this.url = mustache.render(config.url, data);
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
@@ -265,6 +276,7 @@ module.exports = function (RED) {
  
  function playtts(config){
    RED.nodes.createNode(this, config);
+   const debug = (this.context().global.get('nexmoDebug') | false);
    this.creds = RED.nodes.getNode(config.creds);
    this.action = config.action;
    this.loop = config.loop;
@@ -272,8 +284,9 @@ module.exports = function (RED) {
    this.voicename = config.voicename;
    var node = this;
    node.on('input', function (msg) {
-     this.calluuid = mustache.render(config.calluuid, msg);
-     this.text = mustache.render(config.text, msg);
+     var data = dataobject(this.context(), msg);
+     this.calluuid = mustache.render(config.calluuid, data);
+     this.text = mustache.render(config.text, data);
      const nexmo = new Nexmo({
        apiKey: this.creds.credentials.apikey,
        apiSecret: this.creds.credentials.apisecret,
@@ -303,11 +316,13 @@ module.exports = function (RED) {
 
 function playdtmf(config){
   RED.nodes.createNode(this, config);
+  const debug = (this.context().global.get('nexmoDebug') | false);
   this.creds = RED.nodes.getNode(config.creds);
   var node = this;
   node.on('input', function (msg) {
-    this.calluuid = mustache.render(config.calluuid, msg);
-    this.digits = mustache.render(config.digits, msg);
+    var data = dataobject(this.context(), msg);
+    this.calluuid = mustache.render(config.calluuid, data);
+    this.digits = mustache.render(config.digits, data);
     const nexmo = new Nexmo({
       apiKey: this.creds.credentials.apikey,
       apiSecret: this.creds.credentials.apisecret,
@@ -348,6 +363,21 @@ function playdtmf(config){
   RED.nodes.registerType("playtts",playtts);
   RED.nodes.registerType("playdtmf",playdtmf);
   
+  function dataobject(context, msg){
+    data = {}
+    data.msg = msg;
+    data.global = {};
+    data.flow = {};
+    g_keys = context.global.keys();
+    f_keys = context.flow.keys();
+    for (k in g_keys){
+      data.global[g_keys[k]] = context.global.get(g_keys[k]);
+    };
+    for (k in f_keys){
+      data.flow[f_keys[k]] = context.flow.get(f_keys[k]);
+    };
+    return data
+  }
   
   
       
