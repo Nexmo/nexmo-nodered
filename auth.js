@@ -33,5 +33,16 @@ module.exports = function(RED) {
      apisecret: {type:"text"}
    }
  });    
-
+ RED.httpAdmin.post('/nexmo-auth/new-voice-app', RED.auth.needsPermission('test.write'), function(req,res){
+   console.log(req.body);
+   const nexmo = new Nexmo({
+     apiKey: req.body.api_key,
+     apiSecret: req.body.api_secret
+   }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
+   );
+   const options = {};
+   nexmo.app.create(req.body.name, 'voice', req.body.answer_url, req.body.event_url, options, function(error, response){
+     res.send(response);
+   });
+ });   
 }

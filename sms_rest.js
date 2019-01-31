@@ -21,7 +21,7 @@ module.exports = function (RED) {
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret
-      }, {debug: true, appendToUserAgent: "nexmo-nodered/3.0.0"}
+      }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       const opts = {}
       if (this.unicode == true){

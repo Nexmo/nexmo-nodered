@@ -45,7 +45,7 @@
   </div>
   
 	<div class="form-row">
-    <button id="button" onclick="createapp()">Create New Application</button><br>   
+    <button id="button" onclick="newnexmovoiceapp()">Create New Application</button><br>   
   </div>
   
   <div class="form-row">
@@ -68,40 +68,26 @@
 
 
 <script>
-    var resp;
-    function  createapp(){
-      var http = new XMLHttpRequest();
-      var url = 'https://m294jym4q1.execute-api.eu-west-1.amazonaws.com/cors/v1/applications'; //Lambda Function to enable CORS on api.nexmo.com
+
+  function newnexmovoiceapp(){
+      console.log('FUNCTION CALLED')
+      var url = 'nexmo-auth/new-voice-app';
+      console.log(url);
       var params = {
         api_key:  document.getElementById("node-config-input-apikey").value,
         api_secret: document.getElementById("node-config-input-apisecret").value,
         name : document.getElementById("node-config-input-name").value,
-        type : 'voice',
         answer_url : document.getElementById("answerurl").value,
         event_url : document.getElementById("eventurl").value
       }
-      var urlparams = "";
-      for (var key in params) {
-          if (urlparams != "") {
-              urlparams += "&";
-          }
-          urlparams += key + "=" + encodeURIComponent(params[key]);
-      }
-      http.open('POST', url,);
-      //http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      http.onreadystatechange = function() {
-          if(http.readyState == 4 && http.status == 201) {
-              resp = JSON.parse(http.response)
-              console.log(resp);
-              document.getElementById("node-config-input-appid").value = resp.id;
-              document.getElementById("node-config-input-privatekey").value = resp.keys.private_key;
-
-          }
-      }
-      http.send(urlparams);
-    }
-
+      console.log(params);
+      $.post(url, params, function(res){
+		    console.log(res);
+        document.getElementById("node-config-input-appid").value = res.id;
+        document.getElementById("node-config-input-privatekey").value = res.keys.private_key;
+        }, 'json'
+      );
+  }
 </script>
     
     
@@ -113,13 +99,13 @@
           apisecret: {type:"text"}
         },
         label: function() {
-            return this.credentials.apikey;
+            return this.apikey;
         }
     });
 </script>
 
 <script type="text/x-red" data-template-name="nexmobasic">
-  <div class="form-row">
+  <div class="form-row"></
       <label for="node-config-input-apikey">API Key</label>
       <input type="text" id="node-config-input-apikey" placeholder="Nexmo API Key">
   </div>
