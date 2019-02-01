@@ -10,14 +10,6 @@ node-red-contrib-nexmo (beta)
 - [Verify](https://developer.nexmo.com/verify/overview) - Verify a phone number with SMS and voice fallback
 - [Number Insight](https://developer.nexmo.com/number-insight/overview) - Get details and formatting of phone numbers
 
-## Installation
-
-While this version (3.0) is in beta it is recommended to install directly from the npm command line. Once we exit beta and publish to NPM it will appear as Nexmo within the Node Red pallete.
-
-For now, you can install by running the following command from your node-red home directory (eg `~/.node-red`)
-
-`npm install git+https://git@github.com/nexmo/nexmo-nodered.git`
-
 ## Account Setup
 The first time you use a node you will need to create Nexmo authentication parameters.
 The SMS, Insight and Verify Nodes simply use your Nexmo API key and secret.
