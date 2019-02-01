@@ -33,7 +33,7 @@ module.exports = function(RED) {
      apisecret: {type:"text"}
    }
  });    
- RED.httpAdmin.post('/nexmo-auth/new-voice-app', RED.auth.needsPermission('test.write'), function(req,res){
+ RED.httpAdmin.post('/nexmo-auth/new-voice-app', RED.auth.needsPermission('nexmo.write'), function(req,res){
    console.log(req.body);
    const nexmo = new Nexmo({
      apiKey: req.body.api_key,
