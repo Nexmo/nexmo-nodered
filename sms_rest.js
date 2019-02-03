@@ -17,7 +17,6 @@ module.exports = function (RED) {
       this.to = mustache.render(config.to, data);
       this.fr = mustache.render(config.fr, data);
       this.text = mustache.render(config.text, data);
-      console.log(this.text);
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret

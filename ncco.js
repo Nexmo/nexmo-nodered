@@ -5,7 +5,7 @@ module.exports = function (RED) {
     
   function talk(config){
     RED.nodes.createNode(this, config);
-    this.voiceName = config.voiceName;
+    this.voicename = config.voicename;
     this.bargein = config.bargein;
     this.loop = config.loop;
     this.level = config.level;
