@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git://github.com/nexmo/node-red-contrib-nexmo.git"
+        "url": "git://github.com/nexmo/nexmo-nodered.git"
     },
     "author": "Sam Machin",
     "license": "MIT",
