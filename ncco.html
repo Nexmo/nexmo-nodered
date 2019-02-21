@@ -24,7 +24,7 @@
     
     <div class="form-row">
         <label for="node-input-voicename"><i class="icon-tag"></i>Voice Name</label>
-        <input type="text" id="node-input-voicename" placeholder="Kimblerly">
+        <input type="text" id="node-input-voicename" placeholder="Kimberley">
     </div>
     
     <div class="form-row">
@@ -61,9 +61,8 @@
 <h3>Details</h3>
 The talk action sends synthesized speech to a Conversation.
 
-The text provided in the talk action can either be plain, or formatted using SSML. SSML tags provide further instructions to the text-to-speech synthesiser which allow you to set pitch, pronunciation and to combine together text in multiple languages. SSML tags are XML-based and sent inline in the JSON string.
-
-By default, the talk action is synchronous. However, if you set bargeIn to true you must set an input action later in the NCCO stack. The following NCCO examples shows how to send a synthesized speech message to a Conversation or Call:
+The text provided in the talk action can either be plain, or formatted using SSML. SSML tags provide further instructions to the text-to-speech synthesiser which allow you to set pitch, pronunciation and to combine together text in multiple languages. SSML tags are XML-based and sent inline in the text string.
+By default, the talk action is synchronous. However, if you set Barge In to true you must set an input action later in the NCCO flow. 
 
 <h3>References</h3>
     <ul>
@@ -406,7 +405,7 @@ The record action is asynchronous. Recording starts when the record action is ex
  </dl>
 
 <h3>Details</h3>
-The conversation action creates a named conferance.
+The conversation action creates a named Conference.
 
 You can use the conversation action to create standard or moderated conferences. The first person to call the virtual number assigned to the conversation creates it. This action is synchronous, the conversation lasts until the number of participants is 0.
 
