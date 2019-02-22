@@ -28,13 +28,13 @@
     "keywords": [ "node-red", "nexmo", "sms", "phone call" ],
     "node-red": {
         "nodes": {
-            "ncco": "ncco.js",
-            "nexmo_webhooks": "webhooks.js",
-            "vapi_rest" : "vapi_rest.js",
-            "sms_rest" : "sms_rest.js",
-            "verify" : "verify.js",
-            "insight" : "insight.js",
-            "auth" : "auth.js"
+            "ncco": "nodes/ncco.js",
+            "nexmo_webhooks": "nodes/webhooks.js",
+            "vapi_rest" : "nodes/vapi_rest.js",
+            "sms_rest" : "nodes/sms_rest.js",
+            "verify" : "nodes/verify.js",
+            "insight" : "nodes/insight.js",
+            "auth" : "nodes/auth.js"
         }
     }
 }
