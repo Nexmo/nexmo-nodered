@@ -178,6 +178,7 @@ module.exports = function (RED) {
       this.to = mustache.render(config.to, data);
       this.wsuri = mustache.render(config.wsuri, data);
       this.sipuri = mustache.render(config.sipuri, data);
+      this.extension = mustache.render(config.extension, data);
       this.headers = mustache.render(config.headers, data);
       this.from = mustache.render(config.from, data);
       this.eventurl = mustache.render(config.eventurl, data);
@@ -222,6 +223,11 @@ module.exports = function (RED) {
         ep.uri = this.wsuri
         ep['content-type'] = this.contenttype
         ep.headers = JSON.parse(this.headers)
+        ncco.endpoint= [ep]
+      }else if (this.endpoint == "vbc"){
+        var ep = {}
+        ep.type = "vbc"
+        ep.extension = this.extension
         ncco.endpoint= [ep]
       }
       clean(ncco);

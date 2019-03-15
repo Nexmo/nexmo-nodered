@@ -427,6 +427,7 @@ You can use the conversation action to create standard or moderated conferences.
           to: {},
           wsuri: {},
           sipuri: {},
+          extension: {},
           from: {},
           dtmfanswer: {},
           onanswer: {},
@@ -450,10 +451,11 @@ You can use the conversation action to create standard or moderated conferences.
     
   <div class="form-row">
       <label for="node-input-endpoint"><i class="fa fa-tasks"></i>Endpoint</label>
-      <select type="text" id="node-input-endpoint" style="width:70%;" onchange="toggleEndpoint(this.value)">
+      <select type="text" id="node-input-endpoint" style="width:70%;" onchange="toggleEndpointNCCO(this.value)">
         <option value="phone">Phone</option>
         <option value="sip">SIP</option>
         <option value="websocket">Websocket</option>
+        <option value="vbc">VBC Extension</option>
        </select>
   </div>
   
@@ -497,10 +499,16 @@ You can use the conversation action to create standard or moderated conferences.
     </div>
   </div>
   
+  <div id="vbc" style="display: none;">
+    <div class="form-row">
+      <label for="node-input-extension"><i class="icon-tag"></i>Extension {}</label>
+      <input type="text" id="node-input-extension" placeholder="1234">
+    </div>
+  </div>
     
     <div class="form-row">
         <label for="node-input-from"><i class="icon-tag"></i>From {}</label>
-        <input type="number" id="node-input-from" placeholder="From Number">
+        <input type="text" id="node-input-from" placeholder="From Number">
     </div>
     
     <div class="form-row">
@@ -545,20 +553,31 @@ You can use the conversation action to create standard or moderated conferences.
 </script>
 
 <script>
-  function toggleEndpoint(endpoint){
+  function toggleEndpointNCCO(endpoint){
+    console.log(endpoint);
     if (endpoint == 'phone'){
       document.getElementById("phone").style.display = "block";
       document.getElementById("websocket").style.display = "none";
-      document.getElementById("sip").style.display = "none";    
+      document.getElementById("sip").style.display = "none";
+      document.getElementById("vbc").style.display = "none";   
+          
     }
     else if (endpoint == 'websocket'){
       document.getElementById("phone").style.display = "none";
       document.getElementById("websocket").style.display = "block";
-      document.getElementById("sip").style.display = "none";    
+      document.getElementById("sip").style.display = "none";
+      document.getElementById("vbc").style.display = "none";   
+         
     } else if (endpoint == 'sip'){
       document.getElementById("phone").style.display = "none";
       document.getElementById("websocket").style.display = "none";
-      document.getElementById("sip").style.display = "block";    
+      document.getElementById("sip").style.display = "block";
+      document.getElementById("vbc").style.display = "none";          
+    } else if (endpoint == 'vbc'){
+      document.getElementById("phone").style.display = "none";
+      document.getElementById("websocket").style.display = "none";
+      document.getElementById("sip").style.display = "none";  
+      document.getElementById("vbc").style.display = "block";   
     } 
   }
 </script>
