@@ -64,7 +64,7 @@ module.exports = function (RED) {
         if(err) { console.error(err); }
         else {
           msg.payload=response;
-          node.send(response)  
+          node.send(msg)  
         }
       });
     }
@@ -101,7 +101,7 @@ module.exports = function (RED) {
         if(err) { console.error(err); }
         else {
           msg.payload=response;
-          node.send(response)  
+          node.send(msg)  
         }
       });
     }
@@ -127,7 +127,7 @@ module.exports = function (RED) {
         if(err) { console.error(err); }
         else {
           msg.payload=response;
-          node.send(response)  
+          node.send(msg)  
         }
       });
     
@@ -154,7 +154,7 @@ module.exports = function (RED) {
         if(err) { console.error(err); }
         else {
           msg.payload=response;
-          node.send(response)  
+          node.send(msg)  
         }
       });
     
@@ -167,7 +167,7 @@ module.exports = function (RED) {
     const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     this.eventmethod = config.eventmethod;
-    this.answermethod = config.answermethod;  
+    this.answertype = config.answertype;  
     this.endpoint = config.endpoint;
     this.machinedetection = config.machinedetection
     this.contenttype = config.contenttype
@@ -181,10 +181,16 @@ module.exports = function (RED) {
       this.headers = mustache.render(config.headers, data);
       this.from = mustache.render(config.from, data);
       this.eventurl = mustache.render(config.eventurl, data);
-      this.answerurl = mustache.render(config.answerurl, data);    
       this.ringingtimer = mustache.render(config.ringingtimer, data);
       this.lengthtimer = mustache.render(config.lengthtimer, data);
       this.dtmfanswer = mustache.render(config.dtmfanswer, data);
+      if ( this.answertype == 'str'){
+        this.answerURL = mustache.render(config.answer, data);  
+      } else if (this.answertype == 'json'){
+        this.ncco = mustache.render(config.ncco, data);
+      } else if (this.answertype == 'fixed'){
+        this.ncco = msg.ncco
+      }
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
@@ -217,13 +223,16 @@ module.exports = function (RED) {
       var request = {
         to: [ep],
         from: { type: 'phone', number: this.from},
-        answer_url: [this.answerurl],
-        answer_method : this.answermethod,
         event_method : this.eventmethod,
         machine_detection : this.machinedetection,
         length_timer : this.lengthtimer,
         ringing_timer: this.ringingtimer    
       };
+      if ( this.answertype == 'str'){
+        request.answer_url = [this.answerurl]
+      } else {
+        request.ncco = this.ncco
+      }
       if (this.eventurl != ""){
         request.event_url= [this.eventurl]; 
       }
@@ -232,7 +241,7 @@ module.exports = function (RED) {
         if(err) { console.error(err); }
         else {
           msg.payload=response;
-          node.send(response)  
+          node.send(msg)  
         }
       });  
     });  
@@ -271,7 +280,7 @@ module.exports = function (RED) {
           if(err) { console.error(err); }
           else {
             msg.payload=response;
-            node.send(response)  
+            node.send(msg)  
           }
         });
       }
@@ -312,7 +321,7 @@ module.exports = function (RED) {
          if(err) { console.error(err); }
          else {
            msg.payload=response;
-           node.send(response)  
+           node.send(msg)  
          }
        });
      }
@@ -340,15 +349,13 @@ function playdtmf(config){
         console.error(err); 
        } else {
         msg.payload=response;
-        node.send(response)  
+        node.send(msg)  
        }
     });
   });  
 }
 
 
-  
-  
 
   function clean(obj) {
     for (var propName in obj) { 
@@ -367,6 +374,7 @@ function playdtmf(config){
   RED.nodes.registerType("playaudio",playaudio);
   RED.nodes.registerType("playtts",playtts);
   RED.nodes.registerType("playdtmf",playdtmf);
+  
   
   function dataobject(context, msg){
     data = {}

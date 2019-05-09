@@ -284,15 +284,23 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
           ringingtimer:{},
           lengthtimer:{},
           machinedetection:{},
-          answerurl:{},
-          answermethod:{},
+          answer:{},
+          answertype:{},
           eventurl:{},
           eventmethod:{}
         },
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Create Call"
+        label: "Create Call",
+        oneditprepare: function() {
+          $("#node-input-answertype").val(this.answertype);
+          $("#node-input-answer").typedInput({
+              default: 'url',
+              typeField: $("#node-input-answertype"),
+              types:['json',{value:"url",label:"URL"},{value:"fixed",label:"msg.ncco",hasValue:false}]
+          });
+        }
     });
 </script>
 
@@ -363,8 +371,10 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
     
    
     <div class="form-row">
-        <label for="node-input-answerurl"><i class="icon-tag"></i>Answer URL {}</label>
-        <input type="text" id="node-input-answerurl" placeholder="/url">
+        <label for="node-input-answer"><i class="icon-tag"></i>Answer {}</label>
+        <input type="text" id="node-input-answer">
+        <input type="hidden" id="node-input-answertype">
+      
     </div>
    
    
@@ -666,3 +676,5 @@ Play DTMF tones  into a call
         <li><a href="https://developer.nexmo.com/api/voice#startDTMF">Nexmo API Reference</a></li>
     </ul>
 </script>
+        
+        
