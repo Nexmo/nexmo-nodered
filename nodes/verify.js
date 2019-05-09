@@ -1,15 +1,16 @@
 const Nexmo = require('nexmo');
 const mustache = require("mustache");
+const version = require('../package.json').version
 
 module.exports = function (RED) {
   
    function sendverify(config){
     RED.nodes.createNode(this, config);
-    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
     
     node.on('input', function (msg) {
+      var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg)
       this.to = mustache.render(config.to, data);
       this.brand = mustache.render(config.brand, data);
@@ -30,18 +31,18 @@ module.exports = function (RED) {
   
   function checkverify(config){
    RED.nodes.createNode(this, config);
-   const debug = (this.context().global.get('nexmoDebug') | false);
    this.creds = RED.nodes.getNode(config.creds);
    var node = this;
    
    node.on('input', function (msg) {
+     var debug = (this.context().global.get('nexmoDebug') | false);
      var data = dataobject(this.context(), msg)
      this.verify_id = mustache.render(config.verify_id, data);
      this.code = mustache.render(config.code, data);
      const nexmo = new Nexmo({
        apiKey: this.creds.credentials.apikey,
        apiSecret: this.creds.credentials.apisecret
-     }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+     }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
      );
      nexmo.verify.check({request_id: this.verify_id, code: this.code}, function(err, response) {
          if(err) { console.error(err); }
@@ -55,16 +56,16 @@ module.exports = function (RED) {
   
  function cancelverify(config){
   RED.nodes.createNode(this, config);
-  const debug = (this.context().global.get('nexmoDebug') | false);
   this.creds = RED.nodes.getNode(config.creds);
   var node = this;
   
   node.on('input', function (msg) {
+    var debug = (this.context().global.get('nexmoDebug') | false);
     this.verify_id = mustache.render(config.verify_id, dataobject(this.context(), msg));
     const nexmo = new Nexmo({
       apiKey: this.creds.credentials.apikey,
       apiSecret: this.creds.credentials.apisecret
-    }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+    }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
     );
     nexmo.verify.control({request_id: this.verify_id, cmd: 'cancel'}, function(err, response) {
         if(err) { console.error(err); }
@@ -77,16 +78,16 @@ module.exports = function (RED) {
 }
  function nextverify(config){
   RED.nodes.createNode(this, config);
-  const debug = (this.context().global.get('nexmoDebug') | false);
   this.creds = RED.nodes.getNode(config.creds);
   var node = this;
   
   node.on('input', function (msg) {
+    var debug = (this.context().global.get('nexmoDebug') | false);
     this.verify_id = mustache.render(config.verify_id, dataobject(this.context(), msg));
     const nexmo = new Nexmo({
       apiKey: this.creds.credentials.apikey,
       apiSecret: this.creds.credentials.apisecret
-    }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+    }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
     );
     nexmo.verify.control({request_id: this.verify_id, cmd: 'trigger_next_event'}, function(err, response) {
         if(err) { console.error(err); }

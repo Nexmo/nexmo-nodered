@@ -1,4 +1,5 @@
 const Nexmo = require('nexmo');
+const version = require('../package.json').version
 
 
 module.exports = function(RED) {
@@ -34,11 +35,14 @@ module.exports = function(RED) {
    }
  });    
  RED.httpAdmin.post('/nexmo-auth/new-voice-app', RED.auth.needsPermission('nexmo.write'), function(req,res){
-   console.log(req.body);
+   var debug = (this.context().global.get('nexmoDebug') | false);
+   if (debug == true){
+     console.log(req.body);
+   }
    const nexmo = new Nexmo({
      apiKey: req.body.api_key,
      apiSecret: req.body.api_secret
-   }, {debug: false, appendToUserAgent: "nexmo-nodered/3.0.0"}
+   }, {debug: false, appendToUserAgent: "nexmo-nodered/"+version}
    );
    const options = {};
    nexmo.app.create(req.body.name, 'voice', req.body.answer_url, req.body.event_url, options, function(error, response){

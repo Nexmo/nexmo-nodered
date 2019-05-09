@@ -1,17 +1,16 @@
 const Nexmo = require('nexmo');
 const mustache = require("mustache");
+const version = require('../package.json').version
 
 
 module.exports = function (RED) {
-  
         
   function GetRecording(config){
     RED.nodes.createNode(this, config);
-    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
     node.on('input', function (msg) {
-      
+      var debug = (this.context().global.get('nexmoDebug') | false);
       this.filename = mustache.render(config.filename, dataobject(this.context(), msg));
       if (this.filename){
         msg.filename = this.filename;
@@ -21,7 +20,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
       );
       nexmo.files.get(msg.payload.recording_url, (error, data) => {
             if (error) {
@@ -38,18 +37,18 @@ module.exports = function (RED) {
   
   function earmuff(config){
     RED.nodes.createNode(this, config);
-    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     this.state = config.state;
     var node = this;
     node.on('input', function (msg) {
+      var debug = (this.context().global.get('nexmoDebug') | false);
       this.calluuid = mustache.render(config.calluuid, dataobject(this.context(), msg));
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
       );
     if (this.state == "on"){
       nexmo.calls.update(this.calluuid, { action: 'earmuff' }, (err, res) => {
@@ -74,19 +73,18 @@ module.exports = function (RED) {
   
   function mute(config){
     RED.nodes.createNode(this, config);
-    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     this.state = config.state;
     var node = this;
-    
     node.on('input', function (msg) {
+      var debug = (this.context().global.get('nexmoDebug') | false);
       this.calluuid = mustache.render(config.calluuid, dataobject(this.context(), msg));
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
       );
     if (this.state == "on"){
       nexmo.calls.update(this.calluuid, { action: 'mute' }, (err, res) => {
@@ -111,17 +109,17 @@ module.exports = function (RED) {
   
   function hangup(config){
     RED.nodes.createNode(this, config);
-    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
     node.on('input', function (msg) {
+      var debug = (this.context().global.get('nexmoDebug') | false);
       this.calluuid = mustache.render(config.calluuid, dataobject(this.context(), msg));
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
       );
       nexmo.calls.update(this.calluuid, { action: 'hangup' }, (err, response) => {
         if(err) { console.error(err); }
@@ -136,10 +134,10 @@ module.exports = function (RED) {
   }
   function transfer(config){
     RED.nodes.createNode(this, config);
-    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
     node.on('input', function (msg) {
+      var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg);
       this.calluuid = mustache.render(config.calluuid, data);
       this.url = mustache.render(config.url, data);
@@ -148,7 +146,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
       );
       nexmo.calls.update(this.calluuid, {action: 'transfer', destination: {"type": "ncco", "url": [this.url]}}, (err, response) => {
         if(err) { console.error(err); }
@@ -164,7 +162,6 @@ module.exports = function (RED) {
   
   function createCall(config){
     RED.nodes.createNode(this, config);
-    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     this.eventmethod = config.eventmethod;
     this.answertype = config.answertype;  
@@ -173,6 +170,7 @@ module.exports = function (RED) {
     this.contenttype = config.contenttype
     var node = this;
     node.on('input', function (msg) {
+      var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg);
       this.to = mustache.render(config.to, data);
       this.wsuri = mustache.render(config.wsuri, data);
@@ -196,7 +194,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
       );
       if (this.endpoint == "phone"){
         var ep = {}
@@ -249,7 +247,6 @@ module.exports = function (RED) {
   
   function playaudio(config){
     RED.nodes.createNode(this, config);
-    const debug = (this.context().global.get('nexmoDebug') | false);
     console.log(debug);
     this.creds = RED.nodes.getNode(config.creds);
     this.action = config.action
@@ -257,6 +254,7 @@ module.exports = function (RED) {
     this.level = config.level
     var node = this;
     node.on('input', function (msg) {
+      var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg);
       this.calluuid = mustache.render(config.calluuid, data);
       this.url = mustache.render(config.url, data);
@@ -265,7 +263,7 @@ module.exports = function (RED) {
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
       );
       if (this.action == 'on'){
         nexmo.calls.stream.start(this.calluuid, { stream_url: [this.url], loop: this.loop, level: this.level},  (err, response) => {
@@ -290,7 +288,6 @@ module.exports = function (RED) {
  
  function playtts(config){
    RED.nodes.createNode(this, config);
-   const debug = (this.context().global.get('nexmoDebug') | false);
    this.creds = RED.nodes.getNode(config.creds);
    this.action = config.action;
    this.loop = config.loop;
@@ -298,6 +295,7 @@ module.exports = function (RED) {
    this.voicename = config.voicename;
    var node = this;
    node.on('input', function (msg) {
+     var debug = (this.context().global.get('nexmoDebug') | false);
      var data = dataobject(this.context(), msg);
      this.calluuid = mustache.render(config.calluuid, data);
      this.text = mustache.render(config.text, data);
@@ -306,7 +304,7 @@ module.exports = function (RED) {
        apiSecret: this.creds.credentials.apisecret,
        applicationId: this.creds.credentials.appid,
        privateKey: this.creds.credentials.privatekey
-       }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+       }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
      );
      if (this.action == 'on'){
        nexmo.calls.talk.start(this.calluuid, { text: this.text, voice_name: this.voicename, loop: this.loop, level: this.level },  (err, response) => {
@@ -330,10 +328,10 @@ module.exports = function (RED) {
 
 function playdtmf(config){
   RED.nodes.createNode(this, config);
-  const debug = (this.context().global.get('nexmoDebug') | false);
   this.creds = RED.nodes.getNode(config.creds);
   var node = this;
   node.on('input', function (msg) {
+    var debug = (this.context().global.get('nexmoDebug') | false);
     var data = dataobject(this.context(), msg);
     this.calluuid = mustache.render(config.calluuid, data);
     this.digits = mustache.render(config.digits, data);
@@ -342,7 +340,7 @@ function playdtmf(config){
       apiSecret: this.creds.credentials.apisecret,
       applicationId: this.creds.credentials.appid,
       privateKey: this.creds.credentials.privatekey
-      }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+      }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
     );
     nexmo.calls.dtmf.send(this.calluuid, { digits: this.digits }, (err, response) => {
        if(err) { 

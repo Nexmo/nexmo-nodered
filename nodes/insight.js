@@ -1,16 +1,18 @@
 const Nexmo = require('nexmo');
 const mustache = require("mustache");
+const version = require('../package.json').version
+
 
 module.exports = function (RED) {
   
    function numberinsight(config){
     RED.nodes.createNode(this, config);
-    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     this.ni_type = config.ni_type;
     var node = this;
     
     node.on('input', function (msg) {
+      var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg)
       this.number = mustache.render(config.number, data);
       this.url = mustache.render(config.url, data);
@@ -18,7 +20,7 @@ module.exports = function (RED) {
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret
-      }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+      }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
       );
       nexmo.numberInsight.get({level: this.ni_type, number: this.number, callback: this.url}, (error, response) => {
         if(error) {

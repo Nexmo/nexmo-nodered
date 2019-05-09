@@ -1,5 +1,6 @@
 const Nexmo = require('nexmo');
 const mustache = require("mustache");
+const version = require('../package.json').version
 
 
 
@@ -7,12 +8,12 @@ module.exports = function (RED) {
   
    function sendsms(config){
     RED.nodes.createNode(this, config);
-    const debug = (this.context().global.get('nexmoDebug') | false);
     this.creds = RED.nodes.getNode(config.creds);
     this.unicode = config.unicode;
     var node = this;
     
     node.on('input', function (msg) {
+      var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg)
       this.to = mustache.render(config.to, data);
       this.fr = mustache.render(config.fr, data);
@@ -20,7 +21,7 @@ module.exports = function (RED) {
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret
-      }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+      }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
       );
       const opts = {}
       if (this.unicode == true){

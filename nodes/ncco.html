@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('talk',{
         category: 'nexmo',
-        color: '#35be8b',
+        color: '#2d966f',
         defaults: {
           text: {required:true},
           template: {},
@@ -77,7 +77,7 @@ By default, the talk action is synchronous. However, if you set Barge In to true
 <script type="text/javascript">
     RED.nodes.registerType('stream',{
          category: 'nexmo',
-        color: '#35be8b',
+        color: '#2d966f',
         defaults: {
           streamurl: {required:true},
           bargein: {},
@@ -144,7 +144,7 @@ By default, the stream action is synchronous. However, if you set bargeIn to tru
 <script type="text/javascript">
     RED.nodes.registerType('input',{
         category: 'nexmo',
-        color: '#35be8b',
+        color: '#2d966f',
         defaults: {
           eventurl: {},
           eventmethod: {},
@@ -221,7 +221,7 @@ Your webhook endpoint should return another NCCO that replaces the existing NCCO
 <script type="text/javascript">
     RED.nodes.registerType('record',{
         category: 'nexmo',
-        color: '#35be8b',
+        color: '#2d966f',
         defaults: {
           format:{},
           split:{},
@@ -331,7 +331,7 @@ The record action is asynchronous. Recording starts when the record action is ex
 <script type="text/javascript">
     RED.nodes.registerType('conversation',{
         category: 'nexmo',
-        color: '#35be8b',
+        color: '#2d966f',
         defaults: {
           name: {required:true},
           musiconholdurl:{},
@@ -421,7 +421,7 @@ You can use the conversation action to create standard or moderated conferences.
 <script type="text/javascript">
     RED.nodes.registerType('connect',{
         category: 'nexmo',
-        color: '#35be8b',
+        color: '#2d966f',
         defaults: {
           endpoint: {},
           to: {},
