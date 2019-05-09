@@ -236,23 +236,49 @@ module.exports = function (RED) {
       node.send(msg);
     });
   }
+
+//Notify  
+  function notify(config){
+    RED.nodes.createNode(this, config);
+    this.eventmethod = config.eventmethod;  
+    var node = this;
+    node.on('input', function (msg) {
+      var data = dataobject(this.context(), msg);
+      this.payload = mustache.render(config.payload, data);
+      this.eventurl = mustache.render(config.eventurl, data);
+      if ( 'ncco' in msg){
+        var resp = msg.ncco;    
+      }else{
+        var resp = []; 
+      }
+      var ncco = {};
+      ncco.action="notify";
+      ncco.eventUrl= [this.eventurl]; 
+      ncco.eventMethod=this.eventmethod;
+      ncco.payload=JSON.parse(this.payload);
+      clean(ncco);
+      resp.push(ncco);
+      msg.ncco = resp;
+      node.send(msg);
+    });
+  }
   
-  function clean(obj) {
+//Helper Functions  
+function clean(obj) {
     for (var propName in obj) { 
       if (obj[propName] === null || obj[propName] === undefined || obj[propName] === "") {
         delete obj[propName];
       }
     }
-  }
+}
   
-  
-  
-  RED.nodes.registerType("talk", talk);
-  RED.nodes.registerType("stream", stream);
-  RED.nodes.registerType("input", input);
-  RED.nodes.registerType("record", record);
-  RED.nodes.registerType("conversation", conversation);
-  RED.nodes.registerType("connect", connect);
+RED.nodes.registerType("talk", talk);
+RED.nodes.registerType("stream", stream);
+RED.nodes.registerType("input", input);
+RED.nodes.registerType("record", record);
+RED.nodes.registerType("conversation", conversation);
+RED.nodes.registerType("connect", connect);
+RED.nodes.registerType("notify", notify);
 }
 
 

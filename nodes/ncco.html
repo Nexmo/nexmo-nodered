@@ -610,3 +610,67 @@ This action is synchronous, after a connect the next action in the NCCO stack is
 
 
 
+//Notify
+    
+<script type="text/javascript">
+    RED.nodes.registerType('notify',{
+        category: 'nexmo',
+        color: '#2d966f',
+        defaults: {
+          payload: {required:true},
+          eventurl:{required:true},
+          eventmethod:{}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Notify",
+        oneditprepare: function() {
+          $("#node-input-payload").typedInput({ types:['json']});
+          $("#node-input-eventurl").typedInput({
+            default: 'post',
+            types:[{value:"get",label:"GET"},{value:"post",label:"POST"}],
+            typeField: $("#node-input-eventmethod")
+          });
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="notify">
+    <div class="form-row">
+        <label for="node-input-payload"><i class="icon-tag"></i>Payload {}</label>
+        <input type="text" id="node-input-payload">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-eventurl"><i class="icon-tag"></i>Event URL {}</label>
+        <input type="text" id="node-input-eventurl" placeholder="https://example.com/webhooks/event">
+        <input type="hidden" id="node-input-eventmethod">
+    </div>  
+</script>
+
+
+
+<script type="text/x-red" data-help-name="notify">
+    <p>Adds a notify action to an NCCO</p>
+    <h3>Inputs</h3>
+        <dl class="message-properties">
+            <dt>ncco<span class="property-type">object</span></dt>
+            <dd> The output of a previous action, if no <code>msg.ncco</code> exists it will be created  </dd>
+        </dl>
+     <h3>Outputs</h3>
+        <dl class="message-properties">
+          <dt>ncco<span class="property-type">object</span></dt>
+          <dd> <code>msg.ncco</code> will contain any previous actions provided to the input with the new <code>stream</code> action appended  </dd>
+        </dl>
+
+     <h3>Details</h3>
+        The notify action sends a custom <code>payload</code> to your <code>Event URL</code>.
+        You can optonally respond to that webhook with a new NCCO containing actions to execute on the call
+
+     <h3>References</h3>
+          <ul>
+              <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#notify">Nexmo NCCO Reference</a></li>
+          </ul>
+</script>
+
