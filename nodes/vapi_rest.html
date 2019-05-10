@@ -1,3 +1,4 @@
+//getrecording
 <script type="text/javascript">
     RED.nodes.registerType('getrecording',{
         category: 'nexmo',
@@ -51,7 +52,7 @@ Fetch the recording audio from a URL supplied in a recording event webhook
 
 
 
-
+//earmuff
 <script type="text/javascript">
     RED.nodes.registerType('earmuff',{
         category: 'nexmo',
@@ -108,7 +109,7 @@ Earmuff a call leg
     </ul>
 </script>
 
-
+//mute
 <script type="text/javascript">
     RED.nodes.registerType('mute',{
         category: 'nexmo',
@@ -165,6 +166,8 @@ Mute a call leg
     </ul>
 </script>
 
+
+//hangup
 <script type="text/javascript">
     RED.nodes.registerType('hangup',{
         category: 'nexmo',
@@ -212,6 +215,7 @@ Hangup a call leg.
 </script>
 
 
+//transfer
 <script type="text/javascript">
     RED.nodes.registerType('transfer',{
         category: 'nexmo',
@@ -266,6 +270,8 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
 </script>
 
 
+
+//createCall
 <script type="text/javascript">
     RED.nodes.registerType('createcall',{
         category: 'nexmo',
@@ -465,8 +471,7 @@ Create a new outbound call
 </script>
 
 
-
-
+//playaudio
 <script type="text/javascript">
     RED.nodes.registerType('playaudio',{
         category: 'nexmo',
@@ -541,7 +546,7 @@ Play an audio file into a call
 </script>
 
 
-
+//playtts
 <script type="text/javascript">
     RED.nodes.registerType('playtts',{
         category: 'nexmo',
@@ -623,7 +628,7 @@ Play text to speech into a call
     </ul>
 </script>
 
-
+//playdtmf
 
 <script type="text/javascript">
     RED.nodes.registerType('playdtmf',{

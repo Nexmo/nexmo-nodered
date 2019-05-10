@@ -126,7 +126,8 @@ module.exports = function (RED) {
       node.send(msg);
     });
   }
-  
+
+//conversaton  
   function conversation(config){
     RED.nodes.createNode(this, config);
     this.eventmethod = config.eventmethod;  
@@ -135,10 +136,13 @@ module.exports = function (RED) {
     this.startonenter = config.startonenter;
     var node = this;
     node.on('input', function (msg) {
+      console.log(config);
       var data = dataobject(this.context(), msg);
       this.name = mustache.render(config.name, data);
       this.musiconholdurl = mustache.render(config.musiconholdurl, data);
       this.eventurl = mustache.render(config.eventurl, data);
+      this.canhear = mustache.render(config.canhear, data);
+      this.canspeak = mustache.render(config.canspeak, data);
       if ( 'ncco' in msg){
         var resp = msg.ncco;    
       }else{
@@ -155,6 +159,12 @@ module.exports = function (RED) {
       ncco.endOnExit=this.endonexit;
       ncco.startOnEnter=this.startonenter;
       ncco.musicOnHoldUrl=this.musiconholdurl;
+      if (this.canhear != ""){
+        ncco.canHear = this.canhear.split(",")
+      }
+      if (this.canspeak != ""){
+        ncco.canSpeak = this.canspeak.split(",")
+      }
       clean(ncco);
       resp.push(ncco);
       msg.ncco = resp;
@@ -162,7 +172,7 @@ module.exports = function (RED) {
     });
   }
   
-  
+//connect  
   function connect(config){
     RED.nodes.createNode(this, config);
     this.eventmethod = config.eventmethod;  

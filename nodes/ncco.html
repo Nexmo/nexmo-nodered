@@ -326,7 +326,7 @@ The record action is asynchronous. Recording starts when the record action is ex
     </ul>
 </script>
 
-
+//conversation
 
 <script type="text/javascript">
     RED.nodes.registerType('conversation',{
@@ -339,7 +339,9 @@ The record action is asynchronous. Recording starts when the record action is ex
           endonexit:{},
           record:{},
           eventurl:{},
-          eventmethod:{}
+          eventmethod:{},
+          canspeak:{},
+          canhear:{}
         },
         inputs:1,
         outputs:1,
@@ -376,7 +378,8 @@ The record action is asynchronous. Recording starts when the record action is ex
    
     <div class="form-row">
         <label for="node-input-eventurl"><i class="icon-tag"></i>Recording Event URL {}</label>
-        <input type="text" id="node-input-eventurl" placeholder="https://example.com/webhooks/event">
+        <input type="text" id="node-input-eventurl">
+        
     </div>
    
     <div class="form-row">
@@ -386,6 +389,16 @@ The record action is asynchronous. Recording starts when the record action is ex
           <option value="post">POST</option>
          </select>
     </div>
+    <div class="form-row">
+        <label for="node-input-canhear"><i class="icon-tag"></i>Can Hear {}</label>
+        <input type="text" id="node-input-canhear">
+    </div>   
+   
+    <div class="form-row">
+        <label for="node-input-canspeak"><i class="icon-tag"></i>Can Speak {}</label>
+        <input type="text"  id="node-input-canspeak">
+    </div>   
+   
   
 </script>
 
@@ -409,6 +422,7 @@ The conversation action creates a named Conference.
 
 You can use the conversation action to create standard or moderated conferences. The first person to call the virtual number assigned to the conversation creates it. This action is synchronous, the conversation lasts until the number of participants is 0.
 
+Can Hear and Can Speak should be a comma separated list of call UUIDs
 
 <h3>References</h3>
     <ul>
@@ -417,6 +431,7 @@ You can use the conversation action to create standard or moderated conferences.
 </script>
 
 
+//connect
 
 <script type="text/javascript">
     RED.nodes.registerType('connect',{
@@ -446,6 +461,7 @@ You can use the conversation action to create standard or moderated conferences.
         label: "Connect"
     });
 </script>
+
 
 <script type="text/x-red" data-template-name="connect">
     
