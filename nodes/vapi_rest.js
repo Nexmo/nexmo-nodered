@@ -182,10 +182,10 @@ module.exports = function (RED) {
       this.ringingtimer = mustache.render(config.ringingtimer, data);
       this.lengthtimer = mustache.render(config.lengthtimer, data);
       this.dtmfanswer = mustache.render(config.dtmfanswer, data);
-      if ( this.answertype == 'str'){
-        this.answerURL = mustache.render(config.answer, data);  
+      if ( this.answertype == 'url'){
+        this.answerurl = mustache.render(config.answer, data);  
       } else if (this.answertype == 'json'){
-        this.ncco = mustache.render(config.ncco, data);
+        this.ncco = JSON.parse(mustache.render(config.answer, data));
       } else if (this.answertype == 'fixed'){
         this.ncco = msg.ncco
       }
@@ -226,7 +226,7 @@ module.exports = function (RED) {
         length_timer : this.lengthtimer,
         ringing_timer: this.ringingtimer    
       };
-      if ( this.answertype == 'str'){
+      if ( this.answertype == 'url'){
         request.answer_url = [this.answerurl]
       } else {
         request.ncco = this.ncco

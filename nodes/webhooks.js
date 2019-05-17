@@ -190,10 +190,11 @@ module.exports = function(RED) {
             this.callback = function(req,res) {
                 var msgid = RED.util.generateId();
                 res._msgid = msgid;
-                if (node.method.match(/^(post|delete|put|options|patch)$/)) {
-                    node.send({_msgid:msgid,req:req,res:createResponseWrapper(node,res),call:req.body});
+                if (node.method == "post") {
+                  extend(req.body, req.query);
+                  node.send({_msgid:msgid,req:req,res:createResponseWrapper(node,res),call:req.body});
                 } else if (node.method == "get") {
-                    node.send({_msgid:msgid,req:req,res:createResponseWrapper(node,res),call:req.query});
+                  node.send({_msgid:msgid,req:req,res:createResponseWrapper(node,res),call:req.query});
                 } else {
                     node.send({_msgid:msgid,req:req,res:createResponseWrapper(node,res)});
                 }
@@ -259,6 +260,14 @@ module.exports = function(RED) {
             this.warn(RED._("httpin.errors.not-created"));
         }
     }
+    
+    function extend(obj, src) {
+      if (src){
+        Object.keys(src).forEach(function(key) { obj[key] = src[key]; });
+      }
+    	return obj;
+    }
+    
     RED.nodes.registerType("voice webhook",voicewebhook);
     
 
