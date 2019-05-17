@@ -1,3 +1,202 @@
+//createCall
+<script type="text/javascript">
+    RED.nodes.registerType('createcall',{
+        category: 'nexmo',
+        color: '#35be8b',
+        defaults: {
+          creds: {value:"", type:"nexmovoiceapp"},
+          endpoint: {},
+          to: {},
+          dtmfanswer: {},
+          wsuri: {},
+          contenttype: {},
+          headers: {},
+          sipuri: {},
+          extension: {},
+          from: {},
+          ringingtimer:{},
+          lengthtimer:{},
+          machinedetection:{},
+          answer:{},
+          answertype:{},
+          eventurl:{},
+          eventmethod:{}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Create Call",
+        oneditprepare: function() {
+          $("#node-input-answertype").val(this.answertype);
+          $("#node-input-answer").typedInput({
+              default: 'url',
+              typeField: $("#node-input-answertype"),
+              types:['json',{value:"url",label:"URL"},{value:"fixed",label:"msg.ncco",hasValue:false}]
+          });
+          
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="createcall">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+      
+  <div class="form-row">
+      <label for="node-input-endpoint"><i class="fa fa-tasks"></i>Endpoint</label>
+      <select type="text" id="node-input-endpoint" style="width:70%;" onchange="toggleEndpointRest(this.value)">
+        <option value="phone">Phone</option>
+        <option value="sip">SIP</option>
+        <option value="websocket">Websocket</option>
+        <option value="vbc">VBC Extension</option>
+    
+       </select>
+  </div>
+  
+  <div id="phone" style="display: none;">
+    <div class="form-row" >
+       <label for="node-input-to"><i class="icon-tag"></i>Number {}</label>
+       <input type="text" id="node-input-to" placeholder="number">
+    </div>
+    <div class="form-row" >
+       <label for="node-input-dtmfanswer"><i class="icon-tag"></i>dtmfAnswer {}</label>
+       <input type="text" id="node-input-dtmfanswer" placeholder="digits">
+    </div>
+  </div>
+  
+  <div id="websocket" style="display: none;">
+    <div class="form-row">
+      <label for="node-input-wsuri"><i class="icon-tag"></i>URI {}</label>
+      <input type="text" id="node-input-wsuri" placeholder="wss://example.com/socket">
+    </div>
+    <div class="form-row">
+        <label for="node-input-contenttype"><i class="fa fa-tasks"></i>Sample Rate</label>
+        <select type="text" id="node-input-contenttype" style="width:70%;">
+          <option value="audio/l16;rate=16000">16Khz</option>
+          <option value="audio/l16;rate=8000">8Khz</option>
+         </select>
+    </div>
+    <div class="form-row">
+      <label for="node-input-headers"><i class="icon-tag"></i>Headers {}</label>
+      <input type="text" id="node-input-headers" placeholder='{"foo" : "bar"}'>
+    </div>
+  </div>
+  
+  <div id="sip" style="display: none;">
+    <div class="form-row">
+      <label for="node-input-sipuri"><i class="icon-tag"></i>URI {}</label>
+      <input type="text" id="node-input-sipuri" placeholder="sip:1000@example.com">
+    </div>
+  </div>
+      
+  <div id="vbc" style="display: none;">
+    <div class="form-row">
+      <label for="node-input-extension"><i class="icon-tag"></i>Extension {}</label>
+      <input type="text" id="node-input-extension" placeholder="1234">
+    </div>
+  </div>
+    
+    <div class="form-row">
+        <label for="node-input-from"><i class="icon-tag"></i>From {}</label>
+        <input type="text" id="node-input-from" placeholder="From Number">
+    </div>
+    
+   
+    <div class="form-row">
+        <label for="node-input-answer"><i class="icon-tag"></i>Answer {}</label>
+        <input type="text" id="node-input-answer">
+        <input type="hidden" id="node-input-answertype">
+      
+    </div>
+   
+   
+    <div class="form-row">
+        <label for="node-input-ringingtimer"><i class="icon-tag"></i>Ringing Timer {}</label>
+        <input type="number" id="node-input-ringingtimer" placeholder="60">
+    </div>
+    
+     
+    <div class="form-row">
+        <label for="node-input-lengthtimer"><i class="icon-tag"></i>Length Timer {}</label>
+        <input type="number" id="node-input-lengthtimer" placeholder="7200">
+    </div>
+    
+    
+    <div class="form-row">
+        <label for="node-input-machinedetection"><i class="fa fa-tasks"></i>Machine Detection</label>
+        <select type="text" id="node-input-machinedetection" style="width:70%;">
+          <option value="">none</option>
+          <option value="continue">continue</option>
+          <option value="hangup">hangup</option>
+         </select>
+    </div>
+    
+   
+    <div class="form-row">
+        <label for="node-input-eventurl"><i class="icon-tag"></i>Event URL {}</label>
+        <input type="text" id="node-input-eventurl" placeholder="/url">
+    </div>
+   
+    <div class="form-row">
+        <label for="node-input-eventmethod"><i class="fa fa-tasks"></i>Method</label>
+        <select type="text" id="node-input-eventmethod" style="width:70%;">
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+         </select>
+    </div>
+</script>
+
+<script>
+  function toggleEndpointRest(endpoint){
+    if (endpoint == 'phone'){
+      document.getElementById("phone").style.display = "block";
+      document.getElementById("websocket").style.display = "none";
+      document.getElementById("sip").style.display = "none";
+      document.getElementById("vbc").style.display = "none";   
+          
+    }
+    else if (endpoint == 'websocket'){
+      document.getElementById("phone").style.display = "none";
+      document.getElementById("websocket").style.display = "block";
+      document.getElementById("sip").style.display = "none";
+      document.getElementById("vbc").style.display = "none";   
+         
+    } else if (endpoint == 'sip'){
+      document.getElementById("phone").style.display = "none";
+      document.getElementById("websocket").style.display = "none";
+      document.getElementById("sip").style.display = "block";
+      document.getElementById("vbc").style.display = "none";          
+    } else if (endpoint == 'vbc'){
+      document.getElementById("phone").style.display = "none";
+      document.getElementById("websocket").style.display = "none";
+      document.getElementById("sip").style.display = "none";  
+      document.getElementById("vbc").style.display = "block";   
+    } 
+  }
+</script>
+  
+<script type="text/x-red" data-help-name="createcall">
+<p>Create a new Outbound Call</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+ </dl>
+
+<h3>Details</h3>
+Create a new outbound call
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/voice#createCall">Nexmo API Reference</a></li>
+    </ul>
+</script>
+
 //getrecording
 <script type="text/javascript">
     RED.nodes.registerType('getrecording',{
@@ -266,207 +465,6 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
 <h3>References</h3>
     <ul>
         <li><a href="https://developer.nexmo.com/api/voice#updateCall">Nexmo API Reference</a></li>
-    </ul>
-</script>
-
-
-
-//createCall
-<script type="text/javascript">
-    RED.nodes.registerType('createcall',{
-        category: 'nexmo',
-        color: '#35be8b',
-        defaults: {
-          creds: {value:"", type:"nexmovoiceapp"},
-          endpoint: {},
-          to: {},
-          dtmfanswer: {},
-          wsuri: {},
-          contenttype: {},
-          headers: {},
-          sipuri: {},
-          extension: {},
-          from: {},
-          ringingtimer:{},
-          lengthtimer:{},
-          machinedetection:{},
-          answer:{},
-          answertype:{},
-          eventurl:{},
-          eventmethod:{}
-        },
-        inputs:1,
-        outputs:1,
-        icon: "nexmo.png",
-        label: "Create Call",
-        oneditprepare: function() {
-          $("#node-input-answertype").val(this.answertype);
-          $("#node-input-answer").typedInput({
-              default: 'url',
-              typeField: $("#node-input-answertype"),
-              types:['json',{value:"url",label:"URL"},{value:"fixed",label:"msg.ncco",hasValue:false}]
-          });
-          
-        }
-    });
-</script>
-
-<script type="text/x-red" data-template-name="createcall">
-  <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
-      <input type="text" id="node-input-creds" >
-  </div>
-      
-  <div class="form-row">
-      <label for="node-input-endpoint"><i class="fa fa-tasks"></i>Endpoint</label>
-      <select type="text" id="node-input-endpoint" style="width:70%;" onchange="toggleEndpointRest(this.value)">
-        <option value="phone">Phone</option>
-        <option value="sip">SIP</option>
-        <option value="websocket">Websocket</option>
-        <option value="vbc">VBC Extension</option>
-    
-       </select>
-  </div>
-  
-  <div id="phone" style="display: none;">
-    <div class="form-row" >
-       <label for="node-input-to"><i class="icon-tag"></i>Number {}</label>
-       <input type="text" id="node-input-to" placeholder="number">
-    </div>
-    <div class="form-row" >
-       <label for="node-input-dtmfanswer"><i class="icon-tag"></i>dtmfAnswer {}</label>
-       <input type="text" id="node-input-dtmfanswer" placeholder="digits">
-    </div>
-  </div>
-  
-  <div id="websocket" style="display: none;">
-    <div class="form-row">
-      <label for="node-input-wsuri"><i class="icon-tag"></i>URI {}</label>
-      <input type="text" id="node-input-wsuri" placeholder="wss://example.com/socket">
-    </div>
-    <div class="form-row">
-        <label for="node-input-contenttype"><i class="fa fa-tasks"></i>Sample Rate</label>
-        <select type="text" id="node-input-contenttype" style="width:70%;">
-          <option value="audio/l16;rate=16000">16Khz</option>
-          <option value="audio/l16;rate=8000">8Khz</option>
-         </select>
-    </div>
-    <div class="form-row">
-      <label for="node-input-headers"><i class="icon-tag"></i>Headers {}</label>
-      <input type="text" id="node-input-headers" placeholder='{"foo" : "bar"}'>
-    </div>
-  </div>
-  
-  <div id="sip" style="display: none;">
-    <div class="form-row">
-      <label for="node-input-sipuri"><i class="icon-tag"></i>URI {}</label>
-      <input type="text" id="node-input-sipuri" placeholder="sip:1000@example.com">
-    </div>
-  </div>
-      
-  <div id="vbc" style="display: none;">
-    <div class="form-row">
-      <label for="node-input-extension"><i class="icon-tag"></i>Extension {}</label>
-      <input type="text" id="node-input-extension" placeholder="1234">
-    </div>
-  </div>
-    
-    <div class="form-row">
-        <label for="node-input-from"><i class="icon-tag"></i>From {}</label>
-        <input type="text" id="node-input-from" placeholder="From Number">
-    </div>
-    
-   
-    <div class="form-row">
-        <label for="node-input-answer"><i class="icon-tag"></i>Answer {}</label>
-        <input type="text" id="node-input-answer">
-        <input type="hidden" id="node-input-answertype">
-      
-    </div>
-   
-   
-    <div class="form-row">
-        <label for="node-input-ringingtimer"><i class="icon-tag"></i>Ringing Timer {}</label>
-        <input type="number" id="node-input-ringingtimer" placeholder="60">
-    </div>
-    
-     
-    <div class="form-row">
-        <label for="node-input-lengthtimer"><i class="icon-tag"></i>Length Timer {}</label>
-        <input type="number" id="node-input-lengthtimer" placeholder="7200">
-    </div>
-    
-    
-    <div class="form-row">
-        <label for="node-input-machinedetection"><i class="fa fa-tasks"></i>Machine Detection</label>
-        <select type="text" id="node-input-machinedetection" style="width:70%;">
-          <option value="">none</option>
-          <option value="continue">continue</option>
-          <option value="hangup">hangup</option>
-         </select>
-    </div>
-    
-   
-    <div class="form-row">
-        <label for="node-input-eventurl"><i class="icon-tag"></i>Event URL {}</label>
-        <input type="text" id="node-input-eventurl" placeholder="/url">
-    </div>
-   
-    <div class="form-row">
-        <label for="node-input-eventmethod"><i class="fa fa-tasks"></i>Method</label>
-        <select type="text" id="node-input-eventmethod" style="width:70%;">
-          <option value="GET">GET</option>
-          <option value="POST">POST</option>
-         </select>
-    </div>
-</script>
-
-<script>
-  function toggleEndpointRest(endpoint){
-    if (endpoint == 'phone'){
-      document.getElementById("phone").style.display = "block";
-      document.getElementById("websocket").style.display = "none";
-      document.getElementById("sip").style.display = "none";
-      document.getElementById("vbc").style.display = "none";   
-          
-    }
-    else if (endpoint == 'websocket'){
-      document.getElementById("phone").style.display = "none";
-      document.getElementById("websocket").style.display = "block";
-      document.getElementById("sip").style.display = "none";
-      document.getElementById("vbc").style.display = "none";   
-         
-    } else if (endpoint == 'sip'){
-      document.getElementById("phone").style.display = "none";
-      document.getElementById("websocket").style.display = "none";
-      document.getElementById("sip").style.display = "block";
-      document.getElementById("vbc").style.display = "none";          
-    } else if (endpoint == 'vbc'){
-      document.getElementById("phone").style.display = "none";
-      document.getElementById("websocket").style.display = "none";
-      document.getElementById("sip").style.display = "none";  
-      document.getElementById("vbc").style.display = "block";   
-    } 
-  }
-</script>
-  
-<script type="text/x-red" data-help-name="createcall">
-<p>Create a new Outbound Call</p>
-
-<h3>Inputs</h3>
-
- <h3>Outputs</h3>
- <dl class="message-properties">
-     <dt>ncco<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
- </dl>
-
-<h3>Details</h3>
-Create a new outbound call
-
-<h3>References</h3>
-    <ul>
-        <li><a href="https://developer.nexmo.com/api/voice#createCall">Nexmo API Reference</a></li>
     </ul>
 </script>
 

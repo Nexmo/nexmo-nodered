@@ -4,6 +4,90 @@ const version = require('../package.json').version
 
 
 module.exports = function (RED) {
+  function createCall(config){
+    RED.nodes.createNode(this, config);
+    this.creds = RED.nodes.getNode(config.creds);
+    this.eventmethod = config.eventmethod;
+    this.answertype = config.answertype;  
+    this.endpoint = config.endpoint;
+    this.machinedetection = config.machinedetection
+    this.contenttype = config.contenttype
+    var node = this;
+    node.on('input', function (msg) {
+      var debug = (this.context().global.get('nexmoDebug') | false);
+      var data = dataobject(this.context(), msg);
+      this.to = mustache.render(config.to, data);
+      this.wsuri = mustache.render(config.wsuri, data);
+      this.sipuri = mustache.render(config.sipuri, data);
+      this.extension = mustache.render(config.extension, data);
+      this.headers = mustache.render(config.headers, data);
+      this.from = mustache.render(config.from, data);
+      this.eventurl = mustache.render(config.eventurl, data);
+      this.ringingtimer = mustache.render(config.ringingtimer, data);
+      this.lengthtimer = mustache.render(config.lengthtimer, data);
+      this.dtmfanswer = mustache.render(config.dtmfanswer, data);
+      if ( this.answertype == 'url'){
+        this.answerurl = mustache.render(config.answer, data);  
+      } else if (this.answertype == 'json'){
+        this.ncco = JSON.parse(mustache.render(config.answer, data));
+      } else if (this.answertype == 'fixed'){
+        this.ncco = msg.ncco
+      }
+      const nexmo = new Nexmo({
+        apiKey: this.creds.credentials.apikey,
+        apiSecret: this.creds.credentials.apisecret,
+        applicationId: this.creds.credentials.appid,
+        privateKey: this.creds.credentials.privatekey
+        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+      );
+      if (this.endpoint == "phone"){
+        var ep = {}
+        ep.type = "phone"
+        ep.number = this.to
+        if (this.dtmfanswer != ""){
+          ep.dtmfAnswer = this.dtmfanswer
+        }
+      } else if (this.endpoint == "sip"){
+        var ep = {}
+        ep.type = "sip"
+        ep.uri = this.sipuri
+      }else if (this.endpoint == "websocket"){
+        var ep = {}
+        ep.type = "websocket"
+        ep.uri = this.wsuri
+        ep['content-type'] = this.contenttype
+        ep.headers = JSON.parse(this.headers)
+      } else if (this.endpoint == "vbc"){
+        var ep = {}
+        ep.type = "vbc"
+        ep.extension = this.extension
+      }
+      var request = {
+        to: [ep],
+        from: { type: 'phone', number: this.from},
+        event_method : this.eventmethod,
+        machine_detection : this.machinedetection,
+        length_timer : this.lengthtimer,
+        ringing_timer: this.ringingtimer    
+      };
+      if ( this.answertype == 'url'){
+        request.answer_url = [this.answerurl]
+      } else {
+        request.ncco = this.ncco
+      }
+      if (this.eventurl != ""){
+        request.event_url= [this.eventurl]; 
+      }
+      clean(request);
+      nexmo.calls.create(request, (err, response) => {
+        if(err) { console.error(err); }
+        else {
+          msg.payload=response;
+          node.send(msg)  
+        }
+      });  
+    });  
+  }
         
   function GetRecording(config){
     RED.nodes.createNode(this, config);
@@ -160,90 +244,7 @@ module.exports = function (RED) {
     });  
   }
   
-  function createCall(config){
-    RED.nodes.createNode(this, config);
-    this.creds = RED.nodes.getNode(config.creds);
-    this.eventmethod = config.eventmethod;
-    this.answertype = config.answertype;  
-    this.endpoint = config.endpoint;
-    this.machinedetection = config.machinedetection
-    this.contenttype = config.contenttype
-    var node = this;
-    node.on('input', function (msg) {
-      var debug = (this.context().global.get('nexmoDebug') | false);
-      var data = dataobject(this.context(), msg);
-      this.to = mustache.render(config.to, data);
-      this.wsuri = mustache.render(config.wsuri, data);
-      this.sipuri = mustache.render(config.sipuri, data);
-      this.extension = mustache.render(config.extension, data);
-      this.headers = mustache.render(config.headers, data);
-      this.from = mustache.render(config.from, data);
-      this.eventurl = mustache.render(config.eventurl, data);
-      this.ringingtimer = mustache.render(config.ringingtimer, data);
-      this.lengthtimer = mustache.render(config.lengthtimer, data);
-      this.dtmfanswer = mustache.render(config.dtmfanswer, data);
-      if ( this.answertype == 'url'){
-        this.answerurl = mustache.render(config.answer, data);  
-      } else if (this.answertype == 'json'){
-        this.ncco = JSON.parse(mustache.render(config.answer, data));
-      } else if (this.answertype == 'fixed'){
-        this.ncco = msg.ncco
-      }
-      const nexmo = new Nexmo({
-        apiKey: this.creds.credentials.apikey,
-        apiSecret: this.creds.credentials.apisecret,
-        applicationId: this.creds.credentials.appid,
-        privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
-      );
-      if (this.endpoint == "phone"){
-        var ep = {}
-        ep.type = "phone"
-        ep.number = this.to
-        if (this.dtmfanswer != ""){
-          ep.dtmfAnswer = this.dtmfanswer
-        }
-      } else if (this.endpoint == "sip"){
-        var ep = {}
-        ep.type = "sip"
-        ep.uri = this.sipuri
-      }else if (this.endpoint == "websocket"){
-        var ep = {}
-        ep.type = "websocket"
-        ep.uri = this.wsuri
-        ep['content-type'] = this.contenttype
-        ep.headers = JSON.parse(this.headers)
-      } else if (this.endpoint == "vbc"){
-        var ep = {}
-        ep.type = "vbc"
-        ep.extension = this.extension
-      }
-      var request = {
-        to: [ep],
-        from: { type: 'phone', number: this.from},
-        event_method : this.eventmethod,
-        machine_detection : this.machinedetection,
-        length_timer : this.lengthtimer,
-        ringing_timer: this.ringingtimer    
-      };
-      if ( this.answertype == 'url'){
-        request.answer_url = [this.answerurl]
-      } else {
-        request.ncco = this.ncco
-      }
-      if (this.eventurl != ""){
-        request.event_url= [this.eventurl]; 
-      }
-      clean(request);
-      nexmo.calls.create(request, (err, response) => {
-        if(err) { console.error(err); }
-        else {
-          msg.payload=response;
-          node.send(msg)  
-        }
-      });  
-    });  
-  }
+  
   
   function playaudio(config){
     RED.nodes.createNode(this, config);
@@ -362,13 +363,12 @@ function playdtmf(config){
       }
     }
   }
-  
+  RED.nodes.registerType("createcall",createCall);
   RED.nodes.registerType("earmuff",earmuff);    
   RED.nodes.registerType("getrecording",GetRecording);
   RED.nodes.registerType("mute",mute);    
   RED.nodes.registerType("hangup",hangup);    
   RED.nodes.registerType("transfer",transfer);
-  RED.nodes.registerType("createcall",createCall);
   RED.nodes.registerType("playaudio",playaudio);
   RED.nodes.registerType("playtts",playtts);
   RED.nodes.registerType("playdtmf",playdtmf);
