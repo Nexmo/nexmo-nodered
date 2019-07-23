@@ -248,7 +248,6 @@ module.exports = function (RED) {
   
   function playaudio(config){
     RED.nodes.createNode(this, config);
-    console.log(debug);
     this.creds = RED.nodes.getNode(config.creds);
     this.action = config.action
     this.loop = config.loop
@@ -353,7 +352,6 @@ function playdtmf(config){
     });
   });  
 }
-
 
 
   function clean(obj) {

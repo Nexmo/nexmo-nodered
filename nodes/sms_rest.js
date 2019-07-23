@@ -39,9 +39,8 @@ module.exports = function (RED) {
     });  
   }
   
- 
+
   RED.nodes.registerType("sendsms",sendsms);    
-    
 }
 
 function dataobject(context, msg){
