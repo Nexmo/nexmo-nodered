@@ -210,5 +210,55 @@ You can advance to the next verification attempt programmatically by making a co
 </script> 
 
 
+<script type="text/javascript">
+    RED.nodes.registerType('searchverify',{
+        category: 'nexmo',
+        color: '#7683d8',
+        defaults: {
+          creds: {value:"", type:"nexmobasic"},
+          verify_id: {}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Search Verify"
+    });
+</script>
+<script type="text/x-red" data-template-name="searchverify">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-verify_id"><i class="icon-tag"></i>Request ID {}</label>
+      <input type="text" id="node-input-verify_id" placeholder="Verify request ID">
+  </div>
+
+  
+</script>
+
+<script type="text/x-red" data-help-name="searchverify">
+<p>
+Trigger next verification stage</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> The <code>msg</code> Object will contain the response from the Nexmo API</dd>
+ </dl>
+
+<h3>Details</h3>
+You can use the search functionality to see the current status or eventual outcome of a Verify request, using the <code>request_id</code> returned when the verify code was sent.
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/api/verify#verifySearch">Nexmo Documentation</a></li>
+    </ul>
+</script> 
+
+
 
 
