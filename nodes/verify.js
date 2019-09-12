@@ -23,7 +23,7 @@ module.exports = function (RED) {
           if(err) { console.error(err); }
         else {
           msg.payload=response;
-          node.send(response)  
+          node.send(msg)  
         }
       })
     });  
@@ -48,7 +48,7 @@ module.exports = function (RED) {
          if(err) { console.error(err); }
        else {
          msg.payload=response;
-         node.send(response)  
+         node.send(msg)  
        }
      })
    });  
@@ -71,11 +71,12 @@ module.exports = function (RED) {
         if(err) { console.error(err); }
       else {
         msg.payload=response;
-        node.send(response)  
+        node.send(msg)  
       }
     })
   });  
 }
+
  function nextverify(config){
   RED.nodes.createNode(this, config);
   this.creds = RED.nodes.getNode(config.creds);
@@ -93,15 +94,41 @@ module.exports = function (RED) {
         if(err) { console.error(err); }
       else {
         msg.payload=response;
-        node.send(response)  
+        node.send(msg)  
       }
     })
   });  
+}
+
+function searchverify(config){
+  RED.nodes.createNode(this, config);
+  this.creds = RED.nodes.getNode(config.creds);
+  var node = this;
+
+  node.on('input', function(msg) {
+    var debug = (this.context().global.get('nexmoDebug') | false);
+    this.verify_id = mustache.render(config.verify_id, dataobject(this.context(), msg));
+    const nexmo = new Nexmo({
+      apiKey: this.creds.credentials.apikey,
+      apiSecret: this.creds.credentials.apisecret
+    }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+    );
+    nexmo.verify.search(this.verify_id, function(err, response) {
+      if (err) {
+        console.error(err);
+      } else {
+        msg.payload = response;
+        node.send(msg)
+      }
+    });
+    
+  })
 }
   RED.nodes.registerType("sendverify",sendverify);    
   RED.nodes.registerType("checkverify",checkverify);  
   RED.nodes.registerType("cancelverify",cancelverify);  
   RED.nodes.registerType("nextverify",nextverify);  
+  RED.nodes.registerType("searchverify", searchverify);
 }
 
 function dataobject(context, msg){
