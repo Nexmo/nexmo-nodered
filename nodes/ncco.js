@@ -158,7 +158,7 @@ module.exports = function (RED) {
       ncco.record=this.record;
       ncco.endOnExit=this.endonexit;
       ncco.startOnEnter=this.startonenter;
-      ncco.musicOnHoldUrl=this.musiconholdurl;
+      ncco.musicOnHoldUrl=[this.musiconholdurl];
       if (this.canhear != ""){
         ncco.canHear = this.canhear.split(",")
       }
