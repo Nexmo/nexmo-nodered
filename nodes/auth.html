@@ -70,8 +70,7 @@
 <script>
 
   function newnexmovoiceapp(){
-      console.log('FUNCTION CALLED')
-      var url = 'nexmo-auth/new-voice-app';
+    var url = 'nexmo-auth/new-voice-app';
       console.log(url);
       var params = {
         api_key:  document.getElementById("node-config-input-apikey").value,
@@ -128,7 +127,7 @@
 
 
 <script type="text/javascript">
-    RED.nodes.registerType('nexmovoiceapp',{
+    RED.nodes.registerType('nexmoapp',{
         category: 'config',
         defaults: {
           name: {}
@@ -136,15 +135,27 @@
          credentials: {
            apikey: {type:"text"},
            apisecret: {type:"text"},
-           answerurl: {type:"text"},
-           eventurl: {type:"text"},
+           voiceanswerurl: {type:"text"},
+           voiceeventurl: {type:"text"},
+           rtceventurl: {type:"text"},
            appid: {type:"text"},
-           privatekey: {type:"text"}
+           privatekey: {type:"text"},
+           msginboundurl: {type:"text"},
+           msgstatusurl: {type:"text"}
+           voice_answer_method : {type:"text"}
         },
         label: function() {
             return this.name;
+        },
+        oneditprepare: function() {
+          $("#node-config-input-voice_answer_method").val(this.credentials.voice_answer_method);
+          $("#node-config-input-voiceanswerurl").typedInput({
+              default: 'GET',
+              typeField: $("#node-input-voice_answer_method"),
+              types:[{value:"GET",label:"GET"},{value:"POST",label:"POST"}]
+          });
         }
-    });
+      });
 </script>
 
 <script type="text/x-red" data-template-name="nexmoapp">
@@ -153,7 +164,7 @@
       <input type="text" id="node-config-input-name" placeholder="Name">
   </div>
   
-  <div id="appdetails"
+  <div id="appdetails">
   <div class="form-row">
       <label for="node-config-input-apikey">API Key</label>
       <input type="text" id="node-config-input-apikey" placeholder="Nexmo API Key">
@@ -163,61 +174,68 @@
       <label for="node-config-input-apisecret">API Secret</label>
       <input type="text" id="node-config-input-apisecret" placeholder="Nexmo API Secret">
   </div>
-  
+  <h3>Capabilities</h3>
   <div class="form-row">
       <label for="node-input-voicecap"><i class="icon-tag"></i>Voice</label>
-      <input type="checkbox" id="node-input-voicecap">
+      <input type="checkbox" id="node-input-voicecap" onclick='updatecaps(this);'>
       <label for="node-input-rtccap"><i class="icon-tag"></i>RTC</label>
-	  <input type="checkbox" id="node-input-rtccap">
+	    <input type="checkbox" id="node-input-rtccap" onclick='updatecaps(this);'>
       <label for="node-input-vbccap"><i class="icon-tag"></i>VBC</label>
-	  <input type="checkbox" id="node-input-vbccap">
+	    <input type="checkbox" id="node-input-vbccap">
       <label for="node-input-msgcap"><i class="icon-tag"></i>Messages</label>
-	  <input type="checkbox" id="node-input-msgcap">
+	    <input type="checkbox" id="node-input-msgcap" onclick='updatecaps(this);'>
   </div>
   
-  <div id="voice">
+  <div id="voice" style="display:none">
+      <h3>Voice</h3>
   	<div class="form-row">
-      <label for="node-config-input-answerurl"></i>Answer URL</label>
-      <input type="text" id="voice-answerurl" placeholder="http://example.com/answer">
+      <label for="node-config-input-voiceanswerurl"></i>Answer URL</label>
+      <input type="text" id="node-config-voice-answerurl" placeholder="http://example.com/answer">
   	</div>
   	<div class="form-row">
-      <label for="node-config-input-appid"></i>Event URL</label>
-      <input type="text" id="voice-eventurl" placeholder="http://example.com/event">
-  	</div>
-  </div>
-  
-  <div id="rtc">
-  	<div class="form-row">
-      <label for="node-config-input-appid"></i>Event URL</label>
-      <input type="text" id="rtc-eventurl" placeholder="http://example.com/event">
+      <label for="node-config-voice-eventurl"></i>Event URL</label>
+      <input type="text" id="node-config-voice-eventurl" placeholder="http://example.com/event">
   	</div>
   </div>
   
-  <div id="rtc">
+  <div id="rtc" style="display:none">
+      <h3>RTC</h3>
   	<div class="form-row">
-      <label for="node-config-input-appid"></i>Event URL</label>
-      <input type="text" id="rtc-eventurl" placeholder="http://example.com/event">
+      <label for="node-config-rtc-eventurl"></i>Event URL</label>
+      <input type="text" id="node-config-rtc-eventurl" placeholder="http://example.com/event">
   	</div>
   </div>
   
+  <div id="messages" style="display:none">
+      <h3>Messages</h3>
+  	<div class="form-row">
+      <label for="node-config-msg-inboundurl"></i>Inbound URL</label>
+      <input type="text" id="node-config-msg-inboundurl" placeholder="http://example.com/event">
+  	</div>
+  	<div class="form-row">
+      <label for="node-config-msg-statusurl"></i>Status URL</label>
+      <input type="text" id="node-config-msg-statusurl" placeholder="http://example.com/event">
+  	</div>  
+  </div>
   
   
-  
-  
-	<div class="form-row">
+	 <div class="form-row">
     <button id="button" onclick="newnexmoapp()">Create New Application</button><br> 
-	<button id="button" onclick="advanced()">Import Existing Application Credentials</button><br>   
-  </div>
+      
+    <h3>Advanced</h3>
+	  <button id="button" onclick="advancedapp()">Use Existing Application Credentials</button><br>   
+   </div>
+  
   </div>
   
-  <div id="appcreds">
+  <div id="appcreds" style="display:none">
   	<div class="form-row">
       <label for="node-config-input-appid"></i>App ID</label>
       <input type="text" id="node-config-input-appid" placeholder="Application ID" disabled>
   	</div>
   	<div class="form-row">
       <label for="node-config-input-privatekey"></i>Private Key</label>
-      <textarea id="node-config-input-privatekey", placeholder="Private Key" rows="30" cols="50" disabled></textarea>
+      <textarea id="node-config-input-privatekey", placeholder="Private Key" rows="30" cols="50" disabled style="width: 340px; height: 300px;"></textarea>
   	</div>
   </div>
   
@@ -231,11 +249,52 @@
 </script>
 
 
+
+//test
+
+  <script type="text/javascript">
+      RED.nodes.registerType('nexmotest',{
+          category: 'nexmo',
+          color: '#35be8b',
+          defaults: {
+            creds: {value:"", type:"nexmoapp"},
+          },
+          inputs:1,
+          outputs:1,
+          icon: "nexmo.png",
+          label: "TEST"
+      });
+  </script>
+  <script type="text/x-red" data-template-name="nexmotest">
+    <div class="form-row">
+        <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+        <input type="text" id="node-input-creds" >
+    </div>
+  
+    <div class="form-row">
+        <label for="node-input-calluuid"><i class="icon-tag"></i>Call UUID {}</label>
+        <input type="text" id="node-input-calluuid" placeholder="UUID">
+    </div>
+  
+    <div class="form-row">
+        <label for="node-input-digits"><i class="icon-tag"></i>Digits {}</label>
+        <input type="text" id="node-input-digits">
+    </div>
+  </script>
+
+
+  <script type="text/x-red" data-help-name="nexmotest">
+  <p>Test Node</p>
+
+  </script>
+
+
+
+
 <script>
 
-  function newnexmoapp(){
-      console.log('FUNCTION CALLED')
-      var url = 'nexmo-auth/new-app';
+  function newnexmovoiceapp(){
+    var url = 'nexmo-auth/new-voice-app';
       console.log(url);
       var params = {
         api_key:  document.getElementById("node-config-input-apikey").value,
@@ -255,11 +314,73 @@
       );
   }
   
+  function newnexmoapp(){
+      console.log('FUNCTION CALLED')
+      var url = 'nexmo-auth/new-app';
+      console.log(url);
+      var params = {
+        api_key:  document.getElementById("node-config-input-apikey").value,
+        api_secret: document.getElementById("node-config-input-apisecret").value,
+        name : document.getElementById("node-config-input-name").value,
+        voice_answer_url : document.getElementById("node-config-voice-answerurl").value,
+        voice_answer_method : 'POST',
+        voice_event_url : document.getElementById("node-config-voice-eventurl").value,
+        voice_event_method : 'POST',
+        rtc_event_url : document.getElementById("node-config-rtc-eventurl").value,
+        rtc_event_method : 'POST',
+        msg_inbound_url : document.getElementById("node-config-msg-inboundurl").value,
+        msg_inbound_method : 'POST',
+        msg_status_url : document.getElementById("node-config-msg-statusurl").value,
+        voice_cap : document.getElementById("node-input-voicecap").checked,
+        rtc_cap : document.getElementById("node-input-rtccap").checked,
+        msg_cap : document.getElementById("node-input-msgcap").checked,
+        vbc_cap : document.getElementById("node-input-vbccap").checked
+      }
+      console.log(params);
+      $.post(url, params, function(res){
+		console.log(res);
+		document.getElementById("appdetails").style.display = "none";
+		document.getElementById("appcreds").style.display = "block";
+        document.getElementById("node-config-input-appid").value = res.id;
+        document.getElementById("node-config-input-privatekey").value = res.keys.private_key;
+        }, 'json'
+      );
+  }
+  
   function advancedapp(){
 	document.getElementById("appdetails").style.display = "none";
 	document.getElementById("appcreds").style.display = "block";
 	document.getElementById("node-config-input-appid").disabled = false;
 	document.getElementById("node-config-input-privatekey").disabled = false
+  }
+  
+  function updatecaps(item){
+    switch(item.id){
+    case 'node-input-voicecap':
+      if (item.checked == true){
+        document.getElementById("voice").style.display = "block";
+      }
+      else {
+        document.getElementById("voice").style.display = "none";
+      }
+      break;
+    case 'node-input-rtccap':
+      if (item.checked == true){
+        document.getElementById("rtc").style.display = "block";
+      }
+      else {
+        document.getElementById("rtc").style.display = "none";
+      }
+      break;
+    case 'node-input-msgcap':
+      if (item.checked == true){
+        document.getElementById("messages").style.display = "block";
+      }
+      else {
+        document.getElementById("messages").style.display = "none";
+      }
+      break;
+    }
   }
 </script>
   
