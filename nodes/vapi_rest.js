@@ -299,6 +299,7 @@ module.exports = function (RED) {
      var data = dataobject(this.context(), msg);
      this.calluuid = mustache.render(config.calluuid, data);
      this.text = mustache.render(config.text, data);
+     this.voicename = mustache.render(config.voicename, data);
      const nexmo = new Nexmo({
        apiKey: this.creds.credentials.apikey,
        apiSecret: this.creds.credentials.apisecret,
