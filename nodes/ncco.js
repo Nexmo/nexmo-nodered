@@ -13,6 +13,7 @@ module.exports = function (RED) {
     node.on('input', function (msg) {
       var data = dataobject(this.context(), msg);
       this.text = mustache.render(config.text, data);
+      this.voicename = mustache.render(config.voicename, data);
       if ( 'ncco' in msg){
         var resp = msg.ncco;    
       } else{
