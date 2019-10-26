@@ -9,7 +9,8 @@ module.exports = function (RED) {
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
     
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg)
       this.to = mustache.render(config.to, data);
@@ -20,12 +21,17 @@ module.exports = function (RED) {
       }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
       nexmo.verify.request({number: this.to, brand: this.brand}, function(err, response) {
-          if(err) { console.error(err); }
-        else {
+        if(err) {
+          console.error(err);
+          done(err);
+        } else {
           msg.payload=response;
-          node.send(msg)  
+          send(msg);
+          if(done) {
+            done();
+          }
         }
-      })
+      });
     });  
   }
   
@@ -34,7 +40,8 @@ module.exports = function (RED) {
    this.creds = RED.nodes.getNode(config.creds);
    var node = this;
    
-   node.on('input', function (msg) {
+   node.on('input', function (msg, send, done) {
+     send = send || function() { node.send.apply(node,arguments) };
      var debug = (this.context().global.get('nexmoDebug') | false);
      var data = dataobject(this.context(), msg)
      this.verify_id = mustache.render(config.verify_id, data);
@@ -45,10 +52,15 @@ module.exports = function (RED) {
      }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
      );
      nexmo.verify.check({request_id: this.verify_id, code: this.code}, function(err, response) {
-         if(err) { console.error(err); }
-       else {
+       if(err) {
+         console.error(err);
+         done(err);
+       } else {
          msg.payload=response;
-         node.send(msg)  
+         send(msg);
+         if(done) {
+           done();
+         }
        }
      })
    });  
@@ -59,7 +71,8 @@ module.exports = function (RED) {
   this.creds = RED.nodes.getNode(config.creds);
   var node = this;
   
-  node.on('input', function (msg) {
+  node.on('input', function (msg, send, done) {
+    send = send || function() { node.send.apply(node,arguments) };
     var debug = (this.context().global.get('nexmoDebug') | false);
     this.verify_id = mustache.render(config.verify_id, dataobject(this.context(), msg));
     const nexmo = new Nexmo({
@@ -68,10 +81,15 @@ module.exports = function (RED) {
     }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
     );
     nexmo.verify.control({request_id: this.verify_id, cmd: 'cancel'}, function(err, response) {
-        if(err) { console.error(err); }
-      else {
+      if(err) {
+        console.error(err);
+        done(err);
+      } else {
         msg.payload=response;
-        node.send(msg)  
+        send(msg);
+        if(done) {
+          done();
+        }
       }
     })
   });  
@@ -82,7 +100,8 @@ module.exports = function (RED) {
   this.creds = RED.nodes.getNode(config.creds);
   var node = this;
   
-  node.on('input', function (msg) {
+  node.on('input', function (msg, send, done) {
+    send = send || function() { node.send.apply(node,arguments) };
     var debug = (this.context().global.get('nexmoDebug') | false);
     this.verify_id = mustache.render(config.verify_id, dataobject(this.context(), msg));
     const nexmo = new Nexmo({
@@ -91,10 +110,15 @@ module.exports = function (RED) {
     }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
     );
     nexmo.verify.control({request_id: this.verify_id, cmd: 'trigger_next_event'}, function(err, response) {
-        if(err) { console.error(err); }
-      else {
+      if(err) {
+        console.error(err);
+        done(err);
+      } else {
         msg.payload=response;
-        node.send(msg)  
+        send(msg);
+        if(done) {
+          done();
+        }
       }
     })
   });  
@@ -105,7 +129,8 @@ function searchverify(config){
   this.creds = RED.nodes.getNode(config.creds);
   var node = this;
 
-  node.on('input', function(msg) {
+  node.on('input', function(msg, send, done) {
+    send = send || function() { node.send.apply(node,arguments) };
     var debug = (this.context().global.get('nexmoDebug') | false);
     this.verify_id = mustache.render(config.verify_id, dataobject(this.context(), msg));
     const nexmo = new Nexmo({
@@ -116,9 +141,13 @@ function searchverify(config){
     nexmo.verify.search(this.verify_id, function(err, response) {
       if (err) {
         console.error(err);
+        done(err);
       } else {
         msg.payload = response;
-        node.send(msg)
+        send(msg);
+        if(done) {
+          done();
+        }
       }
     });
     
