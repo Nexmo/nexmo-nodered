@@ -12,7 +12,8 @@ module.exports = function (RED) {
     this.unicode = config.unicode;
     var node = this;
     
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg)
       this.to = mustache.render(config.to, data);
@@ -30,10 +31,15 @@ module.exports = function (RED) {
         opts.type = "text";
       }
       nexmo.message.sendSms(this.fr, this.to, this.text, opts, function(err, response){
-        if(err) { console.error(err); }
-        else {
+        if(err) {
+          console.error(err);
+          done(err);
+        } else {
           msg.payload=response;
-          node.send(msg)  
+          send(msg);
+          if(done) {
+            done();
+          }
         }
       })
     });  

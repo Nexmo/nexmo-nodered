@@ -11,7 +11,8 @@ module.exports = function (RED) {
     this.ni_type = config.ni_type;
     var node = this;
     
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg)
       this.number = mustache.render(config.number, data);
@@ -25,10 +26,14 @@ module.exports = function (RED) {
       nexmo.numberInsight.get({level: this.ni_type, number: this.number, callback: this.url}, (error, response) => {
         if(error) {
           console.error(error);
+          done(error);
         }
         else {
           msg.payload=response;
-          node.send(msg) 
+          send(msg);
+          if(done) {
+            done();
+          }
         }
       });
     });  

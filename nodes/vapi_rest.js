@@ -13,7 +13,8 @@ module.exports = function (RED) {
     this.machinedetection = config.machinedetection
     this.contenttype = config.contenttype
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg);
       this.to = mustache.render(config.to, data);
@@ -80,10 +81,15 @@ module.exports = function (RED) {
       }
       clean(request);
       nexmo.calls.create(request, (err, response) => {
-        if(err) { console.error(err); }
-        else {
+        if(err) {
+          console.error(err);
+          done(err);
+        } else {
           msg.payload=response;
-          node.send(msg)  
+          send(msg);
+          if(done) {
+            done();
+          }
         }
       });  
     });  
@@ -93,7 +99,8 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var debug = (this.context().global.get('nexmoDebug') | false);
       this.filename = mustache.render(config.filename, dataobject(this.context(), msg));
       if (this.filename){
@@ -109,10 +116,14 @@ module.exports = function (RED) {
       nexmo.files.get(msg.payload.recording_url, (error, data) => {
             if (error) {
               console.log(error, null);
+              done(error);
             } else {
               console.log(data.length);
               msg.payload = data;
-              node.send(msg);
+              send(msg);
+              if(done) {
+                done();
+              }
             }
       });
       
@@ -124,7 +135,8 @@ module.exports = function (RED) {
     this.creds = RED.nodes.getNode(config.creds);
     this.state = config.state;
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var debug = (this.context().global.get('nexmoDebug') | false);
       this.calluuid = mustache.render(config.calluuid, dataobject(this.context(), msg));
       const nexmo = new Nexmo({
@@ -136,18 +148,28 @@ module.exports = function (RED) {
       );
     if (this.state == "on"){
       nexmo.calls.update(this.calluuid, { action: 'earmuff' }, (err, res) => {
-        if(err) { console.error(err); }
-        else {
+        if(err) {
+          console.error(err);
+          done(err);
+        } else {
           msg.payload=response;
-          node.send(response)  
+          send(response);
+          if(done) {
+            done();
+          }
         }
       });
     } else {
       nexmo.calls.update(this.calluuid, { action: 'unearmuff' }, (err, res) => {
-        if(err) { console.error(err); }
-        else {
+        if(err) {
+          console.error(err);
+          done(err);
+        } else {
           msg.payload=response;
-          node.send(msg)  
+          send(msg);
+          if(done) {
+            done();
+          }
         }
       });
     }
@@ -160,7 +182,8 @@ module.exports = function (RED) {
     this.creds = RED.nodes.getNode(config.creds);
     this.state = config.state;
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var debug = (this.context().global.get('nexmoDebug') | false);
       this.calluuid = mustache.render(config.calluuid, dataobject(this.context(), msg));
       const nexmo = new Nexmo({
@@ -172,18 +195,28 @@ module.exports = function (RED) {
       );
     if (this.state == "on"){
       nexmo.calls.update(this.calluuid, { action: 'mute' }, (err, res) => {
-        if(err) { console.error(err); }
-        else {
+        if(err) {
+          console.error(err);
+          done(err);
+        } else {
           msg.payload=response;
-          node.send(response)  
+          send(response);
+          if(done) {
+            done();
+          }
         }
       });
     } else {
       nexmo.calls.update(this.calluuid, { action: 'unmute' }, (err, res) => {
-        if(err) { console.error(err); }
-        else {
+        if(err) {
+          console.error(err);
+          done(err);
+        } else {
           msg.payload=response;
-          node.send(msg)  
+          send(msg);
+          if(done) {
+            done();
+          }
         }
       });
     }
@@ -195,7 +228,8 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var debug = (this.context().global.get('nexmoDebug') | false);
       this.calluuid = mustache.render(config.calluuid, dataobject(this.context(), msg));
       const nexmo = new Nexmo({
@@ -206,10 +240,15 @@ module.exports = function (RED) {
         }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
       );
       nexmo.calls.update(this.calluuid, { action: 'hangup' }, (err, response) => {
-        if(err) { console.error(err); }
-        else {
+        if(err) {
+          console.error(err);
+          done(err);
+        } else {
           msg.payload=response;
-          node.send(msg)  
+          send(msg);
+          if(done) {
+            done();
+          }
         }
       });
     
@@ -220,7 +259,8 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg);
       this.calluuid = mustache.render(config.calluuid, data);
@@ -233,10 +273,15 @@ module.exports = function (RED) {
         }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
       );
       nexmo.calls.update(this.calluuid, {action: 'transfer', destination: {"type": "ncco", "url": [this.url]}}, (err, response) => {
-        if(err) { console.error(err); }
-        else {
+        if(err) {
+          console.error(err);
+          done(err);
+        } else {
           msg.payload=response;
-          node.send(msg)  
+          send(msg);
+          if(done) {
+            done();
+          }
         }
       });
     
@@ -253,7 +298,8 @@ module.exports = function (RED) {
     this.loop = config.loop
     this.level = config.level
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg);
       this.calluuid = mustache.render(config.calluuid, data);
@@ -267,18 +313,28 @@ module.exports = function (RED) {
       );
       if (this.action == 'on'){
         nexmo.calls.stream.start(this.calluuid, { stream_url: [this.url], loop: this.loop, level: this.level},  (err, response) => {
-          if(err) { console.error(err); }
-          else {
+          if(err) {
+            console.error(err);
+            done(err);
+          } else {
             msg.payload=response;
-            node.send(response)  
+            send(response);
+            if(done) {
+              done();
+            }
           }
         });
       } else {
         nexmo.calls.stream.stop(this.calluuid,  (err, response) => {
-          if(err) { console.error(err); }
-          else {
+          if(err) {
+            console.error(err);
+            done(err);
+          } else {
             msg.payload=response;
-            node.send(msg)  
+            send(msg);
+            if(done) {
+              done();
+            }
           }
         });
       }
@@ -294,7 +350,8 @@ module.exports = function (RED) {
    this.level = config.level;
    this.voicename = config.voicename;
    var node = this;
-   node.on('input', function (msg) {
+   node.on('input', function (msg, send, done) {
+     send = send || function() { node.send.apply(node,arguments) };
      var debug = (this.context().global.get('nexmoDebug') | false);
      var data = dataobject(this.context(), msg);
      this.calluuid = mustache.render(config.calluuid, data);
@@ -309,18 +366,28 @@ module.exports = function (RED) {
      );
      if (this.action == 'on'){
        nexmo.calls.talk.start(this.calluuid, { text: this.text, voice_name: this.voicename, loop: this.loop, level: this.level },  (err, response) => {
-         if(err) { console.error(err); }
-         else {
+         if(err) {
+           console.error(err);
+           done(err);
+         } else {
            msg.payload=response;
-           node.send(response)  
+           send(response);
+           if(done) {
+            done();
+          }
          }
        });
      } else {
        nexmo.calls.talk.stop(this.calluuid,  (err, res) => {
-         if(err) { console.error(err); }
-         else {
+         if(err) {
+           console.error(err);
+           done(err);
+         } else {
            msg.payload=response;
-           node.send(msg)  
+           send(msg);
+           if(done) {
+            done();
+          }
          }
        });
      }
@@ -331,7 +398,8 @@ function playdtmf(config){
   RED.nodes.createNode(this, config);
   this.creds = RED.nodes.getNode(config.creds);
   var node = this;
-  node.on('input', function (msg) {
+  node.on('input', function (msg, send, done) {
+    send = send || function() { node.send.apply(node,arguments) };
     var debug = (this.context().global.get('nexmoDebug') | false);
     var data = dataobject(this.context(), msg);
     this.calluuid = mustache.render(config.calluuid, data);
@@ -345,10 +413,14 @@ function playdtmf(config){
     );
     nexmo.calls.dtmf.send(this.calluuid, { digits: this.digits }, (err, response) => {
        if(err) { 
-        console.error(err); 
+        console.error(err);
+        done(err);
        } else {
         msg.payload=response;
-        node.send(msg)  
+        send(msg);
+         if(done) {
+           done();
+         }
        }
     });
   });  
@@ -365,7 +437,7 @@ function playdtmf(config){
   RED.nodes.registerType("createcall",createCall);
   RED.nodes.registerType("earmuff",earmuff);    
   RED.nodes.registerType("getrecording",GetRecording);
-  RED.nodes.registerType("mute",mute);    
+  RED.nodes.registerType("mute",mute);
   RED.nodes.registerType("hangup",hangup);    
   RED.nodes.registerType("transfer",transfer);
   RED.nodes.registerType("playaudio",playaudio);

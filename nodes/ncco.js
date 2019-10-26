@@ -10,7 +10,8 @@ module.exports = function (RED) {
     this.loop = config.loop;
     this.level = config.level;
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var data = dataobject(this.context(), msg);
       this.text = mustache.render(config.text, data);
       this.voicename = mustache.render(config.voicename, data);
@@ -29,7 +30,10 @@ module.exports = function (RED) {
       clean(ncco);
       resp.push(ncco);
       msg.ncco = resp;
-      node.send(msg);
+      send(msg);
+      if(done) {
+        done();
+      }
     });  
   }
   function stream(config){
@@ -38,7 +42,8 @@ module.exports = function (RED) {
     this.loop = config.loop;
     this.level = config.level;
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var data = dataobject(this.context(), msg);
       this.streamurl = mustache.render(config.streamurl, data);
       if ( 'ncco' in msg){
@@ -55,7 +60,10 @@ module.exports = function (RED) {
       clean(ncco);
       resp.push(ncco);
       msg.ncco = resp;
-      node.send(msg);
+      send(msg);
+      if(done) {
+        done();
+      }
     });  
   }
   function input(config){
@@ -65,7 +73,8 @@ module.exports = function (RED) {
     this.submitonhash = config.submitonhash;
     this.eventmethod = config.eventmethod;  
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var data = dataobject(this.context(), msg);
       this.eventurl = mustache.render(config.eventurl, data);;
       if ( 'ncco' in msg){
@@ -85,7 +94,10 @@ module.exports = function (RED) {
       clean(ncco);
       resp.push(ncco);
       msg.ncco = resp;
-      node.send(msg);
+      send(msg);
+      if(done) {
+        done();
+      }
     });
   }
   
@@ -100,7 +112,8 @@ module.exports = function (RED) {
     this.endonkey = config.endonkey;  
     this.beepstart = config.beepstart;  
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var data = dataobject(this.context(), msg);
       this.eventurl = mustache.render(config.eventurl, data);
       if ( 'ncco' in msg){
@@ -124,7 +137,10 @@ module.exports = function (RED) {
       clean(ncco);
       resp.push(ncco);
       msg.ncco = resp;
-      node.send(msg);
+      send(msg);
+      if(done) {
+        done();
+      }
     });
   }
 
@@ -136,7 +152,8 @@ module.exports = function (RED) {
     this.endonexit = config.endonexit;
     this.startonenter = config.startonenter;
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       console.log(config);
       var data = dataobject(this.context(), msg);
       this.name = mustache.render(config.name, data);
@@ -169,7 +186,10 @@ module.exports = function (RED) {
       clean(ncco);
       resp.push(ncco);
       msg.ncco = resp;
-      node.send(msg);
+      send(msg);
+      if(done) {
+        done();
+      }
     });
   }
   
@@ -184,7 +204,8 @@ module.exports = function (RED) {
     this.endpoint = config.endpoint;
     this.contenttype = config.contenttype;
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var data = dataobject(this.context(), msg);
       this.to = mustache.render(config.to, data);
       this.wsuri = mustache.render(config.wsuri, data);
@@ -244,7 +265,10 @@ module.exports = function (RED) {
       clean(ncco);
       resp.push(ncco);
       msg.ncco = resp;
-      node.send(msg);
+      send(msg);
+      if(done) {
+        done();
+      }
     });
   }
 
@@ -253,7 +277,8 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
     this.eventmethod = config.eventmethod;  
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
+      send = send || function() { node.send.apply(node,arguments) };
       var data = dataobject(this.context(), msg);
       this.payload = mustache.render(config.payload, data);
       this.eventurl = mustache.render(config.eventurl, data);
@@ -270,7 +295,10 @@ module.exports = function (RED) {
       clean(ncco);
       resp.push(ncco);
       msg.ncco = resp;
-      node.send(msg);
+      send(msg);
+      if(done) {
+        done();
+      }
     });
   }
   

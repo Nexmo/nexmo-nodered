@@ -276,7 +276,7 @@ module.exports = function(RED) {
         var node = this;
         this.headers = {};
         this.statusCode=200;
-        this.on("input",function(msg) {
+        this.on("input",function(msg, send, done) {
             if (msg.res) {
                 var headers = RED.util.cloneMessage(node.headers);
                 if (msg.headers) {
@@ -302,6 +302,7 @@ module.exports = function(RED) {
                  var statusCode = node.statusCode || msg.statusCode || 200;
                 if (typeof msg.ncco == "object" && !Buffer.isBuffer(msg.ncco)) {
                     msg.res._res.status(statusCode).jsonp(msg.ncco);
+                    done();
                 } else {
                     if (msg.res._res.get('content-length') == null) {
                         var len;
@@ -316,6 +317,7 @@ module.exports = function(RED) {
                     }
 
                     msg.res._res.status(statusCode).send(msg.ncco);
+                    done();
                 }
             } else {
                 node.warn(RED._("httpin.errors.no-response"));
