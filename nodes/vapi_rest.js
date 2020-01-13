@@ -216,15 +216,23 @@ module.exports = function (RED) {
     
     });  
   }
+
   function transfer(config){
     RED.nodes.createNode(this, config);
     this.creds = RED.nodes.getNode(config.creds);
+    this.nccotype = config.nccotype;
     var node = this;
     node.on('input', function (msg) {
       var debug = (this.context().global.get('nexmoDebug') | false);
       var data = dataobject(this.context(), msg);
       this.calluuid = mustache.render(config.calluuid, data);
-      this.url = mustache.render(config.url, data);
+      if ( this.nccotype == 'url'){
+        this.url = mustache.render(config.ncco, data);  
+      } else if (this.nccotype == 'json'){
+        this.ncco = JSON.parse(mustache.render(config.ncco, data));
+      } else if (this.nccotype == 'fixed'){
+        this.ncco = msg.ncco
+      }
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
@@ -232,7 +240,13 @@ module.exports = function (RED) {
         privateKey: this.creds.credentials.privatekey
         }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
       );
-      nexmo.calls.update(this.calluuid, {action: 'transfer', destination: {"type": "ncco", "url": [this.url]}}, (err, response) => {
+      this.destination = {type:"ncco"};
+      if ( this.nccotype == 'url'){
+        this.destination.url = [this.url]
+      } else {
+        this.destination.ncco = this.ncco
+      }
+      nexmo.calls.update(this.calluuid, {action: 'transfer', destination: this.destination}, (err, response) => {
         if(err) { console.error(err); }
         else {
           msg.payload=response;
