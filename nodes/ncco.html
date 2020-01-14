@@ -129,11 +129,11 @@ By default, the talk action is synchronous. However, if you set Barge In to true
  </dl>
 
 <h3>Details</h3>
-The talk action sends synthesized speech to a Conversation.
-
-The text provided in the talk action can either be plain, or formatted using SSML. SSML tags provide further instructions to the text-to-speech synthesiser which allow you to set pitch, pronunciation and to combine together text in multiple languages. SSML tags are XML-based and sent inline in the JSON string.
+The stream action allows you to send an audio stream to a Call or a Conversation.
 
 By default, the stream action is synchronous. However, if you set bargeIn to true you must set an input action folowing this.
+
+<br>The <b>Stream URL {}</b> will be an array containing a single URL to an MP3 or WAV (16-bit) audio file.
 
 <h3>References</h3>
     <ul>
