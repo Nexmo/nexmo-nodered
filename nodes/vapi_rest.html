@@ -26,13 +26,14 @@
         outputs:1,
         icon: "nexmo.png",
         label: "Create Call",
-        oneditprepare: function() {
+        oneditprepare: function() {            
           $("#node-input-answertype").val(this.answertype);
           $("#node-input-answer").typedInput({
               default: 'url',
               typeField: $("#node-input-answertype"),
               types:['json',{value:"url",label:"URL"},{value:"fixed",label:"msg.ncco",hasValue:false}]
           });
+
           
         }
     });
@@ -100,7 +101,9 @@
     
     <div class="form-row">
         <label for="node-input-from"><i class="icon-tag"></i>From {}</label>
-        <input type="text" id="node-input-from" placeholder="From Number">
+        <select type="text" id="node-input-from" style="width:50%;"></select>
+        <!-- <input type="text" id="node-input-from" style="width:50%;" placeholder="Type Number" onclick="getnumbers()> -->
+        <button onclick="getnumbers()" class="red-ui-button">Load Numbers</button>
     </div>
     
    
@@ -677,6 +680,30 @@ Play DTMF tones  into a call
     </ul>
 </script>
 
+<script>
 
+    function getnumbers(){
+        console.log('FUNCTION CALLED')
+        var url = 'nexmo-auth/numbers';
+        var params = {
+          creds:  document.getElementById("node-input-creds").value,
+        }
+
+        $.get(url, params, function(res){
+              console.log(res);
+          var select = document.getElementById("node-input-from");
+          for (let index = 0; index < select.options.length; index++) {
+              select.remove(0)
+          }
+          for (let index = 0; index < res.length; index++) {
+              const option = document.createElement("option");
+              option.text = res[index].msisdn;
+              select.add(option);
+          }
+
+        }, 'json'
+        );
+    }
+  </script>
 
         

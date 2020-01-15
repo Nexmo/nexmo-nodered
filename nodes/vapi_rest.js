@@ -389,6 +389,23 @@ function playdtmf(config){
     return data
   }
   
-  
+  RED.httpAdmin.get('/nexmo-auth/numbers', RED.auth.needsPermission('nexmo.write'), function(req,res){
+    const creds = RED.nodes.getNode(req.query.creds);
+    const nexmo = new Nexmo({
+      apiKey: creds.credentials.apikey,
+      apiSecret: creds.credentials.apisecret
+      }, {debug: false, appendToUserAgent: "nexmo-nodered/"+version}
+    );
+    nexmo.number.get({}, 
+      (err, response) => {
+        if (err) {
+          console.error(err)
+        } else {
+          console.log(response.numbers);
+          res.send(response.numbers);
+        }
+      })    
+    
+  });
       
 }
