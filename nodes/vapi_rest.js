@@ -401,7 +401,6 @@ function playdtmf(config){
         if (err) {
           console.error(err)
         } else {
-          console.log(response.numbers);
           res.send(response.numbers);
         }
       })    
