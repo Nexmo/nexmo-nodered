@@ -138,15 +138,15 @@ module.exports = function (RED) {
       nexmo.calls.update(this.calluuid, { action: 'earmuff' }, (err, res) => {
         if(err) { console.error(err); }
         else {
-          msg.payload=response;
-          node.send(response)  
+          msg.payload=res;
+          node.send(msg)  
         }
       });
     } else {
       nexmo.calls.update(this.calluuid, { action: 'unearmuff' }, (err, res) => {
         if(err) { console.error(err); }
         else {
-          msg.payload=response;
+          msg.payload=res;
           node.send(msg)  
         }
       });
@@ -174,8 +174,8 @@ module.exports = function (RED) {
       nexmo.calls.update(this.calluuid, { action: 'mute' }, (err, res) => {
         if(err) { console.error(err); }
         else {
-          msg.payload=response;
-          node.send(response)  
+          msg.payload=res;
+          node.send(msg)  
         }
       });
     } else {
@@ -319,7 +319,7 @@ module.exports = function (RED) {
        nexmo.calls.talk.stop(this.calluuid,  (err, res) => {
          if(err) { console.error(err); }
          else {
-           msg.payload=response;
+           msg.payload=res;
            node.send(msg)  
          }
        });
