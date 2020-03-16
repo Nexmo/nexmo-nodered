@@ -182,7 +182,7 @@ module.exports = function (RED) {
       nexmo.calls.update(this.calluuid, { action: 'unmute' }, (err, res) => {
         if(err) { console.error(err); }
         else {
-          msg.payload=response;
+          msg.payload=res;
           node.send(msg)  
         }
       });
@@ -208,7 +208,7 @@ module.exports = function (RED) {
       nexmo.calls.update(this.calluuid, { action: 'hangup' }, (err, response) => {
         if(err) { console.error(err); }
         else {
-          msg.payload=response;
+          msg.payload=res;
           node.send(msg)  
         }
       });
