@@ -418,14 +418,24 @@ Hangup a call leg.
         defaults: {
           creds: {value:"", type:"nexmovoiceapp"},
           calluuid: {},
-	  url: {}
+          ncco: {},
+          nccotype: {}
         },
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Transfer"
+        label: "Transfer",
+        oneditprepare: function() {
+            $("#node-input-nccotype").val(this.nccotype);
+            $("#node-input-ncco").typedInput({
+                default: 'url',
+                typeField: $("#node-input-nccotype"),
+                types: ['json',{value:"url",label:"URL"},{value:"fixed",label:"msg.ncco",hasValue:false}]
+            });
+        }
     });
 </script>
+
 <script type="text/x-red" data-template-name="transfer">
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
@@ -438,8 +448,9 @@ Hangup a call leg.
   </div>
   
   <div class="form-row">
-      <label for="node-input-url"><i class="icon-tag"></i>New NCCO URL {}</label>
-      <input type="text" id="node-input-url" placeholder="url">
+      <label for="node-input-ncco"><i class="icon-tag"></i>New NCCO {}</label>
+      <input type="text" id="node-input-ncco">
+      <input type="hidden" id="node-input-nccotype">
   </div>
 
   
