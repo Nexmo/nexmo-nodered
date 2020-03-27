@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-nexmo",
-    "version": "3.2.0",
+    "version": "3.3.0",
     "description": "Node Red module for the Nexmo API",
     "main": "ncco.js",
     "scripts": {
@@ -14,7 +14,7 @@
     "license": "MIT",
     "dependencies": {
         "mustache": "^2.3.2",
-        "nexmo": "2.4.0",
+        "nexmo": "2.6.0",
         "body-parser": "1.18.3",
         "multer": "1.3.1",
         "cookie-parser": "1.4.3",
@@ -34,7 +34,9 @@
             "sms_rest" : "nodes/sms_rest.js",
             "verify" : "nodes/verify.js",
             "insight" : "nodes/insight.js",
-            "auth" : "nodes/auth.js"
+            "auth" : "nodes/auth.js",
+            "nexmo_apps" : "nodes/apps.js",
+            "number" : "nodes/number.js"
         }
     }
 }

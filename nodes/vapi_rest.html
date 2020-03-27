@@ -26,6 +26,7 @@
         outputs:1,
         icon: "nexmo.png",
         label: "Create Call",
+        paletteLabel: "Create Call",
         oneditprepare: function() {
           $("#node-input-answertype").val(this.answertype);
           $("#node-input-answer").typedInput({
@@ -209,7 +210,8 @@ Create a new outbound call
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Get Recording"
+        label: "Get Recording",
+        paletteLabel: "Get Recording"
     });
 </script>
 <script type="text/x-red" data-template-name="getrecording">
@@ -260,7 +262,8 @@ Note, this node does not write the audio to disk, the filename field is there to
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Earmuff"
+        label: "Earmuff",
+        paletteLabel: "Earmuff"
     });
 </script>
 <script type="text/x-red" data-template-name="earmuff">
@@ -317,7 +320,8 @@ Earmuff a call leg
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Mute"
+        label: "Mute",
+        paletteLabel : "Mute"
     });
 </script>
 <script type="text/x-red" data-template-name="mute">
@@ -374,7 +378,8 @@ Mute a call leg
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Hangup"
+        label: "Hangup",
+        paletteLabel : "Hangup"
     });
 </script>
 <script type="text/x-red" data-template-name="hangup">
@@ -425,6 +430,7 @@ Hangup a call leg.
         outputs:1,
         icon: "nexmo.png",
         label: "Transfer",
+        paletteLabel: "Transfer",
         oneditprepare: function() {
             $("#node-input-nccotype").val(this.nccotype);
             $("#node-input-ncco").typedInput({
@@ -492,7 +498,8 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Play Audio"
+        label: "Play Audio",
+        paletteLabel: "Play Audio"
     });
 </script>
 <script type="text/x-red" data-template-name="playaudio">
@@ -568,7 +575,8 @@ Play an audio file into a call
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Play TTS"
+        label: "Play TTS",
+        paletteLabel: "Play TTS"
     });
 </script>
     
@@ -647,7 +655,8 @@ Play text to speech into a call
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Play DTMF"
+        label: "Play DTMF",
+        paletteLabel: "Play DTMF"
     });
 </script>
 <script type="text/x-red" data-template-name="playdtmf">

@@ -1,0 +1,58 @@
+<script type="text/javascript">
+    RED.nodes.registerType('updateNexmoApp',{
+        category: 'nexmo',
+        color: '#989898',
+        defaults: {
+          creds: {value:"", type:"nexmovoiceapp"},
+          answerURL: {default: false},
+          eventURL: {default: false}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Update Application",
+        paletteLabel: "Update Application"
+        
+    });
+</script>
+<script type="text/x-red" data-template-name="updateNexmoApp">
+  <div class="form-row">
+      <label for="node-config-input-creds"></i>Application to Update</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-answerURL"><i class="icon-tag"></i>Anwser URL {}</label>
+      <input type="text" id="node-input-answerURL" placeholder="https://example.com/answer">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-eventURL"><i class="icon-tag"></i>Event URL {}</label>
+      <input type="text" id="node-input-eventURL" placeholder="https://example.com/event">
+  </div>
+
+  
+</script>
+
+
+<script type="text/x-red" data-help-name="updateNexmoApp">
+<p>Update an Applicaiton</p>
+
+<h3>Inputs</h3>
+<p> Expects <code>msg.payload</code> to contain a url eg https://example.com
+    
+<h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+ </dl>
+
+<h3>Details</h3>
+Allows you to update the URLs of a Nexmo Voice Applicaiton
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/application/overview">Nexmo Documentation</a></li>
+    </ul>
+</script>
+
+
