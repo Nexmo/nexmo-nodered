@@ -208,7 +208,7 @@ module.exports = function (RED) {
       nexmo.calls.update(this.calluuid, { action: 'hangup' }, (err, response) => {
         if(err) { console.error(err); }
         else {
-          msg.payload=res;
+          msg.payload=response;
           node.send(msg)  
         }
       });
