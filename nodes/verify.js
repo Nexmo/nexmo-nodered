@@ -14,12 +14,13 @@ module.exports = function (RED) {
       var data = dataobject(this.context(), msg)
       this.to = mustache.render(config.to, data);
       this.brand = mustache.render(config.brand, data);
+      this.workflow_id = mustache.render(config.workflow_id, data);
       const nexmo = new Nexmo({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret
       }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
       );
-      nexmo.verify.request({number: this.to, brand: this.brand}, function(err, response) {
+      nexmo.verify.request({number: this.to, brand: this.brand, workflow_id: this.workflow_id}, function(err, response) {
           if(err) { console.error(err); }
         else {
           msg.payload=response;

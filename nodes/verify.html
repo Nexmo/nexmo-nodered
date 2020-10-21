@@ -6,6 +6,7 @@
           creds: {value:"", type:"nexmobasic"},
           to: {},
           brand: {},
+          workflow_id: {}
         },
         inputs:1,
         outputs:1,
@@ -29,6 +30,19 @@
       <label for="node-input-brand"><i class="icon-tag"></i>Brand {}</label>
       <input type="text" id="node-input-brand" placeholder="Brand">
   </div>
+
+  <div class="form-row">
+    <label for="node-input-workflow_id"><i class="icon-tag"></i>Workflow ID</label>
+    <select type="text" id="node-input-workflow_id" style="width:70%;">
+      <option value="1">1. SMS -> TTS -> TTS</option>
+      <option value="2">2. SMS -> SMS -> TTS</option>
+      <option value="3">3. TTS -> TTS</option>
+      <option value="4">4. SMS -> SMS</option>
+      <option value="5">5. SMS -> TTS</option>
+      <option value="6">6. SMS</option>
+      <option value="7">7. TTS</option>
+     </select>
+</div>
 </script>
 
 
