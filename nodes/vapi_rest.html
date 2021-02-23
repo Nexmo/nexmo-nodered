@@ -1,45 +1,60 @@
 //createCall
 <script type="text/javascript">
-    RED.nodes.registerType('createcall',{
+    RED.nodes.registerType('createcall', {
         category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmovoiceapp"},
-          endpoint: {},
-          to: {},
-          dtmfanswer: {},
-          wsuri: {},
-          contenttype: {},
-          headers: {},
-          sipuri: {},
-          extension: {},
-          from: {},
-          ringingtimer:{},
-          lengthtimer:{},
-          machinedetection:{},
-          answer:{},
-          answertype:{},
-          eventurl:{},
-          eventmethod:{}
+            creds: { value: "", type: "nexmovoiceapp" },
+            endpoint: {},
+            to: {},
+            dtmfanswer: {},
+            wsuri: {},
+            contenttype: {},
+            headers: {},
+            sipuri: {},
+            extension: {},
+            from: {},
+            ringingtimer: {},
+            lengthtimer: {},
+            machinedetection: {},
+            answer: {},
+            answertype: {},
+            eventurl: {},
+            eventmethod: {}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "nexmo.png",
         label: "Create Call",
         paletteLabel: "Create Call",
-        oneditprepare: function() {
-          $("#node-input-answertype").val(this.answertype);
-          $("#node-input-answer").typedInput({
-              default: 'url',
-              typeField: $("#node-input-answertype"),
-              types:['json',{value:"url",label:"URL"},{value:"fixed",label:"msg.ncco",hasValue:false}]
-          });
-          
+        oneditprepare: function () {
+            const frominput = document.getElementById("node-input-from-input");
+            const input = document.getElementById("node-input-from");
+            frominput.value = input.value;
+            frominput.addEventListener("focus", () => {
+                const chevron = document.getElementById("node-input-get-numbers");
+                const close = document.getElementById("node-input-clear-number");
+                chevron.style.display = "none";
+                close.style.display = "block";
+            })
+            $("#node-input-answertype").val(this.answertype);
+            $("#node-input-answer").typedInput({
+                default: 'url',
+                typeField: $("#node-input-answertype"),
+                types: ['json', { value: "url", label: "URL" }, { value: "fixed", label: "msg.ncco", hasValue: false }]
+            });
+        },
+        oneditsave: function () {
+            const frominput = document.getElementById("node-input-from-input");
+            const select = document.getElementById("node-input-from-select");
+            const input = document.getElementById("node-input-from");
+            input.value = select.value || frominput.value;
         }
     });
 </script>
 
 <script type="text/x-red" data-template-name="createcall">
+
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
       <input type="text" id="node-input-creds" >
@@ -101,7 +116,18 @@
     
     <div class="form-row">
         <label for="node-input-from"><i class="icon-tag"></i>From {}</label>
-        <input type="text" id="node-input-from" placeholder="From Number">
+        <div style="display: inline-block; position: relative; width: 70%; height: 20px;">
+            <div style="position: absolute; left: 0px; right: 40px;">
+                <select type="text" id="node-input-from-select" style="width:100%; display: none;"></select>
+                </select>
+                <input type="text" id="node-input-from-input" style="width:100%;" placeholder="From Number">
+                <input type="hidden" id="node-input-from">
+            </div>
+        
+        <a id="node-input-get-numbers" title="Lookup My Numbers" class="red-ui-button" style="position: absolute; right: 0px; top: 0px;" onclick="getnumbers()"><i class="fa fa-list"></i></a>
+        <a id="node-input-clear-number" title="Clear" class="red-ui-button" style="position: absolute; right: 0px; top: 0px; display:none;" onclick="clearnumber()"><i class="fa fa-times"></i></a>
+        <a id="node-input-edit-number" title="Switch to Manual Entry" class="red-ui-button" style="position: absolute; right: 0px; top: 0px; display:none;" onclick="editnumber()"><i class="fa fa-user-plus"></i></a>
+        </div>
     </div>
     
    
@@ -150,34 +176,34 @@
 </script>
 
 <script>
-  function toggleEndpointRest(endpoint){
-    if (endpoint == 'phone'){
-      document.getElementById("phone").style.display = "block";
-      document.getElementById("websocket").style.display = "none";
-      document.getElementById("sip").style.display = "none";
-      document.getElementById("vbc").style.display = "none";   
-          
+    function toggleEndpointRest(endpoint) {
+        if (endpoint == 'phone') {
+            document.getElementById("phone").style.display = "block";
+            document.getElementById("websocket").style.display = "none";
+            document.getElementById("sip").style.display = "none";
+            document.getElementById("vbc").style.display = "none";
+
+        }
+        else if (endpoint == 'websocket') {
+            document.getElementById("phone").style.display = "none";
+            document.getElementById("websocket").style.display = "block";
+            document.getElementById("sip").style.display = "none";
+            document.getElementById("vbc").style.display = "none";
+
+        } else if (endpoint == 'sip') {
+            document.getElementById("phone").style.display = "none";
+            document.getElementById("websocket").style.display = "none";
+            document.getElementById("sip").style.display = "block";
+            document.getElementById("vbc").style.display = "none";
+        } else if (endpoint == 'vbc') {
+            document.getElementById("phone").style.display = "none";
+            document.getElementById("websocket").style.display = "none";
+            document.getElementById("sip").style.display = "none";
+            document.getElementById("vbc").style.display = "block";
+        }
     }
-    else if (endpoint == 'websocket'){
-      document.getElementById("phone").style.display = "none";
-      document.getElementById("websocket").style.display = "block";
-      document.getElementById("sip").style.display = "none";
-      document.getElementById("vbc").style.display = "none";   
-         
-    } else if (endpoint == 'sip'){
-      document.getElementById("phone").style.display = "none";
-      document.getElementById("websocket").style.display = "none";
-      document.getElementById("sip").style.display = "block";
-      document.getElementById("vbc").style.display = "none";          
-    } else if (endpoint == 'vbc'){
-      document.getElementById("phone").style.display = "none";
-      document.getElementById("websocket").style.display = "none";
-      document.getElementById("sip").style.display = "none";  
-      document.getElementById("vbc").style.display = "block";   
-    } 
-  }
 </script>
-  
+
 <script type="text/x-red" data-help-name="createcall">
 <p>Create a new Outbound Call</p>
 
@@ -200,15 +226,15 @@ Create a new outbound call
 
 //getrecording
 <script type="text/javascript">
-    RED.nodes.registerType('getrecording',{
+    RED.nodes.registerType('getrecording', {
         category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmovoiceapp"},
-          filename: {}
+            creds: { value: "", type: "nexmovoiceapp" },
+            filename: {}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "nexmo.png",
         label: "Get Recording",
         paletteLabel: "Get Recording"
@@ -251,7 +277,7 @@ Note, this node does not write the audio to disk, the filename field is there to
 
 //earmuff
 <script type="text/javascript">
-    RED.nodes.registerType('earmuff',{
+    RED.nodes.registerType('earmuff', {
         category: 'nexmo',
         color: '#35be8b',
         defaults: {
@@ -259,8 +285,8 @@ Note, this node does not write the audio to disk, the filename field is there to
           calluuid: {},
           state:{}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "nexmo.png",
         label: "Earmuff",
         paletteLabel: "Earmuff"
@@ -309,7 +335,7 @@ Earmuff a call leg
 
 //mute
 <script type="text/javascript">
-    RED.nodes.registerType('mute',{
+    RED.nodes.registerType('mute', {
         category: 'nexmo',
         color: '#35be8b',
         defaults: {
@@ -317,8 +343,8 @@ Earmuff a call leg
           calluuid: {},
           state:{}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "nexmo.png",
         label: "Mute",
         paletteLabel : "Mute"
@@ -368,15 +394,15 @@ Mute a call leg
 
 //hangup
 <script type="text/javascript">
-    RED.nodes.registerType('hangup',{
+    RED.nodes.registerType('hangup', {
         category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmovoiceapp"},
-          calluuid: {}
+            creds: { value: "", type: "nexmovoiceapp" },
+            calluuid: {}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "nexmo.png",
         label: "Hangup",
         paletteLabel : "Hangup"
@@ -417,7 +443,7 @@ Hangup a call leg.
 
 //transfer
 <script type="text/javascript">
-    RED.nodes.registerType('transfer',{
+    RED.nodes.registerType('transfer', {
         category: 'nexmo',
         color: '#35be8b',
         defaults: {
@@ -426,8 +452,8 @@ Hangup a call leg.
           ncco: {},
           nccotype: {}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "nexmo.png",
         label: "Transfer",
         paletteLabel: "Transfer",
@@ -484,19 +510,19 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
 
 //playaudio
 <script type="text/javascript">
-    RED.nodes.registerType('playaudio',{
+    RED.nodes.registerType('playaudio', {
         category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmovoiceapp"},
-          calluuid: {},
-          action:{},
-          url:{},
-          loop: {value:1},
-          level: {value:0}
+            creds: { value: "", type: "nexmovoiceapp" },
+            calluuid: {},
+            action: {},
+            url: {},
+            loop: { value: 1 },
+            level: { value: 0 }
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "nexmo.png",
         label: "Play Audio",
         paletteLabel: "Play Audio"
@@ -560,26 +586,26 @@ Play an audio file into a call
 
 //playtts
 <script type="text/javascript">
-    RED.nodes.registerType('playtts',{
+    RED.nodes.registerType('playtts', {
         category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmovoiceapp"},
-          calluuid: {},
-          action:{},
-          text:{},
-          voicename:{value: "kimberly"},
-          loop: {value:1},
-          level: {value:0}
+            creds: { value: "", type: "nexmovoiceapp" },
+            calluuid: {},
+            action: {},
+            text: {},
+            voicename: { value: "kimberly" },
+            loop: { value: 1 },
+            level: { value: 0 }
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "nexmo.png",
         label: "Play TTS",
         paletteLabel: "Play TTS"
     });
 </script>
-    
+
 <script type="text/x-red" data-template-name="playtts">
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
@@ -644,16 +670,16 @@ Play text to speech into a call
 //playdtmf
 
 <script type="text/javascript">
-    RED.nodes.registerType('playdtmf',{
+    RED.nodes.registerType('playdtmf', {
         category: 'nexmo',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmovoiceapp"},
-          calluuid: {},
-          digits: {}
+            creds: { value: "", type: "nexmovoiceapp" },
+            calluuid: {},
+            digits: {}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "nexmo.png",
         label: "Play DTMF",
         paletteLabel: "Play DTMF"
@@ -697,6 +723,56 @@ Play DTMF tones  into a call
     </ul>
 </script>
 
+<script>
+
+    function getnumbers() {
+        var url = 'nexmo-auth/numbers';
+        var params = {
+            creds: document.getElementById("node-input-creds").value,
+        }
+
+        $.get(url, params, function (res) {
+            var select = document.getElementById("node-input-from-select");
+            while (select.options.length > 0) {
+                select.remove(0);
+            }
+            for (let index = 0; index < res.length; index++) {
+                const option = document.createElement("option");
+                option.text = res[index].msisdn;
+                select.add(option);
+            }
+
+            const input = document.getElementById("node-input-from-input");
+            const chevron = document.getElementById("node-input-get-numbers");
+            const edit = document.getElementById("node-input-edit-number");
+            select.style.display = "block";
+            input.style.display = "none";
+            chevron.style.display = "none";
+            edit.style.display = "block";
 
 
-        
+        }, 'json'
+        );
+    }
+
+    function clearnumber() {
+        const input = document.getElementById("node-input-from-input");
+        const chevron = document.getElementById("node-input-get-numbers");
+        const close = document.getElementById("node-input-clear-number");
+        input.value = "";
+        chevron.style.display = "block";
+        close.style.display = "none";
+    }
+    function editnumber() {
+        const input = document.getElementById("node-input-from-input");
+        const select = document.getElementById("node-input-from-select");
+        const chevron = document.getElementById("node-input-get-numbers");
+        const edit = document.getElementById("node-input-edit-number");
+        select.value = "";
+        input.value = "";
+        select.style.display = "none";
+        input.style.display = "block";
+        edit.style.display = "none";
+        chevron.style.display = "block";
+    }
+</script>
