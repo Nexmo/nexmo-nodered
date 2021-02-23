@@ -1,0 +1,64 @@
+<script type="text/javascript">
+    RED.nodes.registerType('updateNumber',{
+        category: 'nexmo',
+        color: '#989898',
+        defaults: {
+          creds: {value:"", type:"nexmobasic"},
+          number:  {required: true },
+          voiceAppid: {default: false},
+          smsURL: {default: false}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "nexmo.png",
+        label: "Update Number",
+        paletteLabel : "Update Number"
+    });
+</script>
+<script type="text/x-red" data-template-name="updateNumber">
+  <div class="form-row">
+      <label for="node-config-input-creds"></i>Application to Update</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+
+    
+<div class="form-row">
+    <label for="node-input-number"><i class="icon-tag"></i>Number {}</label>
+    <input type="text" id="node-input-number" placeholder="12125551212">
+</div>
+
+
+<div class="form-row">
+    <label for="node-input-smsURL"><i class="icon-tag"></i>SMS MO URL {}</label>
+    <input type="text" id="node-input-smsURL" placeholder="https://example.com/message">
+</div>
+
+
+<div class="form-row">
+    <label for="node-input-voiceAppid"><i class="icon-tag"></i>Voice Application ID {}</label>
+    <input type="text" id="node-input-voiceAppid" placeholder="aaaaaaaa-bbbb-cccc-dddd-0123456789ab">
+</div>
+
+</script>
+
+
+<script type="text/x-red" data-help-name="updateNumber">
+<p>Update an Number</p>
+
+<h3>Inputs</h3>
+    
+<h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>ncco<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+ </dl>
+
+<h3>Details</h3>
+Allows you to update the SMS URL and Voice Application ID associated with a number 
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.nexmo.com/application/overview">Nexmo Documentation</a></li>
+    </ul>
+</script>
+
+

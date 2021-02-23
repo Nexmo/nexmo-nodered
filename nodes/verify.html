@@ -6,11 +6,13 @@
           creds: {value:"", type:"nexmobasic"},
           to: {},
           brand: {},
+          workflow_id: {}
         },
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Send Verify"
+        label: "Send Verify",
+        paletteLabel : "Send Verify"
     });
 </script>
 <script type="text/x-red" data-template-name="sendverify">
@@ -27,6 +29,19 @@
   <div class="form-row">
       <label for="node-input-brand"><i class="icon-tag"></i>Brand {}</label>
       <input type="text" id="node-input-brand" placeholder="Brand">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-workflow_id"><i class="icon-tag"></i>Workflow ID</label>
+    <select type="text" id="node-input-workflow_id" style="width:70%;">
+      <option value="1">1. SMS -> TTS -> TTS</option>
+      <option value="2">2. SMS -> SMS -> TTS</option>
+      <option value="3">3. TTS -> TTS</option>
+      <option value="4">4. SMS -> SMS</option>
+      <option value="5">5. SMS -> TTS</option>
+      <option value="6">6. SMS</option>
+      <option value="7">7. TTS</option>
+    </select>
   </div>
 </script>
 
@@ -67,7 +82,8 @@ The Verify API returns a request_id. Use this to identify a specific verificatio
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Check Code"
+        label: "Check Code",
+        paletteLabel : "Check Code"
     });
 </script>
 <script type="text/x-red" data-template-name="checkverify">
@@ -121,7 +137,8 @@ Check the verification code that a user has provided. Use the request_id that wa
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Cancel Verify"
+        label: "Cancel Verify",
+        paletteLabel : "Cancel Verify"
     });
 </script>
 <script type="text/x-red" data-template-name="cancelverify">
@@ -169,7 +186,8 @@ If the user decides to cancel the verification process, you should send a contro
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Next Verify"
+        label: "Next Verify",
+        paletteLabel : "Next Verify"
     });
 </script>
 <script type="text/x-red" data-template-name="nextverify">
@@ -221,7 +239,8 @@ You can advance to the next verification attempt programmatically by making a co
         inputs:1,
         outputs:1,
         icon: "nexmo.png",
-        label: "Search Verify"
+        label: "Search Verify",
+        paletteLabel : "Search Verify"
     });
 </script>
 <script type="text/x-red" data-template-name="searchverify">

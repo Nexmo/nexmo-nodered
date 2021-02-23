@@ -137,7 +137,6 @@ module.exports = function (RED) {
     this.startonenter = config.startonenter;
     var node = this;
     node.on('input', function (msg) {
-      console.log(config);
       var data = dataobject(this.context(), msg);
       this.name = mustache.render(config.name, data);
       this.musiconholdurl = mustache.render(config.musiconholdurl, data);
