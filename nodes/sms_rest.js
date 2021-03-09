@@ -1,4 +1,4 @@
-const Nexmo = require('nexmo');
+const Vonage = require('@vonage/server-sdk');
 const mustache = require("mustache");
 const version = require('../package.json').version
 
@@ -13,15 +13,15 @@ module.exports = function (RED) {
     var node = this;
     
     node.on('input', function (msg) {
-      var debug = (this.context().global.get('nexmoDebug') | false);
+      var debug = (this.context().global.get('vonageDebug') | false);
       var data = dataobject(this.context(), msg)
       this.to = mustache.render(config.to, data);
       this.fr = mustache.render(config.fr, data);
       this.text = mustache.render(config.text, data);
-      const nexmo = new Nexmo({
+      const vonage = new Vonage({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret
-      }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+      }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
       );
       const opts = {}
       if (this.unicode == true){
@@ -29,7 +29,7 @@ module.exports = function (RED) {
       } else{
         opts.type = "text";
       }
-      nexmo.message.sendSms(this.fr, this.to, this.text, opts, function(err, response){
+      vonage.message.sendSms(this.fr, this.to, this.text, opts, function(err, response){
         if(err) { console.error(err); }
         else {
           msg.payload=response;
@@ -40,7 +40,7 @@ module.exports = function (RED) {
   }
   
 
-  RED.nodes.registerType("sendsms",sendsms);    
+  RED.nodes.registerType("vonage-sendsms",sendsms);    
 }
 
 function dataobject(context, msg){

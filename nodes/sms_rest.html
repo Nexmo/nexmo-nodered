@@ -1,9 +1,9 @@
 <script type="text/javascript">
-    RED.nodes.registerType('sendsms',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-sendsms',{
+        category: 'Vonage APIs',
         color: '#c485db',
         defaults: {
-          creds: {value:"", type:"nexmobasic"},
+          creds: {value:"", type:"vonagebasic"},
           to: {},
           fr: {},
           text:{},
@@ -11,14 +11,14 @@
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Send SMS",
         paletteLabel: "Send SMS"
     });
 </script>
-<script type="text/x-red" data-template-name="sendsms">
+<script type="text/x-red" data-template-name="vonage-sendsms">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -45,7 +45,7 @@
 </script>
 
 
-<script type="text/x-red" data-help-name="sendsms">
+<script type="text/x-red" data-help-name="vonage-sendsms">
 <p>Send an SMS</p>
 
 <h3>Inputs</h3>
@@ -53,16 +53,16 @@
  <h3>Outputs</h3>
  <dl class="message-properties">
      <dt>ncco<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
 The to number should always be in e.164 format, that is the full international number without a leading prefix like +, 00 or 001.
-Consult the nexmo documentation for valid From values depending on destination country.
+Consult the vonage documentation for valid From values depending on destination country.
 Set the Unicode flag if the message text contains Unicode parameters
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/messaging/sms/overview">Nexmo Documentation</a></li>
+        <li><a href="https://developer.vonage.com/messaging/sms/overview">Vonage Documentation</a></li>
     </ul>
 </script>
 

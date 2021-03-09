@@ -1,6 +1,6 @@
 <script type="text/javascript">
-    RED.nodes.registerType('talk',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-talk',{
+        category: 'Vonage APIs',
         color: '#2d966f',
         defaults: {
           text: {required:true},
@@ -12,11 +12,12 @@
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
-        label: "Talk"
+        icon: "vonage.png",
+        label: "Talk",
+        paletteLabel: "Talk"
     });
 </script>
-<script type="text/x-red" data-template-name="talk">
+<script type="text/x-red" data-template-name="vonage-talk">
     <div class="form-row">
         <label for="node-input-text"><i class="icon-tag"></i>Text {}</label>
         <input type="text" id="node-input-text" placeholder="text">
@@ -43,7 +44,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="talk">
+<script type="text/x-red" data-help-name="vonage-talk">
 <p>Adds a talk action to an NCCO</p>
 
 <h3>Inputs</h3>
@@ -66,7 +67,7 @@ By default, the talk action is synchronous. However, if you set Barge In to true
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#talk">Nexmo NCCO Reference</a></li>
+        <li><a href="https://developer.vonage.com/voice/voice-api/ncco-reference#talk">Vonage NCCO Reference</a></li>
     </ul>
 </script>
 
@@ -75,8 +76,8 @@ By default, the talk action is synchronous. However, if you set Barge In to true
 
 
 <script type="text/javascript">
-    RED.nodes.registerType('stream',{
-         category: 'nexmo',
+    RED.nodes.registerType('vonage-stream',{
+         category: 'Vonage APIs',
         color: '#2d966f',
         defaults: {
           streamurl: {required:true},
@@ -86,12 +87,13 @@ By default, the talk action is synchronous. However, if you set Barge In to true
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
-        label: "Stream"
+        icon: "vonage.png",
+        label: "Stream",
+        paletteLabel: "Stream"
     });
 </script>
 
-<script type="text/x-red" data-template-name="stream">
+<script type="text/x-red" data-template-name="vonage-stream">
     <div class="form-row">
         <label for="node-input-streamurl"><i class="icon-tag"></i>Stream URL {}</label>
         <input type="text" id="node-input-streamurl" placeholder="https://example.com/audio.mp3">
@@ -113,7 +115,7 @@ By default, the talk action is synchronous. However, if you set Barge In to true
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="stream">
+<script type="text/x-red" data-help-name="vonage-stream">
 <p>Adds a stream action to an NCCO</p>
 
 <h3>Inputs</h3>
@@ -137,13 +139,13 @@ By default, the stream action is synchronous. However, if you set bargeIn to tru
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#stream">Nexmo NCCO Reference</a></li>
+        <li><a href="https://developer.vonage.com/voice/voice-api/ncco-reference#stream">Vonage NCCO Reference</a></li>
     </ul>
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('input',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-input',{
+        category: 'Vonage APIs',
         color: '#2d966f',
         defaults: {
           eventurl: {},
@@ -154,12 +156,13 @@ By default, the stream action is synchronous. However, if you set bargeIn to tru
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
-        label: "Input"
+        icon: "vonage.png",
+        label: "Input",
+        paletteLabel: "Input"
     });
 </script>
 
-<script type="text/x-red" data-template-name="input">
+<script type="text/x-red" data-template-name="vonage-input">
     <div class="form-row">
         <label for="node-input-eventurl"><i class="icon-tag"></i>URL {}</label>
         <input type="text" id="node-input-eventurl" placeholder="https://example.com/webhooks/input">
@@ -190,7 +193,7 @@ By default, the stream action is synchronous. However, if you set bargeIn to tru
     
 </script>
 
-<script type="text/x-red" data-help-name="input">
+<script type="text/x-red" data-help-name="vonage-input">
 <p>Adds an input action to an NCCO</p>
 
 <h3>Inputs</h3>
@@ -208,19 +211,19 @@ By default, the stream action is synchronous. However, if you set bargeIn to tru
 <h3>Details</h3>
 The input action collects DTMF input from the caller.
 
-You can use the input action to collect digits input by the person you are calling. This action is synchronous, Nexmo processes the input and forwards it in the parameters sent to the eventURL webhook endpoint you configure in your request, you will need to use the full url including the hostname here of your webhook here.
+You can use the input action to collect digits input by the person you are calling. This action is synchronous, Vonage processes the input and forwards it in the parameters sent to the eventURL webhook endpoint you configure in your request, you will need to use the full url including the hostname here of your webhook here.
 Your webhook endpoint should return another NCCO that replaces the existing NCCO and controls the Call based on the user input. 
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#input">Nexmo NCCO Reference</a></li>
+        <li><a href="https://developer.vonage.com/voice/voice-api/ncco-reference#input">Vonage NCCO Reference</a></li>
     </ul>
 </script>
 
 
 <script type="text/javascript">
-    RED.nodes.registerType('record',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-record',{
+        category: 'Vonage APIs',
         color: '#2d966f',
         defaults: {
           format:{},
@@ -235,12 +238,13 @@ Your webhook endpoint should return another NCCO that replaces the existing NCCO
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
-        label: "Record"
+        icon: "vonage.png",
+        label: "Record",
+        paletteLabel: "Record"
     });
 </script>
 
-<script type="text/x-red" data-template-name="record">
+<script type="text/x-red" data-template-name="vonage-record">
     <div class="form-row">
         <label for="node-input-eventurl"><i class="icon-tag"></i>URL {}</label>
         <input type="text" id="node-input-eventurl" placeholder="https://example.com/webhooks/record">
@@ -299,7 +303,7 @@ Your webhook endpoint should return another NCCO that replaces the existing NCCO
 
 </script>
 
-<script type="text/x-red" data-help-name="record">
+<script type="text/x-red" data-help-name="vonage-record">
 <p>Adds a record action to an NCCO</p>
 
 <h3>Inputs</h3>
@@ -322,15 +326,15 @@ The record action is asynchronous. Recording starts when the record action is ex
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#record">Nexmo NCCO Reference</a></li>
+        <li><a href="https://developer.vonage.com/voice/voice-api/ncco-reference#record">Vonage NCCO Reference</a></li>
     </ul>
 </script>
 
 //conversation
 
 <script type="text/javascript">
-    RED.nodes.registerType('conversation',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-conversation',{
+        category: 'Vonage APIs',
         color: '#2d966f',
         defaults: {
           name: {required:true},
@@ -345,12 +349,13 @@ The record action is asynchronous. Recording starts when the record action is ex
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
-        label: "Conversation"
+        icon: "vonage.png",
+        label: "Conversation",
+        paletteLabel: "Conversation"
     });
 </script>
 
-<script type="text/x-red" data-template-name="conversation">
+<script type="text/x-red" data-template-name="vonage-conversation">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i>Name {}</label>
         <input type="text" id="node-input-name" placeholder="text">
@@ -402,7 +407,7 @@ The record action is asynchronous. Recording starts when the record action is ex
   
 </script>
 
-<script type="text/x-red" data-help-name="conversation">
+<script type="text/x-red" data-help-name="vonage-conversation">
 <p>Adds a conversaton action to an NCCO</p>
 
 <h3>Inputs</h3>
@@ -426,7 +431,7 @@ Can Hear and Can Speak should be a comma separated list of call UUIDs
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#conversation">Nexmo NCCO Reference</a></li>
+        <li><a href="https://developer.vonage.com/voice/voice-api/ncco-reference#conversation">Vonage NCCO Reference</a></li>
     </ul>
 </script>
 
@@ -434,8 +439,8 @@ Can Hear and Can Speak should be a comma separated list of call UUIDs
 //connect
 
 <script type="text/javascript">
-    RED.nodes.registerType('connect',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-connect',{
+        category: 'Vonage APIs',
         color: '#2d966f',
         defaults: {
           endpoint: {},
@@ -457,13 +462,14 @@ Can Hear and Can Speak should be a comma separated list of call UUIDs
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
-        label: "Connect"
+        icon: "vonage.png",
+        label: "Connect",
+        paletteLabel: "Connect"
     });
 </script>
 
 
-<script type="text/x-red" data-template-name="connect">
+<script type="text/x-red" data-template-name="vonage-connect">
     
   <div class="form-row">
       <label for="node-input-endpoint"><i class="fa fa-tasks"></i>Endpoint</label>
@@ -598,7 +604,7 @@ Can Hear and Can Speak should be a comma separated list of call UUIDs
   }
 </script>
     
-<script type="text/x-red" data-help-name="connect">
+<script type="text/x-red" data-help-name="vonage-connect">
 <p>Adds a connect action to an NCCO</p>
 
 <h3>Inputs</h3>
@@ -620,7 +626,7 @@ This action is synchronous, after a connect the next action in the NCCO stack is
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#connect">Nexmo NCCO Reference</a></li>
+        <li><a href="https://developer.vonage.com/voice/voice-api/ncco-reference#connect">Vonage NCCO Reference</a></li>
     </ul>
 </script>
 
@@ -629,8 +635,8 @@ This action is synchronous, after a connect the next action in the NCCO stack is
 //Notify
     
 <script type="text/javascript">
-    RED.nodes.registerType('notify',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-notify',{
+        category: 'Vonage APIs',
         color: '#2d966f',
         defaults: {
           payload: {required:true},
@@ -639,8 +645,9 @@ This action is synchronous, after a connect the next action in the NCCO stack is
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Notify",
+        paletteLabel: "Notify",
         oneditprepare: function() {
           $("#node-input-payload").typedInput({ types:['json']});
           $("#node-input-eventurl").typedInput({
@@ -652,7 +659,7 @@ This action is synchronous, after a connect the next action in the NCCO stack is
     });
 </script>
 
-<script type="text/x-red" data-template-name="notify">
+<script type="text/x-red" data-template-name="vonage-notify">
     <div class="form-row">
         <label for="node-input-payload"><i class="icon-tag"></i>Payload {}</label>
         <input type="text" id="node-input-payload">
@@ -667,7 +674,7 @@ This action is synchronous, after a connect the next action in the NCCO stack is
 
 
 
-<script type="text/x-red" data-help-name="notify">
+<script type="text/x-red" data-help-name="vonage-notify">
     <p>Adds a notify action to an NCCO</p>
     <h3>Inputs</h3>
         <dl class="message-properties">
@@ -686,7 +693,7 @@ This action is synchronous, after a connect the next action in the NCCO stack is
 
      <h3>References</h3>
           <ul>
-              <li><a href="https://developer.nexmo.com/voice/voice-api/ncco-reference#notify">Nexmo NCCO Reference</a></li>
+              <li><a href="https://developer.vonage.com/voice/voice-api/ncco-reference#notify">Vonage NCCO Reference</a></li>
           </ul>
 </script>
 

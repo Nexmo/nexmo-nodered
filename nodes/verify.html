@@ -1,23 +1,23 @@
 <script type="text/javascript">
-    RED.nodes.registerType('sendverify',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-sendverify',{
+        category: 'Vonage APIs',
         color: '#7683d8',
         defaults: {
-          creds: {value:"", type:"nexmobasic"},
+          creds: {value:"", type:"vonagebasic"},
           to: {},
           brand: {},
           workflow_id: {}
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Send Verify",
         paletteLabel : "Send Verify"
     });
 </script>
-<script type="text/x-red" data-template-name="sendverify">
+<script type="text/x-red" data-template-name="vonage-sendverify">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -47,15 +47,15 @@
 
 
 
-<script type="text/x-red" data-help-name="sendverify">
+<script type="text/x-red" data-help-name="vonage-sendverify">
 <p>Start a Verification</p>
 
 <h3>Inputs</h3>
 
  <h3>Outputs</h3>
  <dl class="message-properties">
-     <dt>Resonse from the Nexmo API<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dt>Resonse from the Vonage API<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
@@ -64,31 +64,31 @@ When you have collected a user's phone number, start the verification process by
 The Verify API returns a request_id. Use this to identify a specific verification request in subsequent calls to the API, such as when making a check request to see if the user provided the correct code.
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/verify#verify-request">Nexmo Documentation</a></li>
+        <li><a href="https://developer.vonage.com/api/verify#verify-request">Vonage Documentation</a></li>
     </ul>
 </script>
 
 
 
 <script type="text/javascript">
-    RED.nodes.registerType('checkverify',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-checkverify',{
+        category: 'Vonage APIs',
         color: '#7683d8',
         defaults: {
-          creds: {value:"", type:"nexmobasic"},
+          creds: {value:"", type:"vonagebasic"},
           verify_id: {},
           code: {},
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Check Code",
         paletteLabel : "Check Code"
     });
 </script>
-<script type="text/x-red" data-template-name="checkverify">
+<script type="text/x-red" data-template-name="vonage-checkverify">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -105,15 +105,15 @@ The Verify API returns a request_id. Use this to identify a specific verificatio
 </script>
 
 
-<script type="text/x-red" data-help-name="checkverify">
+<script type="text/x-red" data-help-name="vonage-checkverify">
 <p>Check a Verification</p>
 
 <h3>Inputs</h3>
 
  <h3>Outputs</h3>
  <dl class="message-properties">
-     <dt>Resonse from the Nexmo API<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dt>Resonse from the Vonage API<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
@@ -121,29 +121,29 @@ Check the verification code that a user has provided. Use the request_id that wa
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/verify#verify-check">Nexmo Documentation</a></li>
+        <li><a href="https://developer.vonage.com/api/verify#verify-check">Vonage Documentation</a></li>
     </ul>
 </script>
 
 
 <script type="text/javascript">
-    RED.nodes.registerType('cancelverify',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-cancelverify',{
+        category: 'Vonage APIs',
         color: '#7683d8',
         defaults: {
-          creds: {value:"", type:"nexmobasic"},
+          creds: {value:"", type:"vonagebasic"},
           verify_id: {},
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Cancel Verify",
         paletteLabel : "Cancel Verify"
     });
 </script>
-<script type="text/x-red" data-template-name="cancelverify">
+<script type="text/x-red" data-template-name="vonage-cancelverify">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -154,15 +154,15 @@ Check the verification code that a user has provided. Use the request_id that wa
 </script>
 
 
-<script type="text/x-red" data-help-name="cancelverify">
+<script type="text/x-red" data-help-name="vonage-cancelverify">
 <p>Cancel a Verification</p>
 
 <h3>Inputs</h3>
 
  <h3>Outputs</h3>
  <dl class="message-properties">
-     <dt>Resonse from the Nexmo API<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dt>Resonse from the Vonage API<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
@@ -170,29 +170,29 @@ If the user decides to cancel the verification process, you should send a contro
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/verify#verify-control">Nexmo Documentation</a></li>
+        <li><a href="https://developer.vonage.com/api/verify#verify-control">Vonage Documentation</a></li>
     </ul>
 </script> 
 
 
 <script type="text/javascript">
-    RED.nodes.registerType('nextverify',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-nextverify',{
+        category: 'Vonage APIs',
         color: '#7683d8',
         defaults: {
-          creds: {value:"", type:"nexmobasic"},
+          creds: {value:"", type:"vonagebasic"},
           verify_id: {}
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Next Verify",
         paletteLabel : "Next Verify"
     });
 </script>
-<script type="text/x-red" data-template-name="nextverify">
+<script type="text/x-red" data-template-name="vonage-nextverify">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -204,7 +204,7 @@ If the user decides to cancel the verification process, you should send a contro
   
 </script>
 
-<script type="text/x-red" data-help-name="nextverify">
+<script type="text/x-red" data-help-name="vonage-nextverify">
 <p>
 Trigger next verification stage</p>
 
@@ -212,8 +212,8 @@ Trigger next verification stage</p>
 
  <h3>Outputs</h3>
  <dl class="message-properties">
-     <dt>Resonse from the Nexmo API<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dt>Resonse from the Vonage API<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
@@ -223,29 +223,29 @@ You can advance to the next verification attempt programmatically by making a co
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/verify#verify-control">Nexmo Documentation</a></li>
+        <li><a href="https://developer.vonage.com/api/verify#verify-control">Vonage Documentation</a></li>
     </ul>
 </script> 
 
 
 <script type="text/javascript">
-    RED.nodes.registerType('searchverify',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-searchverify',{
+        category: 'Vonage APIs',
         color: '#7683d8',
         defaults: {
-          creds: {value:"", type:"nexmobasic"},
+          creds: {value:"", type:"vonagebasic"},
           verify_id: {}
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Search Verify",
         paletteLabel : "Search Verify"
     });
 </script>
-<script type="text/x-red" data-template-name="searchverify">
+<script type="text/x-red" data-template-name="vonage-searchverify">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -257,7 +257,7 @@ You can advance to the next verification attempt programmatically by making a co
   
 </script>
 
-<script type="text/x-red" data-help-name="searchverify">
+<script type="text/x-red" data-help-name="vonage-searchverify">
 <p>
 Trigger next verification stage</p>
 
@@ -265,8 +265,8 @@ Trigger next verification stage</p>
 
  <h3>Outputs</h3>
  <dl class="message-properties">
-     <dt>Resonse from the Nexmo API<span class="property-type">object</span></dt>
-     <dd> The <code>msg</code> Object will contain the response from the Nexmo API</dd>
+     <dt>Resonse from the Vonage API<span class="property-type">object</span></dt>
+     <dd> The <code>msg</code> Object will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
@@ -274,7 +274,7 @@ You can use the search functionality to see the current status or eventual outco
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/verify#verifySearch">Nexmo Documentation</a></li>
+        <li><a href="https://developer.vonage.com/api/verify#verifySearch">Vonage Documentation</a></li>
     </ul>
 </script> 
 

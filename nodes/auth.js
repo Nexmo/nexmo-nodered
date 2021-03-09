@@ -1,9 +1,9 @@
-const Nexmo = require('nexmo');
+const Vonage = require('@vonage/server-sdk');
 const version = require('../package.json').version
 
 
 module.exports = function(RED) {
-  function nexmovoiceapp(n){
+  function vonagevoiceapp(n){
    RED.nodes.createNode(this, n);
    this.apikey = n.apikey;
    this.apisecret = n.apisecret;
@@ -14,7 +14,7 @@ module.exports = function(RED) {
    this.privatekey = n.privatekey;
  }
 
-  RED.nodes.registerType("nexmovoiceapp",nexmovoiceapp,{
+  RED.nodes.registerType("vonagevoiceapp",vonagevoiceapp,{
     credentials: {
       apikey: {type:"text"},
       apisecret: {type:"text"},
@@ -23,25 +23,25 @@ module.exports = function(RED) {
    }
   });  
   
- function nexmobasic(n){
+ function vonagebasic(n){
    RED.nodes.createNode(this, n);
    this.apikey = n.apikey;
    this.apisecret = n.apisecret;
  }
- RED.nodes.registerType("nexmobasic",nexmobasic,{
+ RED.nodes.registerType("vonagebasic",vonagebasic,{
    credentials: {
      apikey: {type:"text"},
      apisecret: {type:"text"}
    }
  });    
- RED.httpAdmin.post('/nexmo-auth/new-voice-app', RED.auth.needsPermission('nexmo.write'), function(req,res){
-   const nexmo = new Nexmo({
+ RED.httpAdmin.post('/vonage-auth/new-voice-app', RED.auth.needsPermission('vonage.write'), function(req,res){
+   const vonage = new Vonage({
      apiKey: req.body.api_key,
      apiSecret: req.body.api_secret
-   }, {debug: false, appendToUserAgent: "nexmo-nodered/"+version}
+   }, {debug: false, appendToUserAgent: "vonage-nodered/"+version}
    );
    const options = {};
-   nexmo.app.create(req.body.name, 'voice', req.body.answer_url, req.body.event_url, options, function(error, response){
+   vonage.app.create(req.body.name, 'voice', req.body.answer_url, req.body.event_url, options, function(error, response){
      res.send(response);
    });
  });   

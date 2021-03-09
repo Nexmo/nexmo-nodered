@@ -1,4 +1,4 @@
-const Nexmo = require('nexmo');
+const Vonage = require('@vonage/server-sdk');
 const mustache = require("mustache");
 const version = require('../package.json').version
 
@@ -10,17 +10,17 @@ module.exports = function (RED) {
     var node = this;
     
     node.on('input', function (msg) {
-      var debug = (this.context().global.get('nexmoDebug') | false);
+      var debug = (this.context().global.get('vonageDebug') | false);
       var data = dataobject(this.context(), msg)
       this.to = mustache.render(config.to, data);
       this.brand = mustache.render(config.brand, data);
       this.workflow_id = mustache.render(config.workflow_id, data);
-      const nexmo = new Nexmo({
+      const vonage = new Vonage({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret
-      }, {debug: debug, appendToUserAgent: "nexmo-nodered/3.0.0"}
+      }, {debug: debug, appendToUserAgent: "vonage-nodered/3.0.0"}
       );
-      nexmo.verify.request({number: this.to, brand: this.brand, workflow_id: this.workflow_id}, function(err, response) {
+      vonage.verify.request({number: this.to, brand: this.brand, workflow_id: this.workflow_id}, function(err, response) {
           if(err) { console.error(err); }
         else {
           msg.payload=response;
@@ -36,16 +36,16 @@ module.exports = function (RED) {
    var node = this;
    
    node.on('input', function (msg) {
-     var debug = (this.context().global.get('nexmoDebug') | false);
+     var debug = (this.context().global.get('vonageDebug') | false);
      var data = dataobject(this.context(), msg)
      this.verify_id = mustache.render(config.verify_id, data);
      this.code = mustache.render(config.code, data);
-     const nexmo = new Nexmo({
+     const vonage = new Vonage({
        apiKey: this.creds.credentials.apikey,
        apiSecret: this.creds.credentials.apisecret
-     }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+     }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
      );
-     nexmo.verify.check({request_id: this.verify_id, code: this.code}, function(err, response) {
+     vonage.verify.check({request_id: this.verify_id, code: this.code}, function(err, response) {
          if(err) { console.error(err); }
        else {
          msg.payload=response;
@@ -61,14 +61,14 @@ module.exports = function (RED) {
   var node = this;
   
   node.on('input', function (msg) {
-    var debug = (this.context().global.get('nexmoDebug') | false);
+    var debug = (this.context().global.get('vonageDebug') | false);
     this.verify_id = mustache.render(config.verify_id, dataobject(this.context(), msg));
-    const nexmo = new Nexmo({
+    const vonage = new Vonage({
       apiKey: this.creds.credentials.apikey,
       apiSecret: this.creds.credentials.apisecret
-    }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+    }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
     );
-    nexmo.verify.control({request_id: this.verify_id, cmd: 'cancel'}, function(err, response) {
+    vonage.verify.control({request_id: this.verify_id, cmd: 'cancel'}, function(err, response) {
         if(err) { console.error(err); }
       else {
         msg.payload=response;
@@ -84,14 +84,14 @@ module.exports = function (RED) {
   var node = this;
   
   node.on('input', function (msg) {
-    var debug = (this.context().global.get('nexmoDebug') | false);
+    var debug = (this.context().global.get('vonageDebug') | false);
     this.verify_id = mustache.render(config.verify_id, dataobject(this.context(), msg));
-    const nexmo = new Nexmo({
+    const vonage = new Vonage({
       apiKey: this.creds.credentials.apikey,
       apiSecret: this.creds.credentials.apisecret
-    }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+    }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
     );
-    nexmo.verify.control({request_id: this.verify_id, cmd: 'trigger_next_event'}, function(err, response) {
+    vonage.verify.control({request_id: this.verify_id, cmd: 'trigger_next_event'}, function(err, response) {
         if(err) { console.error(err); }
       else {
         msg.payload=response;
@@ -107,14 +107,14 @@ function searchverify(config){
   var node = this;
 
   node.on('input', function(msg) {
-    var debug = (this.context().global.get('nexmoDebug') | false);
+    var debug = (this.context().global.get('vonageDebug') | false);
     this.verify_id = mustache.render(config.verify_id, dataobject(this.context(), msg));
-    const nexmo = new Nexmo({
+    const vonage = new Vonage({
       apiKey: this.creds.credentials.apikey,
       apiSecret: this.creds.credentials.apisecret
-    }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+    }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
     );
-    nexmo.verify.search(this.verify_id, function(err, response) {
+    vonage.verify.search(this.verify_id, function(err, response) {
       if (err) {
         console.error(err);
       } else {
@@ -125,11 +125,11 @@ function searchverify(config){
     
   })
 }
-  RED.nodes.registerType("sendverify",sendverify);    
-  RED.nodes.registerType("checkverify",checkverify);  
-  RED.nodes.registerType("cancelverify",cancelverify);  
-  RED.nodes.registerType("nextverify",nextverify);  
-  RED.nodes.registerType("searchverify", searchverify);
+  RED.nodes.registerType("vonage-sendverify",sendverify);    
+  RED.nodes.registerType("vonage-checkverify",checkverify);  
+  RED.nodes.registerType("vonage-cancelverify",cancelverify);  
+  RED.nodes.registerType("vonage-nextverify",nextverify);  
+  RED.nodes.registerType("vonage-searchverify", searchverify);
 }
 
 function dataobject(context, msg){

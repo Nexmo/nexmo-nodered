@@ -1,4 +1,4 @@
-const Nexmo = require('nexmo');
+const Vonage = require('@vonage/server-sdk');
 const mustache = require("mustache");
 const version = require('../package.json').version
 
@@ -12,17 +12,17 @@ module.exports = function (RED) {
     var node = this;
     
     node.on('input', function (msg) {
-      var debug = (this.context().global.get('nexmoDebug') | false);
+      var debug = (this.context().global.get('vonageDebug') | false);
       var data = dataobject(this.context(), msg)
       this.number = mustache.render(config.number, data);
       this.url = mustache.render(config.url, data);
       
-      const nexmo = new Nexmo({
+      const vonage = new Vonage({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret
-      }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+      }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
       );
-      nexmo.numberInsight.get({level: this.ni_type, number: this.number, callback: this.url}, (error, response) => {
+      vonage.numberInsight.get({level: this.ni_type, number: this.number, callback: this.url}, (error, response) => {
         if(error) {
           console.error(error);
         }
@@ -35,7 +35,7 @@ module.exports = function (RED) {
   }
   
  
-  RED.nodes.registerType("numberinsight",numberinsight);  
+  RED.nodes.registerType("vonage-numberinsight",numberinsight);  
     
 }
 

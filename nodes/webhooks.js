@@ -268,7 +268,7 @@ module.exports = function(RED) {
     	return obj;
     }
     
-    RED.nodes.registerType("voice webhook",voicewebhook);
+    RED.nodes.registerType("vonage-voice webhook",voicewebhook);
     
 
     function returnncco(n) {
@@ -322,7 +322,7 @@ module.exports = function(RED) {
             }
         });
     }
-    RED.nodes.registerType("return ncco",returnncco);
+    RED.nodes.registerType("vonage-return ncco",returnncco);
     
 
 

@@ -5,8 +5,8 @@ Create a new docker container based on latest Node-RED (0.19.5 currently) with N
 
 `docker run -itd -p 1880:1880 --name [NAME] nodered/node-red-docker:0.19.5-v8`
 
-Install the latest build of Nexmo Nodered from GitHub
-`docker exec -it [NAME] npm install git+https://git@github.com/nexmo/nexmo-nodered.git`
+Install the latest build of Vonage Node-RED from GitHub
+`docker exec -it [NAME] npm install git+https://git@github.com/vonage/vonage-nodered.git`
 
 (To test a specific branch add `#branchName` to the end of the url)
 

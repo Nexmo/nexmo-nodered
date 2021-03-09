@@ -282,13 +282,13 @@ function clean(obj) {
     }
 }
   
-RED.nodes.registerType("talk", talk);
-RED.nodes.registerType("stream", stream);
-RED.nodes.registerType("input", input);
-RED.nodes.registerType("record", record);
-RED.nodes.registerType("conversation", conversation);
-RED.nodes.registerType("connect", connect);
-RED.nodes.registerType("notify", notify);
+RED.nodes.registerType("vonage-talk", talk);
+RED.nodes.registerType("vonage-stream", stream);
+RED.nodes.registerType("vonage-input", input);
+RED.nodes.registerType("vonage-record", record);
+RED.nodes.registerType("vonage-conversation", conversation);
+RED.nodes.registerType("vonage-connect", connect);
+RED.nodes.registerType("vonage-notify", notify);
 }
 
 

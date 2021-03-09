@@ -1,4 +1,4 @@
-const Nexmo = require('nexmo');
+const Vonage = require('@vonage/server-sdk');
 const mustache = require("mustache");
 const version = require('../package.json').version
 
@@ -14,7 +14,7 @@ module.exports = function (RED) {
     this.contenttype = config.contenttype
     var node = this;
     node.on('input', function (msg) {
-      var debug = (this.context().global.get('nexmoDebug') | false);
+      var debug = (this.context().global.get('vonageDebug') | false);
       var data = dataobject(this.context(), msg);
       this.to = mustache.render(config.to, data);
       this.wsuri = mustache.render(config.wsuri, data);
@@ -33,12 +33,12 @@ module.exports = function (RED) {
       } else if (this.answertype == 'fixed'){
         this.ncco = msg.ncco
       }
-      const nexmo = new Nexmo({
+      const vonage = new Vonage({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+        }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
       );
       if (this.endpoint == "phone"){
         var ep = {}
@@ -79,7 +79,7 @@ module.exports = function (RED) {
         request.event_url= [this.eventurl]; 
       }
       clean(request);
-      nexmo.calls.create(request, (err, response) => {
+      vonage.calls.create(request, (err, response) => {
         if(err) { console.error(err); }
         else {
           msg.payload=response;
@@ -94,19 +94,19 @@ module.exports = function (RED) {
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
     node.on('input', function (msg) {
-      var debug = (this.context().global.get('nexmoDebug') | false);
+      var debug = (this.context().global.get('vonageDebug') | false);
       this.filename = mustache.render(config.filename, dataobject(this.context(), msg));
       if (this.filename){
         msg.filename = this.filename;
       }
-      const nexmo = new Nexmo({
+      const vonage = new Vonage({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+        }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
       );
-      nexmo.files.get(msg.payload.recording_url, (error, data) => {
+      vonage.files.get(msg.payload.recording_url, (error, data) => {
             if (error) {
               console.log(error, null);
             } else {
@@ -125,17 +125,17 @@ module.exports = function (RED) {
     this.state = config.state;
     var node = this;
     node.on('input', function (msg) {
-      var debug = (this.context().global.get('nexmoDebug') | false);
+      var debug = (this.context().global.get('vonageDebug') | false);
       this.calluuid = mustache.render(config.calluuid, dataobject(this.context(), msg));
-      const nexmo = new Nexmo({
+      const vonage = new Vonage({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+        }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
       );
     if (this.state == "on"){
-      nexmo.calls.update(this.calluuid, { action: 'earmuff' }, (err, res) => {
+      vonage.calls.update(this.calluuid, { action: 'earmuff' }, (err, res) => {
         if(err) { console.error(err); }
         else {
           msg.payload=res;
@@ -143,7 +143,7 @@ module.exports = function (RED) {
         }
       });
     } else {
-      nexmo.calls.update(this.calluuid, { action: 'unearmuff' }, (err, res) => {
+      vonage.calls.update(this.calluuid, { action: 'unearmuff' }, (err, res) => {
         if(err) { console.error(err); }
         else {
           msg.payload=res;
@@ -161,17 +161,17 @@ module.exports = function (RED) {
     this.state = config.state;
     var node = this;
     node.on('input', function (msg) {
-      var debug = (this.context().global.get('nexmoDebug') | false);
+      var debug = (this.context().global.get('vonageDebug') | false);
       this.calluuid = mustache.render(config.calluuid, dataobject(this.context(), msg));
-      const nexmo = new Nexmo({
+      const vonage = new Vonage({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+        }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
       );
     if (this.state == "on"){
-      nexmo.calls.update(this.calluuid, { action: 'mute' }, (err, res) => {
+      vonage.calls.update(this.calluuid, { action: 'mute' }, (err, res) => {
         if(err) { console.error(err); }
         else {
           msg.payload=res;
@@ -179,7 +179,7 @@ module.exports = function (RED) {
         }
       });
     } else {
-      nexmo.calls.update(this.calluuid, { action: 'unmute' }, (err, res) => {
+      vonage.calls.update(this.calluuid, { action: 'unmute' }, (err, res) => {
         if(err) { console.error(err); }
         else {
           msg.payload=res;
@@ -196,16 +196,16 @@ module.exports = function (RED) {
     this.creds = RED.nodes.getNode(config.creds);
     var node = this;
     node.on('input', function (msg) {
-      var debug = (this.context().global.get('nexmoDebug') | false);
+      var debug = (this.context().global.get('vonageDebug') | false);
       this.calluuid = mustache.render(config.calluuid, dataobject(this.context(), msg));
-      const nexmo = new Nexmo({
+      const vonage = new Vonage({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+        }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
       );
-      nexmo.calls.update(this.calluuid, { action: 'hangup' }, (err, response) => {
+      vonage.calls.update(this.calluuid, { action: 'hangup' }, (err, response) => {
         if(err) { console.error(err); }
         else {
           msg.payload=response;
@@ -223,7 +223,7 @@ module.exports = function (RED) {
     this.nccotype = config.nccotype;
     var node = this;
     node.on('input', function (msg) {
-      var debug = (this.context().global.get('nexmoDebug') | false);
+      var debug = (this.context().global.get('vonageDebug') | false);
       var data = dataobject(this.context(), msg);
       this.calluuid = mustache.render(config.calluuid, data);
       if ( this.nccotype == 'url'){
@@ -233,12 +233,12 @@ module.exports = function (RED) {
       } else if (this.nccotype == 'fixed'){
         this.ncco = msg.ncco
       }
-      const nexmo = new Nexmo({
+      const vonage = new Vonage({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+        }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
       );
       this.destination = {type:"ncco"};
       if ( this.nccotype == 'url'){
@@ -246,7 +246,7 @@ module.exports = function (RED) {
       } else {
         this.destination.ncco = this.ncco
       }
-      nexmo.calls.update(this.calluuid, {action: 'transfer', destination: this.destination}, (err, response) => {
+      vonage.calls.update(this.calluuid, {action: 'transfer', destination: this.destination}, (err, response) => {
         if(err) { console.error(err); }
         else {
           msg.payload=response;
@@ -268,19 +268,19 @@ module.exports = function (RED) {
     this.level = config.level
     var node = this;
     node.on('input', function (msg) {
-      var debug = (this.context().global.get('nexmoDebug') | false);
+      var debug = (this.context().global.get('vonageDebug') | false);
       var data = dataobject(this.context(), msg);
       this.calluuid = mustache.render(config.calluuid, data);
       this.url = mustache.render(config.url, data);
-      const nexmo = new Nexmo({
+      const vonage = new Vonage({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret,
         applicationId: this.creds.credentials.appid,
         privateKey: this.creds.credentials.privatekey
-        }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+        }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
       );
       if (this.action == 'on'){
-        nexmo.calls.stream.start(this.calluuid, { stream_url: [this.url], loop: this.loop, level: this.level},  (err, response) => {
+        vonage.calls.stream.start(this.calluuid, { stream_url: [this.url], loop: this.loop, level: this.level},  (err, response) => {
           if(err) { console.error(err); }
           else {
             msg.payload=response;
@@ -288,7 +288,7 @@ module.exports = function (RED) {
           }
         });
       } else {
-        nexmo.calls.stream.stop(this.calluuid,  (err, response) => {
+        vonage.calls.stream.stop(this.calluuid,  (err, response) => {
           if(err) { console.error(err); }
           else {
             msg.payload=response;
@@ -309,20 +309,20 @@ module.exports = function (RED) {
    this.voicename = config.voicename;
    var node = this;
    node.on('input', function (msg) {
-     var debug = (this.context().global.get('nexmoDebug') | false);
+     var debug = (this.context().global.get('vonageDebug') | false);
      var data = dataobject(this.context(), msg);
      this.calluuid = mustache.render(config.calluuid, data);
      this.text = mustache.render(config.text, data);
      this.voicename = mustache.render(config.voicename, data);
-     const nexmo = new Nexmo({
+     const vonage = new Vonage({
        apiKey: this.creds.credentials.apikey,
        apiSecret: this.creds.credentials.apisecret,
        applicationId: this.creds.credentials.appid,
        privateKey: this.creds.credentials.privatekey
-       }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+       }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
      );
      if (this.action == 'on'){
-       nexmo.calls.talk.start(this.calluuid, { text: this.text, voice_name: this.voicename, loop: this.loop, level: this.level },  (err, response) => {
+       vonage.calls.talk.start(this.calluuid, { text: this.text, voice_name: this.voicename, loop: this.loop, level: this.level },  (err, response) => {
          if(err) { console.error(err); }
          else {
            msg.payload=response;
@@ -330,7 +330,7 @@ module.exports = function (RED) {
          }
        });
      } else {
-       nexmo.calls.talk.stop(this.calluuid,  (err, res) => {
+       vonage.calls.talk.stop(this.calluuid,  (err, res) => {
          if(err) { console.error(err); }
          else {
            msg.payload=res;
@@ -346,18 +346,18 @@ function playdtmf(config){
   this.creds = RED.nodes.getNode(config.creds);
   var node = this;
   node.on('input', function (msg) {
-    var debug = (this.context().global.get('nexmoDebug') | false);
+    var debug = (this.context().global.get('vonageDebug') | false);
     var data = dataobject(this.context(), msg);
     this.calluuid = mustache.render(config.calluuid, data);
     this.digits = mustache.render(config.digits, data);
-    const nexmo = new Nexmo({
+    const vonage = new Vonage({
       apiKey: this.creds.credentials.apikey,
       apiSecret: this.creds.credentials.apisecret,
       applicationId: this.creds.credentials.appid,
       privateKey: this.creds.credentials.privatekey
-      }, {debug: debug, appendToUserAgent: "nexmo-nodered/"+version}
+      }, {debug: debug, appendToUserAgent: "vonage-nodered/"+version}
     );
-    nexmo.calls.dtmf.send(this.calluuid, { digits: this.digits }, (err, response) => {
+    vonage.calls.dtmf.send(this.calluuid, { digits: this.digits }, (err, response) => {
        if(err) { 
         console.error(err); 
        } else {
@@ -376,15 +376,15 @@ function playdtmf(config){
       }
     }
   }
-  RED.nodes.registerType("createcall",createCall);
-  RED.nodes.registerType("earmuff",earmuff);    
-  RED.nodes.registerType("getrecording",GetRecording);
-  RED.nodes.registerType("mute",mute);    
-  RED.nodes.registerType("hangup",hangup);    
-  RED.nodes.registerType("transfer",transfer);
-  RED.nodes.registerType("playaudio",playaudio);
-  RED.nodes.registerType("playtts",playtts);
-  RED.nodes.registerType("playdtmf",playdtmf);
+  RED.nodes.registerType("vonage-createcall",createCall);
+  RED.nodes.registerType("vonage-earmuff",earmuff);    
+  RED.nodes.registerType("vonage-getrecording",GetRecording);
+  RED.nodes.registerType("vonage-mute",mute);    
+  RED.nodes.registerType("vonage-hangup",hangup);    
+  RED.nodes.registerType("vonage-transfer",transfer);
+  RED.nodes.registerType("vonage-playaudio",playaudio);
+  RED.nodes.registerType("vonage-playtts",playtts);
+  RED.nodes.registerType("vonage-playdtmf",playdtmf);
   
   
   function dataobject(context, msg){
@@ -403,14 +403,14 @@ function playdtmf(config){
     return data
   }
   
-  RED.httpAdmin.get('/nexmo-auth/numbers', RED.auth.needsPermission('nexmo.write'), function(req,res){
+  RED.httpAdmin.get('/vonage-auth/numbers', RED.auth.needsPermission('vonage.write'), function(req,res){
     const creds = RED.nodes.getNode(req.query.creds);
-    const nexmo = new Nexmo({
+    const vonage = new Vonage({
       apiKey: creds.credentials.apikey,
       apiSecret: creds.credentials.apisecret
-      }, {debug: false, appendToUserAgent: "nexmo-nodered/"+version}
+      }, {debug: false, appendToUserAgent: "vonage-nodered/"+version}
     );
-    nexmo.number.get({}, 
+    vonage.number.get({}, 
       (err, response) => {
         if (err) {
           console.error(err)

@@ -1,21 +1,21 @@
 <script type="text/javascript">
-    RED.nodes.registerType('updateNumber',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-updateNumber',{
+        category: 'Vonage APIs',
         color: '#989898',
         defaults: {
-          creds: {value:"", type:"nexmobasic"},
+          creds: {value:"", type:"vonagebasic"},
           number:  {required: true },
           voiceAppid: {default: false},
           smsURL: {default: false}
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Update Number",
         paletteLabel : "Update Number"
     });
 </script>
-<script type="text/x-red" data-template-name="updateNumber">
+<script type="text/x-red" data-template-name="vonage-updateNumber">
   <div class="form-row">
       <label for="node-config-input-creds"></i>Application to Update</label>
       <input type="text" id="node-input-creds" >
@@ -42,7 +42,7 @@
 </script>
 
 
-<script type="text/x-red" data-help-name="updateNumber">
+<script type="text/x-red" data-help-name="vonage-updateNumber">
 <p>Update an Number</p>
 
 <h3>Inputs</h3>
@@ -50,14 +50,14 @@
 <h3>Outputs</h3>
  <dl class="message-properties">
      <dt>ncco<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
 Allows you to update the SMS URL and Voice Application ID associated with a number 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/application/overview">Nexmo Documentation</a></li>
+        <li><a href="https://developer.vonage.com/application/overview">Vonage Documentation</a></li>
     </ul>
 </script>
 

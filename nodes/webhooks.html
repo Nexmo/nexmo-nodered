@@ -1,4 +1,4 @@
-<script type="text/x-red" data-template-name="voice webhook">
+<script type="text/x-red" data-template-name="vonage-voice webhook">
    
     <div class="form-row">
         <label for="node-input-method"><i class="fa fa-tasks"></i> Method</label>
@@ -18,7 +18,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="voice webhook">
+<script type="text/x-red" data-help-name="vonage-voice webhook">
   <p>Creates a url to handle a voice webhook </p>
 
    <h3>Outputs</h3>
@@ -28,23 +28,23 @@
    </dl>
    
    <h3>Reference</h3>
-   See the <a href="https://developer.nexmo.com/voice/voice-api/webhook-reference"> Voice API Webhooks Reference </a> for details of all the parameters on a webhook <
+   See the <a href="https://developer.vonage.com/voice/voice-api/webhook-reference"> Voice API Webhooks Reference </a> for details of all the parameters on a webhook <
    
 </script>
 
-<script type="text/x-red" data-template-name="return ncco">
+<script type="text/x-red" data-template-name="vonage-return ncco">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="common.label.name"></span></label>
         <input type="text" id="node-input-name" data-i18n="[placeholder]common.label.name">
     </div>
   </script>
 
-<script type="text/x-red" data-help-name="return ncco">
+<script type="text/x-red" data-help-name="vonage-return ncco">
     <p>Sends responses back to requests received from an HTTP Input node.</p>
   </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('voice webhook',{
+    RED.nodes.registerType('vonage-voice webhook',{
         category: 'network',
         color: "#2d966f",
         defaults: {
@@ -54,7 +54,7 @@
         },
         inputs:0,
         outputs:1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: function() {
             if (this.name) {
                 return this.name;
@@ -78,7 +78,7 @@
         },
     });
 
-    RED.nodes.registerType('return ncco',{
+    RED.nodes.registerType('vonage-return ncco',{
         category: 'network',
         color: "#2d966f",
         defaults: {
@@ -87,7 +87,7 @@
         inputs:1,
         outputs:0,
         align: "right",
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: function() {
             return this.name||("http"+(this.statusCode?" ("+this.statusCode+")":""));
         },

@@ -1,23 +1,23 @@
 <script type="text/javascript">
-    RED.nodes.registerType('numberinsight',{
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-numberinsight',{
+        category: 'Vonage APIs',
         color: '#ff8f02',
         defaults: {
-          creds: {value:"", type:"nexmobasic"},
+          creds: {value:"", type:"vonagebasic"},
           ni_type: {},
           number: {},
           url: {value: "",}
         },
         inputs:1,
         outputs:1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Number Insight",
         paletteLabel: "Number Insight"
     });
 </script>
-<script type="text/x-red" data-template-name="numberinsight">
+<script type="text/x-red" data-template-name="vonage-numberinsight">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -54,26 +54,26 @@
 </script>
     
     
-<script type="text/x-red" data-help-name="numberinsight">
-<p>Queries the Nexmo Number Insight API</p>
+<script type="text/x-red" data-help-name="vonage-numberinsight">
+<p>Queries the Vonage Number Insight API</p>
 
 <h3>Inputs</h3>
 
  <h3>Outputs</h3>
  <dl class="message-properties">
      <dt>ncco<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
-Nexmo&apos;s Number Insight API delivers real-time information about the validity, reachability and roaming status of a phone number and tells you how to format the number correctly in your application.
+Vonage&apos;s Number Insight API delivers real-time information about the validity, reachability and roaming status of a phone number and tells you how to format the number correctly in your application.
 
 We have merged al 4 of the Number Insight methods into a single node allowing you to select the level you want to use.
 
 The Callback URL is only required for the Async type.
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/number-insight/overview">Nexmo Documentation</a></li>
+        <li><a href="https://developer.vonage.com/number-insight/overview">Vonage Documentation</a></li>
     </ul>
 </script>
 

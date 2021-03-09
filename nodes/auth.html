@@ -1,6 +1,6 @@
 
 <script type="text/javascript">
-    RED.nodes.registerType('nexmovoiceapp',{
+    RED.nodes.registerType('vonagevoiceapp',{
         category: 'config',
         defaults: {
           name: {}
@@ -19,7 +19,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="nexmovoiceapp">
+<script type="text/x-red" data-template-name="vonagevoiceapp">
   <div class="form-row">
       <label for="node-config-input-name">Name</label>
       <input type="text" id="node-config-input-name" placeholder="Name">
@@ -27,12 +27,12 @@
   
   <div class="form-row">
       <label for="node-config-input-apikey">API Key</label>
-      <input type="text" id="node-config-input-apikey" placeholder="Nexmo API Key">
+      <input type="text" id="node-config-input-apikey" placeholder="Vonage API Key">
   </div>
   
   <div class="form-row">
       <label for="node-config-input-apisecret">API Secret</label>
-      <input type="text" id="node-config-input-apisecret" placeholder="Nexmo API Secret">
+      <input type="text" id="node-config-input-apisecret" placeholder="Vonage API Secret">
   </div>
   
   <div class="form-row">
@@ -45,7 +45,7 @@
   </div>
   
 	<div class="form-row">
-    <button id="button" onclick="newnexmovoiceapp()">Create New Application</button><br>   
+    <button id="button" onclick="newvonagevoiceapp()">Create New Application</button><br>   
   </div>
   
   <div class="form-row">
@@ -59,19 +59,19 @@
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="nexmovoiceapp">
-   <p>Creates a new Nexmo Voice Application </p>
+<script type="text/x-red" data-help-name="vonagevoiceapp">
+   <p>Creates a new Vonage Voice Application </p>
    <h3>Details</h3>
-   <p>Enter your details in the boxes above and click, Create Application, node-red will then create a new nexmo application on your account and fill in the Dpp ID and Private Key fields for you to save.</p>
-   <p> This auth module can be used by any Nexmo Voice nodes that require auth.</p>
+   <p>Enter your details in the boxes above and click, Create Application, node-red will then create a new vonage application on your account and fill in the Dpp ID and Private Key fields for you to save.</p>
+   <p> This auth module can be used by any Vonage Voice nodes that require auth.</p>
 </script>
 
 
 <script>
 
-  function newnexmovoiceapp(){
+  function newvonagevoiceapp(){
       console.log('FUNCTION CALLED')
-      var url = 'nexmo-auth/new-voice-app';
+      var url = 'vonage-auth/new-voice-app';
       console.log(url);
       var params = {
         api_key:  document.getElementById("node-config-input-apikey").value,
@@ -92,7 +92,7 @@
     
     
 <script type="text/javascript">
-    RED.nodes.registerType('nexmobasic',{
+    RED.nodes.registerType('vonagebasic',{
         category: 'config',
         credentials: {
           apikey: {type:"text"},
@@ -104,20 +104,20 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="nexmobasic">
+<script type="text/x-red" data-template-name="vonagebasic">
   <div class="form-row"></
       <label for="node-config-input-apikey">API Key</label>
-      <input type="text" id="node-config-input-apikey" placeholder="Nexmo API Key">
+      <input type="text" id="node-config-input-apikey" placeholder="Vonage API Key">
   </div>
   
   <div class="form-row">
       <label for="node-config-input-apisecret">API Secret</label>
-      <input type="text" id="node-config-input-apisecret" placeholder="Nexmo API Secret">
+      <input type="text" id="node-config-input-apisecret" placeholder="Vonage API Secret">
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="nexmobasic">
-   <p>Creates a new Nexmo Basic Auth node </p>
+<script type="text/x-red" data-help-name="vonagebasic">
+   <p>Creates a new Vonage Basic Auth node </p>
    <h3>Details</h3>
    <p>Enter your api key and secret</p>
    <p> This auth module will be used by nodes that require basic auth such as SMS, Verify and Number Insight.</p>

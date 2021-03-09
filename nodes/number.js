@@ -1,4 +1,4 @@
-const Nexmo = require('nexmo');
+const Vonage = require('@vonage/server-sdk');
 const mustache = require("mustache");
 const version = require('../package.json').version
 mustache.escape = function (text) { return text; }
@@ -11,17 +11,17 @@ module.exports = function (RED) {
     var node = this;
     node.on('input', function (msg) {
     if (msg.payload != null){
-        var debug = (this.context().global.get('nexmoDebug') | false);
+        var debug = (this.context().global.get('vonageDebug') | false);
       var data = dataobject(this.context(), msg)
       var update = {}
       this.number = mustache.render(config.number, data)
       config.voiceAppid ? update.voiceAppid = mustache.render(config.voiceAppid, data) : update.voiceAppid = false
       config.smsURL ? update.smsURL = mustache.render(config.smsURL, data) : update.smsURL = false
-      const nexmo = new Nexmo({
+      const vonage = new Vonage({
         apiKey: this.creds.credentials.apikey,
         apiSecret: this.creds.credentials.apisecret
-      }, {debug: true, appendToUserAgent: "nexmo-nodered/"+version});
-      nexmo.number.get({pattern: this.number, search_pattern: 0 }, (error, result) => {
+      }, {debug: true, appendToUserAgent: "vonage-nodered/"+version});
+      vonage.number.get({pattern: this.number, search_pattern: 0 }, (error, result) => {
         if(error) {
           console.error(error);
         }
@@ -35,7 +35,7 @@ module.exports = function (RED) {
           update.voiceAppid ? data.voiceCallbackType = 'app' : data.voiceCallbackType = result.numbers[0].voiceCallbackType
           update.smsURL ? data.moHttpUrl = update.smsURL : data.moHttpUrl = result.numbers[0].moHttpUrl
           clean(data)
-          nexmo.number.update(result.numbers[0].country, result.numbers[0].msisdn, data, (err, res) => {
+          vonage.number.update(result.numbers[0].country, result.numbers[0].msisdn, data, (err, res) => {
               if (err) {
                 console.error(err)
               }
@@ -50,7 +50,7 @@ module.exports = function (RED) {
     }  
     });
   }
-  RED.nodes.registerType("updateNumber",updateNumber);    
+  RED.nodes.registerType("vonage-updateNumber",updateNumber);    
 }
 
 function dataobject(context, msg){

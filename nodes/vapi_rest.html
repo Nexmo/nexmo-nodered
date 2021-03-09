@@ -1,10 +1,10 @@
 //createCall
 <script type="text/javascript">
-    RED.nodes.registerType('createcall', {
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-createcall', {
+        category: 'Vonage APIs',
         color: '#35be8b',
         defaults: {
-            creds: { value: "", type: "nexmovoiceapp" },
+            creds: { value: "", type: "vonagevoiceapp" },
             endpoint: {},
             to: {},
             dtmfanswer: {},
@@ -24,7 +24,7 @@
         },
         inputs: 1,
         outputs: 1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Create Call",
         paletteLabel: "Create Call",
         oneditprepare: function () {
@@ -53,10 +53,10 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="createcall">
+<script type="text/x-red" data-template-name="vonage-createcall">
 
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
       
@@ -204,7 +204,7 @@
     }
 </script>
 
-<script type="text/x-red" data-help-name="createcall">
+<script type="text/x-red" data-help-name="vonage-createcall">
 <p>Create a new Outbound Call</p>
 
 <h3>Inputs</h3>
@@ -212,7 +212,7 @@
  <h3>Outputs</h3>
  <dl class="message-properties">
      <dt>ncco<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
@@ -220,29 +220,29 @@ Create a new outbound call
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/voice#createCall">Nexmo API Reference</a></li>
+        <li><a href="https://developer.vonage.com/api/voice#createCall">Vonage API Reference</a></li>
     </ul>
 </script>
 
 //getrecording
 <script type="text/javascript">
-    RED.nodes.registerType('getrecording', {
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-getrecording', {
+        category: 'Vonage APIs',
         color: '#35be8b',
         defaults: {
-            creds: { value: "", type: "nexmovoiceapp" },
+            creds: { value: "", type: "vonagevoiceapp" },
             filename: {}
         },
         inputs: 1,
         outputs: 1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Get Recording",
         paletteLabel: "Get Recording"
     });
 </script>
-<script type="text/x-red" data-template-name="getrecording">
+<script type="text/x-red" data-template-name="vonage-getrecording">
   <div class="form-row">
-      <label for="node-config-input-creds"></i>Nexmo Credentials</label>
+      <label for="node-config-input-creds"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds">
   </div>
   <div class="form-row">
@@ -251,7 +251,7 @@ Create a new outbound call
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="getrecording">
+<script type="text/x-red" data-help-name="vonage-getrecording">
 <p>Fetch a recording</p>
 
 <h3>Inputs</h3>
@@ -277,24 +277,24 @@ Note, this node does not write the audio to disk, the filename field is there to
 
 //earmuff
 <script type="text/javascript">
-    RED.nodes.registerType('earmuff', {
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-earmuff', {
+        category: 'Vonage APIs',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmovoiceapp"},
+          creds: {value:"", type:"vonagevoiceapp"},
           calluuid: {},
           state:{}
         },
         inputs: 1,
         outputs: 1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Earmuff",
         paletteLabel: "Earmuff"
     });
 </script>
-<script type="text/x-red" data-template-name="earmuff">
+<script type="text/x-red" data-template-name="vonage-earmuff">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -313,7 +313,7 @@ Note, this node does not write the audio to disk, the filename field is there to
   
 </script>
 
-<script type="text/x-red" data-help-name="earmuff">
+<script type="text/x-red" data-help-name="vonage-earmuff">
 <p>Earmuff a Call</p>
 
 <h3>Inputs</h3>
@@ -321,7 +321,7 @@ Note, this node does not write the audio to disk, the filename field is there to
  <h3>Outputs</h3>
  <dl class="message-properties">
      <dt>ncco<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
@@ -329,30 +329,30 @@ Earmuff a call leg
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/voice#updateCall">Nexmo API Reference</a></li>
+        <li><a href="https://developer.vonage.com/api/voice#updateCall">Vonage API Reference</a></li>
     </ul>
 </script>
 
 //mute
 <script type="text/javascript">
-    RED.nodes.registerType('mute', {
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-mute', {
+        category: 'Vonage APIs',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmovoiceapp"},
+          creds: {value:"", type:"vonagevoiceapp"},
           calluuid: {},
           state:{}
         },
         inputs: 1,
         outputs: 1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Mute",
         paletteLabel : "Mute"
     });
 </script>
-<script type="text/x-red" data-template-name="mute">
+<script type="text/x-red" data-template-name="vonage-mute">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -371,7 +371,7 @@ Earmuff a call leg
   
 </script>
 
-<script type="text/x-red" data-help-name="mute">
+<script type="text/x-red" data-help-name="vonage-mute">
 <p>Mute a Call</p>
 
 <h3>Inputs</h3>
@@ -379,7 +379,7 @@ Earmuff a call leg
  <h3>Outputs</h3>
  <dl class="message-properties">
      <dt>ncco<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
@@ -387,30 +387,30 @@ Mute a call leg
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/voice#updateCall">Nexmo API Reference</a></li>
+        <li><a href="https://developer.vonage.com/api/voice#updateCall">Vonage API Reference</a></li>
     </ul>
 </script>
 
 
 //hangup
 <script type="text/javascript">
-    RED.nodes.registerType('hangup', {
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-hangup', {
+        category: 'Vonage APIs',
         color: '#35be8b',
         defaults: {
-            creds: { value: "", type: "nexmovoiceapp" },
+            creds: { value: "", type: "vonagevoiceapp" },
             calluuid: {}
         },
         inputs: 1,
         outputs: 1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Hangup",
         paletteLabel : "Hangup"
     });
 </script>
-<script type="text/x-red" data-template-name="hangup">
+<script type="text/x-red" data-template-name="vonage-hangup">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -420,7 +420,7 @@ Mute a call leg
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="hangup">
+<script type="text/x-red" data-help-name="vonage-hangup">
 <p>Hangup a Call</p>
 
 <h3>Inputs</h3>
@@ -428,7 +428,7 @@ Mute a call leg
  <h3>Outputs</h3>
  <dl class="message-properties">
      <dt>ncco<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
@@ -436,25 +436,25 @@ Hangup a call leg.
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/voice#updateCall">Nexmo API Reference</a></li>
+        <li><a href="https://developer.vonage.com/api/voice#updateCall">Vonage API Reference</a></li>
     </ul>
 </script>
 
 
 //transfer
 <script type="text/javascript">
-    RED.nodes.registerType('transfer', {
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-transfer', {
+        category: 'Vonage APIs',
         color: '#35be8b',
         defaults: {
-          creds: {value:"", type:"nexmovoiceapp"},
+          creds: {value:"", type:"vonagevoiceapp"},
           calluuid: {},
           ncco: {},
           nccotype: {}
         },
         inputs: 1,
         outputs: 1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Transfer",
         paletteLabel: "Transfer",
         oneditprepare: function() {
@@ -468,9 +468,9 @@ Hangup a call leg.
     });
 </script>
 
-<script type="text/x-red" data-template-name="transfer">
+<script type="text/x-red" data-template-name="vonage-transfer">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -488,7 +488,7 @@ Hangup a call leg.
   
 </script>
 
-<script type="text/x-red" data-help-name="transfer">
+<script type="text/x-red" data-help-name="vonage-transfer">
 <p>Transfer a Call to a new NCCO</p>
 
 <h3>Inputs</h3>
@@ -496,25 +496,25 @@ Hangup a call leg.
  <h3>Outputs</h3>
  <dl class="message-properties">
      <dt>ncco<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
 Will transfer a call leg to a new NCCO, you need to supply the URL which will serve the new NCCO response.
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/voice#updateCall">Nexmo API Reference</a></li>
+        <li><a href="https://developer.vonage.com/api/voice#updateCall">Vonage API Reference</a></li>
     </ul>
 </script>
 
 
 //playaudio
 <script type="text/javascript">
-    RED.nodes.registerType('playaudio', {
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-playaudio', {
+        category: 'Vonage APIs',
         color: '#35be8b',
         defaults: {
-            creds: { value: "", type: "nexmovoiceapp" },
+            creds: { value: "", type: "vonagevoiceapp" },
             calluuid: {},
             action: {},
             url: {},
@@ -523,14 +523,14 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
         },
         inputs: 1,
         outputs: 1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Play Audio",
         paletteLabel: "Play Audio"
     });
 </script>
-<script type="text/x-red" data-template-name="playaudio">
+<script type="text/x-red" data-template-name="vonage-playaudio">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -563,7 +563,7 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
 </script>
 
 
-<script type="text/x-red" data-help-name="playaudio">
+<script type="text/x-red" data-help-name="vonage-playaudio">
 <p>Play audio into a call</p>
 
 <h3>Inputs</h3>
@@ -571,7 +571,7 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
  <h3>Outputs</h3>
  <dl class="message-properties">
      <dt>ncco<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
@@ -579,18 +579,18 @@ Play an audio file into a call
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/voice#startStream">Nexmo API Reference</a></li>
+        <li><a href="https://developer.vonage.com/api/voice#startStream">Vonage API Reference</a></li>
     </ul>
 </script>
 
 
 //playtts
 <script type="text/javascript">
-    RED.nodes.registerType('playtts', {
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-playtts', {
+        category: 'Vonage APIs',
         color: '#35be8b',
         defaults: {
-            creds: { value: "", type: "nexmovoiceapp" },
+            creds: { value: "", type: "vonagevoiceapp" },
             calluuid: {},
             action: {},
             text: {},
@@ -600,15 +600,15 @@ Play an audio file into a call
         },
         inputs: 1,
         outputs: 1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Play TTS",
         paletteLabel: "Play TTS"
     });
 </script>
 
-<script type="text/x-red" data-template-name="playtts">
+<script type="text/x-red" data-template-name="vonage-playtts">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -647,7 +647,7 @@ Play an audio file into a call
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="playtts">
+<script type="text/x-red" data-help-name="vonage-playtts">
 <p>Play text to speech into a call</p>
 
 <h3>Inputs</h3>
@@ -655,7 +655,7 @@ Play an audio file into a call
  <h3>Outputs</h3>
  <dl class="message-properties">
      <dt>ncco<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
@@ -663,31 +663,31 @@ Play text to speech into a call
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/voice#startTalk">Nexmo API Reference</a></li>
+        <li><a href="https://developer.vonage.com/api/voice#startTalk">Vonage API Reference</a></li>
     </ul>
 </script>
 
 //playdtmf
 
 <script type="text/javascript">
-    RED.nodes.registerType('playdtmf', {
-        category: 'nexmo',
+    RED.nodes.registerType('vonage-playdtmf', {
+        category: 'Vonage APIs',
         color: '#35be8b',
         defaults: {
-            creds: { value: "", type: "nexmovoiceapp" },
+            creds: { value: "", type: "vonagevoiceapp" },
             calluuid: {},
             digits: {}
         },
         inputs: 1,
         outputs: 1,
-        icon: "nexmo.png",
+        icon: "vonage.png",
         label: "Play DTMF",
         paletteLabel: "Play DTMF"
     });
 </script>
-<script type="text/x-red" data-template-name="playdtmf">
+<script type="text/x-red" data-template-name="vonage-playdtmf">
   <div class="form-row">
-      <label for="node-config-input-privatekey"></i>Nexmo Credentials</label>
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
   </div>
   
@@ -703,7 +703,7 @@ Play text to speech into a call
 </script>
 
 
-<script type="text/x-red" data-help-name="playdtmf">
+<script type="text/x-red" data-help-name="vonage-playdtmf">
 <p>Play DTMF into a call</p>
 
 <h3>Inputs</h3>
@@ -711,7 +711,7 @@ Play text to speech into a call
  <h3>Outputs</h3>
  <dl class="message-properties">
      <dt>ncco<span class="property-type">object</span></dt>
-     <dd> <code>msg.payload</code> will contain the response from the Nexmo API</dd>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
  </dl>
 
 <h3>Details</h3>
@@ -719,14 +719,14 @@ Play DTMF tones  into a call
 
 <h3>References</h3>
     <ul>
-        <li><a href="https://developer.nexmo.com/api/voice#startDTMF">Nexmo API Reference</a></li>
+        <li><a href="https://developer.vonage.com/api/voice#startDTMF">Vonage API Reference</a></li>
     </ul>
 </script>
 
 <script>
 
     function getnumbers() {
-        var url = 'nexmo-auth/numbers';
+        var url = 'vonage-auth/numbers';
         var params = {
             creds: document.getElementById("node-input-creds").value,
         }
