@@ -1,4 +1,4 @@
-<script type="text/x-red" data-template-name="vonage-voice webhook">
+<script type="text/x-red" data-template-name="voice webhook">
    
     <div class="form-row">
         <label for="node-input-method"><i class="fa fa-tasks"></i> Method</label>
@@ -18,12 +18,12 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="vonage-voice webhook">
+<script type="text/x-red" data-help-name="voice webhook">
   <p>Creates a url to handle a voice webhook </p>
 
    <h3>Outputs</h3>
    <dl class="message-properties">
-       <dt>ncco<span class="property-type">object</span></dt>
+       <dt>NCCO<span class="property-type">object</span></dt>
        <dd> <code>msg.call</code> will contain the parameters sent with the webhook, eg <code>from</code> <code>to</code> <code>uuid</code> etc </dd>
    </dl>
    
@@ -32,20 +32,20 @@
    
 </script>
 
-<script type="text/x-red" data-template-name="vonage-return ncco">
+<script type="text/x-red" data-template-name="return NCCO">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="common.label.name"></span></label>
         <input type="text" id="node-input-name" data-i18n="[placeholder]common.label.name">
     </div>
   </script>
 
-<script type="text/x-red" data-help-name="vonage-return ncco">
+<script type="text/x-red" data-help-name="return NCCO">
     <p>Sends responses back to requests received from an HTTP Input node.</p>
   </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-voice webhook',{
-        category: 'network',
+    RED.nodes.registerType('voice webhook',{
+        category: 'Vonage APIs',
         color: "#2d966f",
         defaults: {
             name: {value:""},
@@ -54,7 +54,7 @@
         },
         inputs:0,
         outputs:1,
-        icon: "vonage.png",
+        icon: "vonage-white.svg",
         label: function() {
             if (this.name) {
                 return this.name;
@@ -76,10 +76,11 @@
         labelStyle: function() {
             return this.name?"node_label_italic":"";
         },
+        paletteLabel: "Voice Webhook"
     });
 
-    RED.nodes.registerType('vonage-return ncco',{
-        category: 'network',
+    RED.nodes.registerType('return NCCO',{
+        category: 'Vonage APIs',
         color: "#2d966f",
         defaults: {
             name: {value:""},
@@ -87,12 +88,13 @@
         inputs:1,
         outputs:0,
         align: "right",
-        icon: "vonage.png",
+        icon: "vonage-white.svg",
         label: function() {
             return this.name||("http"+(this.statusCode?" ("+this.statusCode+")":""));
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
-        }
+        },
+        paletteLabel: "Return NCCO"
     });
 </script>
