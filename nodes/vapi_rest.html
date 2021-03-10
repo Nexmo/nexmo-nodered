@@ -2,7 +2,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('vonage-createcall', {
         category: 'Vonage APIs',
-        color: '#35be8b',
+        color: '#FFA68C',
         defaults: {
             creds: { value: "", type: "vonagevoiceapp" },
             endpoint: {},
@@ -228,7 +228,7 @@ Create a new outbound call
 <script type="text/javascript">
     RED.nodes.registerType('vonage-getrecording', {
         category: 'Vonage APIs',
-        color: '#35be8b',
+        color: '#FFA68C',
         defaults: {
             creds: { value: "", type: "vonagevoiceapp" },
             filename: {}
@@ -279,7 +279,7 @@ Note, this node does not write the audio to disk, the filename field is there to
 <script type="text/javascript">
     RED.nodes.registerType('vonage-earmuff', {
         category: 'Vonage APIs',
-        color: '#35be8b',
+        color: '#FFA68C',
         defaults: {
           creds: {value:"", type:"vonagevoiceapp"},
           calluuid: {},
@@ -337,7 +337,7 @@ Earmuff a call leg
 <script type="text/javascript">
     RED.nodes.registerType('vonage-mute', {
         category: 'Vonage APIs',
-        color: '#35be8b',
+        color: '#FFA68C',
         defaults: {
           creds: {value:"", type:"vonagevoiceapp"},
           calluuid: {},
@@ -396,7 +396,7 @@ Mute a call leg
 <script type="text/javascript">
     RED.nodes.registerType('vonage-hangup', {
         category: 'Vonage APIs',
-        color: '#35be8b',
+        color: '#FFA68C',
         defaults: {
             creds: { value: "", type: "vonagevoiceapp" },
             calluuid: {}
@@ -445,7 +445,7 @@ Hangup a call leg.
 <script type="text/javascript">
     RED.nodes.registerType('vonage-transfer', {
         category: 'Vonage APIs',
-        color: '#35be8b',
+        color: '#FFA68C',
         defaults: {
           creds: {value:"", type:"vonagevoiceapp"},
           calluuid: {},
@@ -512,7 +512,7 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
 <script type="text/javascript">
     RED.nodes.registerType('vonage-playaudio', {
         category: 'Vonage APIs',
-        color: '#35be8b',
+        color: '#FFA68C',
         defaults: {
             creds: { value: "", type: "vonagevoiceapp" },
             calluuid: {},
@@ -588,7 +588,7 @@ Play an audio file into a call
 <script type="text/javascript">
     RED.nodes.registerType('vonage-playtts', {
         category: 'Vonage APIs',
-        color: '#35be8b',
+        color: '#FFA68C',
         defaults: {
             creds: { value: "", type: "vonagevoiceapp" },
             calluuid: {},
@@ -672,7 +672,7 @@ Play text to speech into a call
 <script type="text/javascript">
     RED.nodes.registerType('vonage-playdtmf', {
         category: 'Vonage APIs',
-        color: '#35be8b',
+        color: '#FFA68C',
         defaults: {
             creds: { value: "", type: "vonagevoiceapp" },
             calluuid: {},

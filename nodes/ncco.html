@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('vonage-talk',{
         category: 'Vonage APIs',
-        color: '#2d966f',
+        color: '#FA7554',
         defaults: {
           text: {required:true},
           template: {},
@@ -78,7 +78,7 @@ By default, the talk action is synchronous. However, if you set Barge In to true
 <script type="text/javascript">
     RED.nodes.registerType('vonage-stream',{
          category: 'Vonage APIs',
-        color: '#2d966f',
+        color: '#FA7554',
         defaults: {
           streamurl: {required:true},
           bargein: {},
@@ -146,7 +146,7 @@ By default, the stream action is synchronous. However, if you set bargeIn to tru
 <script type="text/javascript">
     RED.nodes.registerType('vonage-input',{
         category: 'Vonage APIs',
-        color: '#2d966f',
+        color: '#FA7554',
         defaults: {
           eventurl: {},
           eventmethod: {},
@@ -224,7 +224,7 @@ Your webhook endpoint should return another NCCO that replaces the existing NCCO
 <script type="text/javascript">
     RED.nodes.registerType('vonage-record',{
         category: 'Vonage APIs',
-        color: '#2d966f',
+        color: '#FA7554',
         defaults: {
           format:{},
           split:{},
@@ -335,7 +335,7 @@ The record action is asynchronous. Recording starts when the record action is ex
 <script type="text/javascript">
     RED.nodes.registerType('vonage-conversation',{
         category: 'Vonage APIs',
-        color: '#2d966f',
+        color: '#FA7554',
         defaults: {
           name: {required:true},
           musiconholdurl:{},
@@ -441,7 +441,7 @@ Can Hear and Can Speak should be a comma separated list of call UUIDs
 <script type="text/javascript">
     RED.nodes.registerType('vonage-connect',{
         category: 'Vonage APIs',
-        color: '#2d966f',
+        color: '#FA7554',
         defaults: {
           endpoint: {},
           to: {},
@@ -637,7 +637,7 @@ This action is synchronous, after a connect the next action in the NCCO stack is
 <script type="text/javascript">
     RED.nodes.registerType('vonage-notify',{
         category: 'Vonage APIs',
-        color: '#2d966f',
+        color: '#FA7554',
         defaults: {
           payload: {required:true},
           eventurl:{required:true},

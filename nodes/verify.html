@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('vonage-sendverify',{
         category: 'Vonage APIs',
-        color: '#7683d8',
+        color: '#871FFF',
         defaults: {
           creds: {value:"", type:"vonagebasic"},
           to: {},
@@ -73,7 +73,7 @@ The Verify API returns a request_id. Use this to identify a specific verificatio
 <script type="text/javascript">
     RED.nodes.registerType('vonage-checkverify',{
         category: 'Vonage APIs',
-        color: '#7683d8',
+        color: '#871FFF',
         defaults: {
           creds: {value:"", type:"vonagebasic"},
           verify_id: {},
@@ -129,7 +129,7 @@ Check the verification code that a user has provided. Use the request_id that wa
 <script type="text/javascript">
     RED.nodes.registerType('vonage-cancelverify',{
         category: 'Vonage APIs',
-        color: '#7683d8',
+        color: '#871FFF',
         defaults: {
           creds: {value:"", type:"vonagebasic"},
           verify_id: {},
@@ -178,7 +178,7 @@ If the user decides to cancel the verification process, you should send a contro
 <script type="text/javascript">
     RED.nodes.registerType('vonage-nextverify',{
         category: 'Vonage APIs',
-        color: '#7683d8',
+        color: '#871FFF',
         defaults: {
           creds: {value:"", type:"vonagebasic"},
           verify_id: {}
@@ -231,7 +231,7 @@ You can advance to the next verification attempt programmatically by making a co
 <script type="text/javascript">
     RED.nodes.registerType('vonage-searchverify',{
         category: 'Vonage APIs',
-        color: '#7683d8',
+        color: '#871FFF',
         defaults: {
           creds: {value:"", type:"vonagebasic"},
           verify_id: {}
