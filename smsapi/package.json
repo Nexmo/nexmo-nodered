@@ -1,0 +1,20 @@
+{
+  "name": "@vonage/node-red-smsapi",
+  "version": "1.0.0",
+  "description": "Node-RED nodes for using the Vonage SMS API. Vonage's SMS API enables you to send and receive text messages to and from users worldwide, using our REST APIs.",
+  "main": "smsapi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "node-red": {
+    "nodes": {
+      "sms": "smsapi.js"
+    }
+  },
+  "dependencies": {
+    "@vonage/server-sdk": "^2.10.7",
+    "mustache": "^4.1.0"
+  }
+}

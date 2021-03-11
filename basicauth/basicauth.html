@@ -1,0 +1,32 @@
+<script type="text/javascript">
+    RED.nodes.registerType('vonagebasic',{
+        category: 'config',
+        credentials: {
+          apikey: {type:"text"},
+          apisecret: {type:"text"}
+        },
+        label: function() {
+            return this.credentials.apikey;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="vonagebasic">
+  <div class="form-row"></
+      <label for="node-config-input-apikey">API Key</label>
+      <input type="text" id="node-config-input-apikey" placeholder="Vonage API Key">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-config-input-apisecret">API Secret</label>
+      <input type="text" id="node-config-input-apisecret" placeholder="Vonage API Secret">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="vonagebasic">
+   <p>Creates a new Vonage Basic Auth node </p>
+   <h3>Details</h3>
+   <p>Enter your api key and secret</p>
+   <p> This auth module will be used by nodes that require basic auth such as SMS, Verify and Number Insight.</p>
+</script>
+

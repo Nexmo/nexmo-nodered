@@ -1,0 +1,20 @@
+{
+  "name": "@vonage/node-red-numberinsight",
+  "version": "1.0.0",
+  "description": "Node-RED nodes for using the Vonage Number Insight API. Vonage's Number Insight API delivers real-time intelligence about the validity, reachability and roaming status of a phone number and tells you how to format the number correctly in your application.",
+  "main": "insight.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "node-red": {
+    "nodes": {
+      "numberinsight": "numberinsight.js"
+    }
+  },
+  "dependencies": {
+    "@vonage/server-sdk": "^2.10.7",
+    "mustache": "^4.1.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@vonage/node-red-apiauth",
+  "version": "1.0.0",
+  "description": "Node-RED Vonage auth utils.",
+  "main": "basicauth.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "node-red": {
+    "nodes": {
+      "vonagebasic": "basicauth.js"
+    }
+  }
+}

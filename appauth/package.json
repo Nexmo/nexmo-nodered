@@ -1,0 +1,19 @@
+{
+  "name": "@vonage/node-red-apiauth",
+  "version": "1.0.0",
+  "description": "Node-RED Vonage auth utils.",
+  "main": "auth.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "node-red": {
+    "nodes": {
+      "appauth": "appauth.js"
+    }
+  },
+  "dependencies": {
+    "@vonage/server-sdk": "^2.10.7"
+  }
+}

@@ -19,7 +19,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="vonagevoiceapp">
+<script type="text/x-red" data-template-name="vonageappauth">
   <div class="form-row">
       <label for="node-config-input-name">Name</label>
       <input type="text" id="node-config-input-name" placeholder="Name">
@@ -45,7 +45,7 @@
   </div>
   
 	<div class="form-row">
-    <button id="button" onclick="newvonagevoiceapp()">Create New Application</button><br>   
+    <button id="button" onclick="newvonageappauth()">Create New Application</button><br>   
   </div>
   
   <div class="form-row">
@@ -59,7 +59,7 @@
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="vonagevoiceapp">
+<script type="text/x-red" data-help-name="vonageappauth">
    <p>Creates a new Vonage Voice Application </p>
    <h3>Details</h3>
    <p>Enter your details in the boxes above and click, Create Application, node-red will then create a new vonage application on your account and fill in the Dpp ID and Private Key fields for you to save.</p>
@@ -69,9 +69,9 @@
 
 <script>
 
-  function newvonagevoiceapp(){
+  function newvonageappauth(){
       console.log('FUNCTION CALLED')
-      var url = 'vonage-auth/new-voice-app';
+      var url = 'vonage-auth/new-app';
       console.log(url);
       var params = {
         api_key:  document.getElementById("node-config-input-apikey").value,
@@ -89,37 +89,3 @@
       );
   }
 </script>
-    
-    
-<script type="text/javascript">
-    RED.nodes.registerType('vonagebasic',{
-        category: 'config',
-        credentials: {
-          apikey: {type:"text"},
-          apisecret: {type:"text"}
-        },
-        label: function() {
-            return this.credentials.apikey;
-        }
-    });
-</script>
-
-<script type="text/x-red" data-template-name="vonagebasic">
-  <div class="form-row"></
-      <label for="node-config-input-apikey">API Key</label>
-      <input type="text" id="node-config-input-apikey" placeholder="Vonage API Key">
-  </div>
-  
-  <div class="form-row">
-      <label for="node-config-input-apisecret">API Secret</label>
-      <input type="text" id="node-config-input-apisecret" placeholder="Vonage API Secret">
-  </div>
-</script>
-
-<script type="text/x-red" data-help-name="vonagebasic">
-   <p>Creates a new Vonage Basic Auth node </p>
-   <h3>Details</h3>
-   <p>Enter your api key and secret</p>
-   <p> This auth module will be used by nodes that require basic auth such as SMS, Verify and Number Insight.</p>
-</script>
-
