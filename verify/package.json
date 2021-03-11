@@ -1,8 +1,8 @@
 {
-  "name": "@vonage/node-red-smsapi",
+  "name": "@vonage/node-red-verify",
   "version": "1.0.0",
-  "description": "Node-RED nodes for using the Vonage SMS API. Vonage's SMS API enables you to send and receive text messages to and from users worldwide, using our REST APIs.",
-  "main": "smsapi.js",
+  "description": "Node-RED module for the Vonage Verify API. The Verify API lets you send a PIN to a user's phone and validate that they received it. ",
+  "main": "verify.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,7 +10,7 @@
   "license": "MIT",
   "node-red": {
     "nodes": {
-      "smsapi": "smsapi.js"
+      "verify": "verify.js"
     }
   },
   "dependencies": {

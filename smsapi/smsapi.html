@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.getNodeSet(console.log)
-    RED.nodes.registerType('vonage-sendsms',{
+    RED.nodes.registerType('sendsms',{
         category: 'Vonage APIs',
         color: '#e973c4',
         defaults: {
@@ -17,7 +17,7 @@
         paletteLabel: "Send SMS"
     });
 </script>
-<script type="text/x-red" data-template-name="vonage-sendsms">
+<script type="text/x-red" data-template-name="sendsms">
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
@@ -46,7 +46,7 @@
 </script>
 
 
-<script type="text/x-red" data-help-name="vonage-sendsms">
+<script type="text/x-red" data-help-name="sendsms">
 <p>Send an SMS</p>
 
 <h3>Inputs</h3>

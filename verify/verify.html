@@ -1,0 +1,283 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sendverify',{
+        category: 'Vonage APIs',
+        color: '#ae76f0',
+        defaults: {
+          creds: {value:"", type:"vonagebasic"},
+          to: {},
+          brand: {},
+          workflow_id: {}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "vonage-white.svg",
+        label: "Send Verify",
+        paletteLabel : "Send Verify"
+    });
+</script>
+<script type="text/x-red" data-template-name="sendverify">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-to"><i class="icon-tag"></i>To {}</label>
+      <input type="text" id="node-input-to" placeholder="number to verify">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-brand"><i class="icon-tag"></i>Brand {}</label>
+      <input type="text" id="node-input-brand" placeholder="Brand">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-workflow_id"><i class="icon-tag"></i>Workflow ID</label>
+    <select type="text" id="node-input-workflow_id" style="width:70%;">
+      <option value="1">1. SMS -> TTS -> TTS</option>
+      <option value="2">2. SMS -> SMS -> TTS</option>
+      <option value="3">3. TTS -> TTS</option>
+      <option value="4">4. SMS -> SMS</option>
+      <option value="5">5. SMS -> TTS</option>
+      <option value="6">6. SMS</option>
+      <option value="7">7. TTS</option>
+    </select>
+  </div>
+</script>
+
+
+
+<script type="text/x-red" data-help-name="sendverify">
+<p>Start a Verification</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>Resonse from the Vonage API<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
+ </dl>
+
+<h3>Details</h3>
+When you have collected a user's phone number, start the verification process by sending a verify request to the Verify API.
+
+The Verify API returns a request_id. Use this to identify a specific verification request in subsequent calls to the API, such as when making a check request to see if the user provided the correct code.
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.vonage.com/api/verify#verify-request">Vonage Documentation</a></li>
+    </ul>
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('checkverify',{
+        category: 'Vonage APIs',
+        color: '#ae76f0',
+        defaults: {
+          creds: {value:"", type:"vonagebasic"},
+          verify_id: {},
+          code: {},
+        },
+        inputs:1,
+        outputs:1,
+        icon: "vonage-white.svg",
+        label: "Check Code",
+        paletteLabel : "Check Code"
+    });
+</script>
+<script type="text/x-red" data-template-name="checkverify">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-verify_id"><i class="icon-tag"></i>Request ID {}</label>
+      <input type="text" id="node-input-verify_id" placeholder="Verify request ID">
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-code"><i class="icon-tag"></i>Code {}</label>
+      <input type="text" id="node-input-code" placeholder="Code">
+  </div>
+  
+</script>
+
+
+<script type="text/x-red" data-help-name="checkverify">
+<p>Check a Verification</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>Resonse from the Vonage API<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
+ </dl>
+
+<h3>Details</h3>
+Check the verification code that a user has provided. Use the request_id that was received when the verification code was sent.
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.vonage.com/api/verify#verify-check">Vonage Documentation</a></li>
+    </ul>
+</script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('cancelverify',{
+        category: 'Vonage APIs',
+        color: '#ae76f0',
+        defaults: {
+          creds: {value:"", type:"vonagebasic"},
+          verify_id: {},
+        },
+        inputs:1,
+        outputs:1,
+        icon: "vonage-white.svg",
+        label: "Cancel Verify",
+        paletteLabel : "Cancel Verify"
+    });
+</script>
+<script type="text/x-red" data-template-name="cancelverify">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-verify_id"><i class="icon-tag"></i>Request ID {}</label>
+      <input type="text" id="node-input-verify_id" placeholder="Verify Request ID">
+  </div>
+</script>
+
+
+<script type="text/x-red" data-help-name="cancelverify">
+<p>Cancel a Verification</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>Resonse from the Vonage API<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
+ </dl>
+
+<h3>Details</h3>
+If the user decides to cancel the verification process, you should send a control request to the Verify API. This will terminate the verification process even if the user supplied the correct code.
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.vonage.com/api/verify#verify-control">Vonage Documentation</a></li>
+    </ul>
+</script> 
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('nextverify',{
+        category: 'Vonage APIs',
+        color: '#ae76f0',
+        defaults: {
+          creds: {value:"", type:"vonagebasic"},
+          verify_id: {}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "vonage-white.svg",
+        label: "Next Verify",
+        paletteLabel : "Next Verify"
+    });
+</script>
+<script type="text/x-red" data-template-name="nextverify">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-verify_id"><i class="icon-tag"></i>Request ID {}</label>
+      <input type="text" id="node-input-verify_id" placeholder="Verify request ID">
+  </div>
+
+  
+</script>
+
+<script type="text/x-red" data-help-name="nextverify">
+<p>
+Trigger next verification stage</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>Resonse from the Vonage API<span class="property-type">object</span></dt>
+     <dd> <code>msg.payload</code> will contain the response from the Vonage API</dd>
+ </dl>
+
+<h3>Details</h3>
+The Verify API starts the verification process by sending an SMS to the user. If the user does not confirm the code that they received within a certain time period, the Verify API sends a second SMS. If that does not elicit a response it attempts a Text-to-Speech (TTS) call.
+
+You can advance to the next verification attempt programmatically by making a control request. You would normally do this if your user indicates that they prefer to verify via a phone call instead of by SMS.
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.vonage.com/api/verify#verify-control">Vonage Documentation</a></li>
+    </ul>
+</script> 
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('searchverify',{
+        category: 'Vonage APIs',
+        color: '#ae76f0',
+        defaults: {
+          creds: {value:"", type:"vonagebasic"},
+          verify_id: {}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "vonage-white.svg",
+        label: "Search Verify",
+        paletteLabel : "Search Verify"
+    });
+</script>
+<script type="text/x-red" data-template-name="searchverify">
+  <div class="form-row">
+      <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
+      <input type="text" id="node-input-creds" >
+  </div>
+  
+  <div class="form-row">
+      <label for="node-input-verify_id"><i class="icon-tag"></i>Request ID {}</label>
+      <input type="text" id="node-input-verify_id" placeholder="Verify request ID">
+  </div>
+
+  
+</script>
+
+<script type="text/x-red" data-help-name="searchverify">
+<p>
+Trigger next verification stage</p>
+
+<h3>Inputs</h3>
+
+ <h3>Outputs</h3>
+ <dl class="message-properties">
+     <dt>Resonse from the Vonage API<span class="property-type">object</span></dt>
+     <dd> The <code>msg</code> Object will contain the response from the Vonage API</dd>
+ </dl>
+
+<h3>Details</h3>
+You can use the search functionality to see the current status or eventual outcome of a Verify request, using the <code>request_id</code> returned when the verify code was sent.
+
+<h3>References</h3>
+    <ul>
+        <li><a href="https://developer.vonage.com/api/verify#verifySearch">Vonage Documentation</a></li>
+    </ul>
+</script> 
+
+
+
+

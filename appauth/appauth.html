@@ -1,19 +1,18 @@
-
 <script type="text/javascript">
-    RED.nodes.registerType('vonageappauth',{
+    RED.nodes.registerType('vonageappauth', {
         category: 'config',
         defaults: {
-          name: {}
+            name: {}
         },
-         credentials: {
-           apikey: {type:"text"},
-           apisecret: {type:"text"},
-           answerurl: {type:"text"},
-           eventurl: {type:"text"},
-           appid: {type:"text"},
-           privatekey: {type:"text"}
+        credentials: {
+            apikey: { type: "text" },
+            apisecret: { type: "text" },
+            answerurl: { type: "text" },
+            eventurl: { type: "text" },
+            appid: { type: "text" },
+            privatekey: { type: "text" }
         },
-        label: function() {
+        label: function () {
             return this.name;
         }
     });
@@ -69,23 +68,20 @@
 
 <script>
 
-  function newvonageappauth(){
-      console.log('FUNCTION CALLED')
-      var url = 'vonage-auth/new-app';
-      console.log(url);
-      var params = {
-        api_key:  document.getElementById("node-config-input-apikey").value,
-        api_secret: document.getElementById("node-config-input-apisecret").value,
-        name : document.getElementById("node-config-input-name").value,
-        answer_url : document.getElementById("answerurl").value,
-        event_url : document.getElementById("eventurl").value
-      }
-      console.log(params);
-      $.post(url, params, function(res){
-		    console.log(res);
-        document.getElementById("node-config-input-appid").value = res.id;
-        document.getElementById("node-config-input-privatekey").value = res.keys.private_key;
+    function newvonageappauth() {
+        console.log('FUNCTION CALLED')
+        var url = 'vonage-auth/new-app';
+        var params = {
+            api_key: document.getElementById("node-config-input-apikey").value,
+            api_secret: document.getElementById("node-config-input-apisecret").value,
+            name: document.getElementById("node-config-input-name").value,
+            answer_url: document.getElementById("answerurl").value,
+            event_url: document.getElementById("eventurl").value
+        }
+        $.post(url, params, function (res) {
+            document.getElementById("node-config-input-appid").value = res.id;
+            document.getElementById("node-config-input-privatekey").value = res.keys.private_key;
         }, 'json'
-      );
-  }
+        );
+    }
 </script>

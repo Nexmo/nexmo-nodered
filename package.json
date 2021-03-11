@@ -37,10 +37,7 @@
             "ncco": "nodes/ncco.js",
             "vonage_webhooks": "nodes/webhooks.js",
             "vapi_rest": "nodes/vapi_rest.js",
-            "sms_rest": "nodes/sms_rest.js",
             "verify": "nodes/verify.js",
-            "insight": "nodes/insight.js",
-            "auth": "nodes/auth.js",
             "vonage_apps": "nodes/apps.js",
             "number": "nodes/number.js"
         }
