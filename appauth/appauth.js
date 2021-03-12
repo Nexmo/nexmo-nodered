@@ -1,5 +1,5 @@
 const Vonage = require('@vonage/server-sdk');
-const version = require('package.json').version
+const version = require('./package.json').version
 
 module.exports = function (RED) {
   function vonageappauth(n) {

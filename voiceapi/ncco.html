@@ -1,23 +1,25 @@
+<!-- Talk -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-talk',{
+    RED.nodes.registerType('talk', {
         category: 'Vonage APIs',
         color: '#80C7F5',
         defaults: {
-          text: {required:true},
-          template: {},
-          voicename: {},
-          bargein: {},
-          loop: {},
-          level: {},
+            text: { required: true },
+            template: {},
+            voicename: {},
+            bargein: {},
+            loop: {},
+            level: {},
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "vonage-white.svg",
         label: "Talk",
         paletteLabel: "Talk"
     });
 </script>
-<script type="text/x-red" data-template-name="vonage-talk">
+
+<script type="text/x-red" data-template-name="talk">
     <div class="form-row">
         <label for="node-input-text"><i class="icon-tag"></i>Text {}</label>
         <input type="text" id="node-input-text" placeholder="text">
@@ -44,7 +46,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="vonage-talk">
+<script type="text/x-red" data-help-name="talk">
 <p>Adds a talk action to an NCCO</p>
 
 <h3>Inputs</h3>
@@ -72,28 +74,26 @@ By default, the talk action is synchronous. However, if you set Barge In to true
 </script>
 
 
-
-
-
+<!-- Stream -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-stream',{
-         category: 'Vonage APIs',
+    RED.nodes.registerType('stream', {
+        category: 'Vonage APIs',
         color: '#80C7F5',
         defaults: {
-          streamurl: {required:true},
-          bargein: {},
-          loop: {},
-          level: {}
+            streamurl: { required: true },
+            bargein: {},
+            loop: {},
+            level: {}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "vonage-white.svg",
         label: "Stream",
         paletteLabel: "Stream"
     });
 </script>
 
-<script type="text/x-red" data-template-name="vonage-stream">
+<script type="text/x-red" data-template-name="stream">
     <div class="form-row">
         <label for="node-input-streamurl"><i class="icon-tag"></i>Stream URL {}</label>
         <input type="text" id="node-input-streamurl" placeholder="https://example.com/audio.mp3">
@@ -115,7 +115,7 @@ By default, the talk action is synchronous. However, if you set Barge In to true
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="vonage-stream">
+<script type="text/x-red" data-help-name="stream">
 <p>Adds a stream action to an NCCO</p>
 
 <h3>Inputs</h3>
@@ -143,26 +143,28 @@ By default, the stream action is synchronous. However, if you set bargeIn to tru
     </ul>
 </script>
 
+
+<!-- Input -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-input',{
+    RED.nodes.registerType('input', {
         category: 'Vonage APIs',
         color: '#80C7F5',
         defaults: {
-          eventurl: {},
-          eventmethod: {},
-          timeout:{},
-          maxdigits:{},
-          submitonhash:{}        
+            eventurl: {},
+            eventmethod: {},
+            timeout: {},
+            maxdigits: {},
+            submitonhash: {}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "vonage-white.svg",
         label: "Input",
         paletteLabel: "Input"
     });
 </script>
 
-<script type="text/x-red" data-template-name="vonage-input">
+<script type="text/x-red" data-template-name="input">
     <div class="form-row">
         <label for="node-input-eventurl"><i class="icon-tag"></i>URL {}</label>
         <input type="text" id="node-input-eventurl" placeholder="https://example.com/webhooks/input">
@@ -190,10 +192,9 @@ By default, the stream action is synchronous. However, if you set bargeIn to tru
         <label for="node-input-maxdigits"><i class="icon-tag"></i>Max Digits</label>
         <input type="text" id="node-input-maxdigits">
     </div>
-    
 </script>
 
-<script type="text/x-red" data-help-name="vonage-input">
+<script type="text/x-red" data-help-name="input">
 <p>Adds an input action to an NCCO</p>
 
 <h3>Inputs</h3>
@@ -221,30 +222,31 @@ Your webhook endpoint should return another NCCO that replaces the existing NCCO
 </script>
 
 
+<!-- Record -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-record',{
+    RED.nodes.registerType('record', {
         category: 'Vonage APIs',
         color: '#80C7F5',
         defaults: {
-          format:{},
-          split:{},
-          channel:{},
-          endonsilence:{},
-          endonkey:{},
-          timeout:{},
-          beepstart:{},
-          eventurl: {},
-          eventmethod:{}
+            format: {},
+            split: {},
+            channel: {},
+            endonsilence: {},
+            endonkey: {},
+            timeout: {},
+            beepstart: {},
+            eventurl: {},
+            eventmethod: {}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "vonage-white.svg",
         label: "Record",
         paletteLabel: "Record"
     });
 </script>
 
-<script type="text/x-red" data-template-name="vonage-record">
+<script type="text/x-red" data-template-name="record">
     <div class="form-row">
         <label for="node-input-eventurl"><i class="icon-tag"></i>URL {}</label>
         <input type="text" id="node-input-eventurl" placeholder="https://example.com/webhooks/record">
@@ -300,10 +302,9 @@ Your webhook endpoint should return another NCCO that replaces the existing NCCO
         <label for="node-input-beepstart"><i class="icon-tag"></i>Beep Start</label>
         <input type="checkbox" id="node-input-beepstart">
     </div>
-
 </script>
 
-<script type="text/x-red" data-help-name="vonage-record">
+<script type="text/x-red" data-help-name="record">
 <p>Adds a record action to an NCCO</p>
 
 <h3>Inputs</h3>
@@ -323,39 +324,38 @@ The record action records audio from a caller or records the call.
 
 The record action is asynchronous. Recording starts when the record action is executed in the NCCO and finishes when the synchronous condition in the action is met. That is, endOnSilence, timeOut or endOnKey. If you do not set a synchronous condition, the Voice API immediately executes the next NCCO without recording.
 
-
 <h3>References</h3>
     <ul>
         <li><a href="https://developer.vonage.com/voice/voice-api/ncco-reference#record">Vonage NCCO Reference</a></li>
     </ul>
 </script>
 
-//conversation
 
+<!-- Conversation -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-conversation',{
+    RED.nodes.registerType('conversation', {
         category: 'Vonage APIs',
         color: '#80C7F5',
         defaults: {
-          name: {required:true},
-          musiconholdurl:{},
-          startonenter:{},
-          endonexit:{},
-          record:{},
-          eventurl:{},
-          eventmethod:{},
-          canspeak:{},
-          canhear:{}
+            name: { required: true },
+            musiconholdurl: {},
+            startonenter: {},
+            endonexit: {},
+            record: {},
+            eventurl: {},
+            eventmethod: {},
+            canspeak: {},
+            canhear: {}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "vonage-white.svg",
         label: "Conversation",
         paletteLabel: "Conversation"
     });
 </script>
 
-<script type="text/x-red" data-template-name="vonage-conversation">
+<script type="text/x-red" data-template-name="conversation">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i>Name {}</label>
         <input type="text" id="node-input-name" placeholder="text">
@@ -383,8 +383,7 @@ The record action is asynchronous. Recording starts when the record action is ex
    
     <div class="form-row">
         <label for="node-input-eventurl"><i class="icon-tag"></i>Recording Event URL {}</label>
-        <input type="text" id="node-input-eventurl">
-        
+        <input type="text" id="node-input-eventurl">   
     </div>
    
     <div class="form-row">
@@ -394,6 +393,7 @@ The record action is asynchronous. Recording starts when the record action is ex
           <option value="post">POST</option>
          </select>
     </div>
+
     <div class="form-row">
         <label for="node-input-canhear"><i class="icon-tag"></i>Can Hear {}</label>
         <input type="text" id="node-input-canhear">
@@ -403,11 +403,9 @@ The record action is asynchronous. Recording starts when the record action is ex
         <label for="node-input-canspeak"><i class="icon-tag"></i>Can Speak {}</label>
         <input type="text"  id="node-input-canspeak">
     </div>   
-   
-  
 </script>
 
-<script type="text/x-red" data-help-name="vonage-conversation">
+<script type="text/x-red" data-help-name="conversation">
 <p>Adds a conversaton action to an NCCO</p>
 
 <h3>Inputs</h3>
@@ -436,41 +434,39 @@ Can Hear and Can Speak should be a comma separated list of call UUIDs
 </script>
 
 
-//connect
-
+<!-- Connect -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-connect',{
+    RED.nodes.registerType('connect', {
         category: 'Vonage APIs',
         color: '#80C7F5',
         defaults: {
-          endpoint: {},
-          to: {},
-          wsuri: {},
-          sipuri: {},
-          extension: {},
-          from: {},
-          dtmfanswer: {},
-          onanswer: {},
-          contenttype: {},
-          headers: {},
-          eventtype: {},
-          timeout: {},
-          machinedetection:{},
-          limit:{},
-          eventurl:{},
-          eventmethod:{}
+            endpoint: {},
+            to: {},
+            wsuri: {},
+            sipuri: {},
+            extension: {},
+            from: {},
+            dtmfanswer: {},
+            onanswer: {},
+            contenttype: {},
+            headers: {},
+            eventtype: {},
+            timeout: {},
+            machinedetection: {},
+            limit: {},
+            eventurl: {},
+            eventmethod: {}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "vonage-white.svg",
         label: "Connect",
         paletteLabel: "Connect"
     });
 </script>
 
+<script type="text/x-red" data-template-name="connect">
 
-<script type="text/x-red" data-template-name="vonage-connect">
-    
   <div class="form-row">
       <label for="node-input-endpoint"><i class="fa fa-tasks"></i>Endpoint</label>
       <select type="text" id="node-input-endpoint" style="width:70%;" onchange="toggleEndpointNCCO(this.value)">
@@ -542,13 +538,11 @@ Can Hear and Can Speak should be a comma separated list of call UUIDs
         <label for="node-input-timeout"><i class="icon-tag"></i>Timeout</label>
         <input type="number" id="node-input-timeout" placeholder="60">
     </div>
-    
      
     <div class="form-row">
         <label for="node-input-limit"><i class="icon-tag"></i>Limit</label>
         <input type="number" id="node-input-limit" placeholder="7200">
     </div>
-    
     
     <div class="form-row">
         <label for="node-input-machinedetection"><i class="fa fa-tasks"></i>Machine Detection</label>
@@ -559,7 +553,6 @@ Can Hear and Can Speak should be a comma separated list of call UUIDs
          </select>
     </div>
     
-   
     <div class="form-row">
         <label for="node-input-eventurl"><i class="icon-tag"></i>Event URL {}</label>
         <input type="text" id="node-input-eventurl" placeholder="/url">
@@ -575,36 +568,36 @@ Can Hear and Can Speak should be a comma separated list of call UUIDs
 </script>
 
 <script>
-  function toggleEndpointNCCO(endpoint){
-    console.log(endpoint);
-    if (endpoint == 'phone'){
-      document.getElementById("phone").style.display = "block";
-      document.getElementById("websocket").style.display = "none";
-      document.getElementById("sip").style.display = "none";
-      document.getElementById("vbc").style.display = "none";   
-          
+    function toggleEndpointNCCO(endpoint) {
+        console.log(endpoint);
+        if (endpoint == 'phone') {
+            document.getElementById("phone").style.display = "block";
+            document.getElementById("websocket").style.display = "none";
+            document.getElementById("sip").style.display = "none";
+            document.getElementById("vbc").style.display = "none";
+
+        }
+        else if (endpoint == 'websocket') {
+            document.getElementById("phone").style.display = "none";
+            document.getElementById("websocket").style.display = "block";
+            document.getElementById("sip").style.display = "none";
+            document.getElementById("vbc").style.display = "none";
+
+        } else if (endpoint == 'sip') {
+            document.getElementById("phone").style.display = "none";
+            document.getElementById("websocket").style.display = "none";
+            document.getElementById("sip").style.display = "block";
+            document.getElementById("vbc").style.display = "none";
+        } else if (endpoint == 'vbc') {
+            document.getElementById("phone").style.display = "none";
+            document.getElementById("websocket").style.display = "none";
+            document.getElementById("sip").style.display = "none";
+            document.getElementById("vbc").style.display = "block";
+        }
     }
-    else if (endpoint == 'websocket'){
-      document.getElementById("phone").style.display = "none";
-      document.getElementById("websocket").style.display = "block";
-      document.getElementById("sip").style.display = "none";
-      document.getElementById("vbc").style.display = "none";   
-         
-    } else if (endpoint == 'sip'){
-      document.getElementById("phone").style.display = "none";
-      document.getElementById("websocket").style.display = "none";
-      document.getElementById("sip").style.display = "block";
-      document.getElementById("vbc").style.display = "none";          
-    } else if (endpoint == 'vbc'){
-      document.getElementById("phone").style.display = "none";
-      document.getElementById("websocket").style.display = "none";
-      document.getElementById("sip").style.display = "none";  
-      document.getElementById("vbc").style.display = "block";   
-    } 
-  }
 </script>
-    
-<script type="text/x-red" data-help-name="vonage-connect">
+
+<script type="text/x-red" data-help-name="connect">
 <p>Adds a connect action to an NCCO</p>
 
 <h3>Inputs</h3>
@@ -631,35 +624,33 @@ This action is synchronous, after a connect the next action in the NCCO stack is
 </script>
 
 
-
-//Notify
-    
+<!-- Notify -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-notify',{
+    RED.nodes.registerType('notify', {
         category: 'Vonage APIs',
         color: '#80C7F5',
         defaults: {
-          payload: {required:true},
-          eventurl:{required:true},
-          eventmethod:{}
+            payload: { required: true },
+            eventurl: { required: true },
+            eventmethod: {}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "vonage-white.svg",
         label: "Notify",
         paletteLabel: "Notify",
-        oneditprepare: function() {
-          $("#node-input-payload").typedInput({ types:['json']});
-          $("#node-input-eventurl").typedInput({
-            default: 'post',
-            types:[{value:"get",label:"GET"},{value:"post",label:"POST"}],
-            typeField: $("#node-input-eventmethod")
-          });
+        oneditprepare: function () {
+            $("#node-input-payload").typedInput({ types: ['json'] });
+            $("#node-input-eventurl").typedInput({
+                default: 'post',
+                types: [{ value: "get", label: "GET" }, { value: "post", label: "POST" }],
+                typeField: $("#node-input-eventmethod")
+            });
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="vonage-notify">
+<script type="text/x-red" data-template-name="notify">
     <div class="form-row">
         <label for="node-input-payload"><i class="icon-tag"></i>Payload {}</label>
         <input type="text" id="node-input-payload">
@@ -672,15 +663,14 @@ This action is synchronous, after a connect the next action in the NCCO stack is
     </div>  
 </script>
 
-
-
-<script type="text/x-red" data-help-name="vonage-notify">
+<script type="text/x-red" data-help-name="notify">
     <p>Adds a notify action to an NCCO</p>
     <h3>Inputs</h3>
         <dl class="message-properties">
             <dt>ncco<span class="property-type">object</span></dt>
             <dd> The output of a previous action, if no <code>msg.ncco</code> exists it will be created  </dd>
         </dl>
+        
      <h3>Outputs</h3>
         <dl class="message-properties">
           <dt>ncco<span class="property-type">object</span></dt>
@@ -696,4 +686,3 @@ This action is synchronous, after a connect the next action in the NCCO stack is
               <li><a href="https://developer.vonage.com/voice/voice-api/ncco-reference#notify">Vonage NCCO Reference</a></li>
           </ul>
 </script>
-

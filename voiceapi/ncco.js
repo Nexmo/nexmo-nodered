@@ -1,8 +1,7 @@
 var mustache = require("mustache");
 
-
 module.exports = function (RED) {
-    
+//Talk
   function talk(config){
     RED.nodes.createNode(this, config);
     this.voicename = config.voicename;
@@ -32,6 +31,8 @@ module.exports = function (RED) {
       node.send(msg);
     });  
   }
+
+//Stream
   function stream(config){
     RED.nodes.createNode(this, config);
     this.bargein = config.bargein;
@@ -58,6 +59,8 @@ module.exports = function (RED) {
       node.send(msg);
     });  
   }
+
+//Input
   function input(config){
     RED.nodes.createNode(this, config);
     this.timeout = config.timeout;
@@ -88,7 +91,8 @@ module.exports = function (RED) {
       node.send(msg);
     });
   }
-  
+
+  //Record
   function record(config){
     RED.nodes.createNode(this, config);
     this.eventmethod = config.eventmethod;  
@@ -128,7 +132,7 @@ module.exports = function (RED) {
     });
   }
 
-//conversaton  
+//Conversaton  
   function conversation(config){
     RED.nodes.createNode(this, config);
     this.eventmethod = config.eventmethod;  
@@ -171,8 +175,8 @@ module.exports = function (RED) {
       node.send(msg);
     });
   }
-  
-//connect  
+
+//Connect  
   function connect(config){
     RED.nodes.createNode(this, config);
     this.eventmethod = config.eventmethod;  
@@ -282,13 +286,13 @@ function clean(obj) {
     }
 }
   
-RED.nodes.registerType("vonage-talk", talk);
-RED.nodes.registerType("vonage-stream", stream);
-RED.nodes.registerType("vonage-input", input);
-RED.nodes.registerType("vonage-record", record);
-RED.nodes.registerType("vonage-conversation", conversation);
-RED.nodes.registerType("vonage-connect", connect);
-RED.nodes.registerType("vonage-notify", notify);
+RED.nodes.registerType("talk", talk);
+RED.nodes.registerType("stream", stream);
+RED.nodes.registerType("input", input);
+RED.nodes.registerType("record", record);
+RED.nodes.registerType("conversation", conversation);
+RED.nodes.registerType("connect", connect);
+RED.nodes.registerType("notify", notify);
 }
 
 

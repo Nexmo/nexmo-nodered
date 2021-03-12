@@ -1,6 +1,6 @@
 const Vonage = require('@vonage/server-sdk');
 const mustache = require("mustache");
-const version = require('../package.json').version
+const version = require('./package.json').version
 
 
 module.exports = function (RED) {
@@ -376,15 +376,15 @@ function playdtmf(config){
       }
     }
   }
-  RED.nodes.registerType("vonage-createcall",createCall);
-  RED.nodes.registerType("vonage-earmuff",earmuff);    
-  RED.nodes.registerType("vonage-getrecording",GetRecording);
-  RED.nodes.registerType("vonage-mute",mute);    
-  RED.nodes.registerType("vonage-hangup",hangup);    
-  RED.nodes.registerType("vonage-transfer",transfer);
-  RED.nodes.registerType("vonage-playaudio",playaudio);
-  RED.nodes.registerType("vonage-playtts",playtts);
-  RED.nodes.registerType("vonage-playdtmf",playdtmf);
+  RED.nodes.registerType("createcall",createCall);
+  RED.nodes.registerType("earmuff",earmuff);    
+  RED.nodes.registerType("getrecording",GetRecording);
+  RED.nodes.registerType("mute",mute);    
+  RED.nodes.registerType("hangup",hangup);    
+  RED.nodes.registerType("transfer",transfer);
+  RED.nodes.registerType("playaudio",playaudio);
+  RED.nodes.registerType("playtts",playtts);
+  RED.nodes.registerType("playdtmf",playdtmf);
   
   
   function dataobject(context, msg){

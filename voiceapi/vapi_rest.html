@@ -1,10 +1,10 @@
-//createCall
+<!-- createCall -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-createcall', {
+    RED.nodes.registerType('createcall', {
         category: 'Vonage APIs',
         color: '#b3dbf4',
         defaults: {
-            creds: { value: "", type: "vonagevoiceapp" },
+            creds: { value: "", type: "vonageappauth" },
             endpoint: {},
             to: {},
             dtmfanswer: {},
@@ -53,7 +53,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="vonage-createcall">
+<script type="text/x-red" data-template-name="createcall">
 
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
@@ -204,7 +204,7 @@
     }
 </script>
 
-<script type="text/x-red" data-help-name="vonage-createcall">
+<script type="text/x-red" data-help-name="createcall">
 <p>Create a new Outbound Call</p>
 
 <h3>Inputs</h3>
@@ -224,13 +224,14 @@ Create a new outbound call
     </ul>
 </script>
 
-//getrecording
+
+<!-- getrecording -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-getrecording', {
+    RED.nodes.registerType('getrecording', {
         category: 'Vonage APIs',
         color: '#b3dbf4',
         defaults: {
-            creds: { value: "", type: "vonagevoiceapp" },
+            creds: { value: "", type: "vonageappauth" },
             filename: {}
         },
         inputs: 1,
@@ -240,7 +241,7 @@ Create a new outbound call
         paletteLabel: "Get Recording"
     });
 </script>
-<script type="text/x-red" data-template-name="vonage-getrecording">
+<script type="text/x-red" data-template-name="getrecording">
   <div class="form-row">
       <label for="node-config-input-creds"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds">
@@ -251,7 +252,7 @@ Create a new outbound call
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="vonage-getrecording">
+<script type="text/x-red" data-help-name="getrecording">
 <p>Fetch a recording</p>
 
 <h3>Inputs</h3>
@@ -274,16 +275,15 @@ Note, this node does not write the audio to disk, the filename field is there to
 </script>
 
 
-
-//earmuff
+<!-- earmuff -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-earmuff', {
+    RED.nodes.registerType('earmuff', {
         category: 'Vonage APIs',
         color: '#b3dbf4',
         defaults: {
-          creds: {value:"", type:"vonagevoiceapp"},
-          calluuid: {},
-          state:{}
+            creds: { value: "", type: "vonageappauth" },
+            calluuid: {},
+            state: {}
         },
         inputs: 1,
         outputs: 1,
@@ -292,7 +292,7 @@ Note, this node does not write the audio to disk, the filename field is there to
         paletteLabel: "Earmuff"
     });
 </script>
-<script type="text/x-red" data-template-name="vonage-earmuff">
+<script type="text/x-red" data-template-name="earmuff">
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
@@ -310,10 +310,9 @@ Note, this node does not write the audio to disk, the filename field is there to
       <option value="off">Earmuff Off (unearmuff)</option>
        </select>
   </div>
-  
 </script>
 
-<script type="text/x-red" data-help-name="vonage-earmuff">
+<script type="text/x-red" data-help-name="earmuff">
 <p>Earmuff a Call</p>
 
 <h3>Inputs</h3>
@@ -333,24 +332,26 @@ Earmuff a call leg
     </ul>
 </script>
 
-//mute
+
+<!-- mute -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-mute', {
+    RED.nodes.registerType('mute', {
         category: 'Vonage APIs',
         color: '#b3dbf4',
         defaults: {
-          creds: {value:"", type:"vonagevoiceapp"},
-          calluuid: {},
-          state:{}
+            creds: { value: "", type: "vonageappauth" },
+            calluuid: {},
+            state: {}
         },
         inputs: 1,
         outputs: 1,
         icon: "vonage-white.svg",
         label: "Mute",
-        paletteLabel : "Mute"
+        paletteLabel: "Mute"
     });
 </script>
-<script type="text/x-red" data-template-name="vonage-mute">
+
+<script type="text/x-red" data-template-name="mute">
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
@@ -371,7 +372,7 @@ Earmuff a call leg
   
 </script>
 
-<script type="text/x-red" data-help-name="vonage-mute">
+<script type="text/x-red" data-help-name="mute">
 <p>Mute a Call</p>
 
 <h3>Inputs</h3>
@@ -392,23 +393,24 @@ Mute a call leg
 </script>
 
 
-//hangup
+<!-- hangup -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-hangup', {
+    RED.nodes.registerType('hangup', {
         category: 'Vonage APIs',
         color: '#b3dbf4',
         defaults: {
-            creds: { value: "", type: "vonagevoiceapp" },
+            creds: { value: "", type: "vonageappauth" },
             calluuid: {}
         },
         inputs: 1,
         outputs: 1,
         icon: "vonage-white.svg",
         label: "Hangup",
-        paletteLabel : "Hangup"
+        paletteLabel: "Hangup"
     });
 </script>
-<script type="text/x-red" data-template-name="vonage-hangup">
+
+<script type="text/x-red" data-template-name="hangup">
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
@@ -420,7 +422,7 @@ Mute a call leg
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="vonage-hangup">
+<script type="text/x-red" data-help-name="hangup">
 <p>Hangup a Call</p>
 
 <h3>Inputs</h3>
@@ -441,34 +443,34 @@ Hangup a call leg.
 </script>
 
 
-//transfer
+<!-- transfer -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-transfer', {
+    RED.nodes.registerType('transfer', {
         category: 'Vonage APIs',
         color: '#b3dbf4',
         defaults: {
-          creds: {value:"", type:"vonagevoiceapp"},
-          calluuid: {},
-          ncco: {},
-          nccotype: {}
+            creds: { value: "", type: "vonageappauth" },
+            calluuid: {},
+            ncco: {},
+            nccotype: {}
         },
         inputs: 1,
         outputs: 1,
         icon: "vonage-white.svg",
         label: "Transfer",
         paletteLabel: "Transfer",
-        oneditprepare: function() {
+        oneditprepare: function () {
             $("#node-input-nccotype").val(this.nccotype);
             $("#node-input-ncco").typedInput({
                 default: 'url',
                 typeField: $("#node-input-nccotype"),
-                types: ['json',{value:"url",label:"URL"},{value:"fixed",label:"msg.ncco",hasValue:false}]
+                types: ['json', { value: "url", label: "URL" }, { value: "fixed", label: "msg.ncco", hasValue: false }]
             });
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="vonage-transfer">
+<script type="text/x-red" data-template-name="transfer">
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
@@ -484,11 +486,9 @@ Hangup a call leg.
       <input type="text" id="node-input-ncco">
       <input type="hidden" id="node-input-nccotype">
   </div>
-
-  
 </script>
 
-<script type="text/x-red" data-help-name="vonage-transfer">
+<script type="text/x-red" data-help-name="transfer">
 <p>Transfer a Call to a new NCCO</p>
 
 <h3>Inputs</h3>
@@ -508,13 +508,13 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
 </script>
 
 
-//playaudio
+<!-- playaudio -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-playaudio', {
+    RED.nodes.registerType('playaudio', {
         category: 'Vonage APIs',
         color: '#b3dbf4',
         defaults: {
-            creds: { value: "", type: "vonagevoiceapp" },
+            creds: { value: "", type: "vonageappauth" },
             calluuid: {},
             action: {},
             url: {},
@@ -528,7 +528,8 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
         paletteLabel: "Play Audio"
     });
 </script>
-<script type="text/x-red" data-template-name="vonage-playaudio">
+
+<script type="text/x-red" data-template-name="playaudio">
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
@@ -562,8 +563,7 @@ Will transfer a call leg to a new NCCO, you need to supply the URL which will se
   </div>
 </script>
 
-
-<script type="text/x-red" data-help-name="vonage-playaudio">
+<script type="text/x-red" data-help-name="playaudio">
 <p>Play audio into a call</p>
 
 <h3>Inputs</h3>
@@ -584,13 +584,13 @@ Play an audio file into a call
 </script>
 
 
-//playtts
+<!-- playtts -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-playtts', {
+    RED.nodes.registerType('playtts', {
         category: 'Vonage APIs',
         color: '#b3dbf4',
         defaults: {
-            creds: { value: "", type: "vonagevoiceapp" },
+            creds: { value: "", type: "vonageappauth" },
             calluuid: {},
             action: {},
             text: {},
@@ -606,7 +606,7 @@ Play an audio file into a call
     });
 </script>
 
-<script type="text/x-red" data-template-name="vonage-playtts">
+<script type="text/x-red" data-template-name="playtts">
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
@@ -635,7 +635,6 @@ Play an audio file into a call
       <input type="text" id="node-input-voicename" placeholder="Kimblerly">
   </div>
   
-  
   <div class="form-row">
       <label for="node-input-loop"><i class="icon-tag"></i>Loop</label>
       <input type="text" id="node-input-loop">
@@ -647,7 +646,7 @@ Play an audio file into a call
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="vonage-playtts">
+<script type="text/x-red" data-help-name="playtts">
 <p>Play text to speech into a call</p>
 
 <h3>Inputs</h3>
@@ -667,14 +666,14 @@ Play text to speech into a call
     </ul>
 </script>
 
-//playdtmf
 
+<!-- playdtmf -->
 <script type="text/javascript">
-    RED.nodes.registerType('vonage-playdtmf', {
+    RED.nodes.registerType('playdtmf', {
         category: 'Vonage APIs',
         color: '#b3dbf4',
         defaults: {
-            creds: { value: "", type: "vonagevoiceapp" },
+            creds: { value: "", type: "vonageappauth" },
             calluuid: {},
             digits: {}
         },
@@ -685,7 +684,7 @@ Play text to speech into a call
         paletteLabel: "Play DTMF"
     });
 </script>
-<script type="text/x-red" data-template-name="vonage-playdtmf">
+<script type="text/x-red" data-template-name="playdtmf">
   <div class="form-row">
       <label for="node-config-input-privatekey"></i>Vonage Credentials</label>
       <input type="text" id="node-input-creds" >
@@ -702,8 +701,7 @@ Play text to speech into a call
   </div>
 </script>
 
-
-<script type="text/x-red" data-help-name="vonage-playdtmf">
+<script type="text/x-red" data-help-name="playdtmf">
 <p>Play DTMF into a call</p>
 
 <h3>Inputs</h3>
