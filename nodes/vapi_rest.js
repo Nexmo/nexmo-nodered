@@ -110,7 +110,6 @@ module.exports = function (RED) {
             if (error) {
               console.log(error, null);
             } else {
-              console.log(data.length);
               msg.payload = data;
               node.send(msg);
             }
